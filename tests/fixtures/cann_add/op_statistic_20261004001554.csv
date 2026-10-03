@@ -1,0 +1,2 @@
+Device_id,OP Type,Core Type,Count,Total Time(us),Min Time(us),Avg Time(us),Max Time(us),Ratio(%)
+5,Add,AI_VECTOR_CORE,10,38.601,1.84,3.86,4.38,100

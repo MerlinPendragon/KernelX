@@ -1,6 +1,6 @@
 # KernelX msprof 自动性能采集与稳定性分析设计
 
-状态：整体设计草案；issue #1 协议与只读探测已实现并在 910B1 验证，见 [验收记录](docs/910B1_VALIDATION.md)。其余模块待实现。日期：2026-10-03。
+状态：整体设计草案；issue #1 协议/探测和 issue #2 CANN Add 采集闭环已实现并在 910B1 验证，见 [探测验收](docs/910B1_VALIDATION.md)及 [采集验收](docs/ISSUE2_910B1_VALIDATION.md)。其余模块待实现。更新：2026-10-04。
 
 ## 1. 目标与前提
 

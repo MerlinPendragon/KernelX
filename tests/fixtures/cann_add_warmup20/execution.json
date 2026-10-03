@@ -1,0 +1,22 @@
+{
+  "argv": [
+    "/home/lxb/kernelx-issue2/run-final/build/cann_add",
+    "5",
+    "20",
+    "10",
+    "/home/lxb/kernelx-issue2/run-final/raw",
+    "/home/lxb/kernelx-issue2/run-final/sidecar.jsonl"
+  ],
+  "pid": 97281,
+  "process_group": 97281,
+  "owned_pids": [
+    97281
+  ],
+  "started_at": "2026-10-03T16:40:41.897122Z",
+  "ended_at": "2026-10-03T16:40:46.510352Z",
+  "elapsed_seconds": 4.613326613092795,
+  "exit_code": 0,
+  "reason": null,
+  "signals": [],
+  "process_release": "RELEASED"
+}

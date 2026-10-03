@@ -1,0 +1,16 @@
+{
+  "status": "UNVERIFIED",
+  "reason": "requires actual benchmark and attribution validation",
+  "preset": {
+    "name": "latency-v1",
+    "collector": "aclprof",
+    "data_type_mask": 131,
+    "modules": [
+      "ACL_PROF_TASK_TIME",
+      "ACL_PROF_ACL_API",
+      "ACL_PROF_MSPROFTX"
+    ],
+    "aicore_metrics": "ACL_AICORE_NONE",
+    "attribution": "synchronous-msproftx-range-v1"
+  }
+}

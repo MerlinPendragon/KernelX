@@ -1,0 +1,16 @@
+{"phase":"WARMUP","iteration":0,"rank":0,"profile_active":false}
+{"phase":"WARMUP","iteration":1,"rank":0,"profile_active":false}
+{"phase":"WARMUP","iteration":2,"rank":0,"profile_active":false}
+{"phase":"PROFILE_START","rank":0,"warmup_completed":3}
+{"phase":"MEASURE","iteration":0,"rank":0,"profile_active":true,"range_name":"kernelx:measure:0","start_monotonic_ns":1158096822574656,"end_monotonic_ns":1158096822724797}
+{"phase":"MEASURE","iteration":1,"rank":0,"profile_active":true,"range_name":"kernelx:measure:1","start_monotonic_ns":1158096822760407,"end_monotonic_ns":1158096822793057}
+{"phase":"MEASURE","iteration":2,"rank":0,"profile_active":true,"range_name":"kernelx:measure:2","start_monotonic_ns":1158096822799777,"end_monotonic_ns":1158096822821418}
+{"phase":"MEASURE","iteration":3,"rank":0,"profile_active":true,"range_name":"kernelx:measure:3","start_monotonic_ns":1158096822825838,"end_monotonic_ns":1158096822881508}
+{"phase":"MEASURE","iteration":4,"rank":0,"profile_active":true,"range_name":"kernelx:measure:4","start_monotonic_ns":1158096822885598,"end_monotonic_ns":1158096822906168}
+{"phase":"MEASURE","iteration":5,"rank":0,"profile_active":true,"range_name":"kernelx:measure:5","start_monotonic_ns":1158096822910068,"end_monotonic_ns":1158096822929598}
+{"phase":"MEASURE","iteration":6,"rank":0,"profile_active":true,"range_name":"kernelx:measure:6","start_monotonic_ns":1158096822933488,"end_monotonic_ns":1158096822955279}
+{"phase":"MEASURE","iteration":7,"rank":0,"profile_active":true,"range_name":"kernelx:measure:7","start_monotonic_ns":1158096822959309,"end_monotonic_ns":1158096823001699}
+{"phase":"MEASURE","iteration":8,"rank":0,"profile_active":true,"range_name":"kernelx:measure:8","start_monotonic_ns":1158096823005469,"end_monotonic_ns":1158096823059759}
+{"phase":"MEASURE","iteration":9,"rank":0,"profile_active":true,"range_name":"kernelx:measure:9","start_monotonic_ns":1158096823063519,"end_monotonic_ns":1158096823080749}
+{"phase":"PROFILE_STOP","rank":0,"measured_iterations":10}
+{"phase":"RELEASED","rank":0}

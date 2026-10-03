@@ -1,0 +1,29 @@
+{
+  "status": "RELEASED",
+  "checked_at": "2026-10-03T16:40:41.896710Z",
+  "evidence": {
+    "evidence_id": "e0000",
+    "argv": [
+      "npu-smi",
+      "info",
+      "-t",
+      "proc-mem",
+      "-i",
+      "5",
+      "-c",
+      "0"
+    ],
+    "started_at": "2026-10-03T16:40:41.369389Z",
+    "duration_seconds": 0.5256649539805949,
+    "exit_code": 0,
+    "stdout": "\tNo process in device.\n",
+    "stderr": "",
+    "execution_status": "KNOWN",
+    "parse_status": "UNKNOWN",
+    "reason": "raw evidence; no parser assigned",
+    "permission_scope": "euid=1015; no privilege elevation",
+    "parser_version": "ascend-probe-v2",
+    "redacted": true,
+    "output_sha256": "c6fc8a13eddd3104abd20fd47c15c30cf4fda518e321aa9af8fdfa1268e542ce"
+  }
+}

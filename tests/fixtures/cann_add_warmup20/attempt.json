@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+  "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+  "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+  "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+  "ordinal": 0,
+  "started_at": "2026-10-03T16:40:41.897122Z",
+  "ended_at": "2026-10-03T16:40:46.510352Z",
+  "state": "SUCCEEDED",
+  "exit_code": 0,
+  "process_group": 97281,
+  "release_status": "RELEASED",
+  "released_at": "2026-10-03T16:40:47.195553Z",
+  "evidence_ids": [
+    "e0001"
+  ],
+  "reason": null
+}

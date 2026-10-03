@@ -1,0 +1,8 @@
+{
+  "device": 5,
+  "warmup": 20,
+  "repeats": 10,
+  "raw": "/home/lxb/kernelx-issue2/run-final/raw",
+  "sidecar": "/home/lxb/kernelx-issue2/run-final/sidecar.jsonl",
+  "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308"
+}

@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+  "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+  "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+  "preset": "latency-v1",
+  "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+  "collector_version": {
+    "value": null,
+    "status": "UNKNOWN",
+    "reason": "msprof API version unavailable; executable fingerprint in environment",
+    "source": [
+      "environment:5a875843-31fc-462e-9914-fbb01a3f5e50"
+    ],
+    "confidence": "NONE"
+  },
+  "exporter_version": {
+    "value": null,
+    "status": "UNKNOWN",
+    "reason": "msprof API version unavailable; executable fingerprint in environment",
+    "source": [
+      "environment:5a875843-31fc-462e-9914-fbb01a3f5e50"
+    ],
+    "confidence": "NONE"
+  },
+  "parser_version": "msprof-add-v1",
+  "artifact_ids": [
+    "ccb294c1-2a17-4d63-b462-efa2be1698b0",
+    "9efd2886-2aa5-49e9-aad1-de1674b70078",
+    "50c56715-874e-41e6-9e96-c3bd245697a5",
+    "65211de0-7d92-4396-9775-bb71da7a159d",
+    "a5ec2b04-cf5e-4608-93c1-c8e47f6ba88b",
+    "7f0ccd6c-695e-41d9-bc1b-3df246098985",
+    "1ec8b62b-4644-4f26-8de2-b21f07c1472c",
+    "89034b8e-5507-450a-978a-26f1ba9af9d3",
+    "7de08738-80fe-4fbd-8e54-d991e3811167",
+    "8bfef65d-cb0e-4c7e-8c73-8c0985f8688f",
+    "e935ee72-6918-4b91-97e4-ef9742acb6e1",
+    "025c5b0d-2afc-41d4-84a9-92abc2082463",
+    "d215b544-71a8-48f3-8f89-56c39c74c292",
+    "d945cc55-3ce9-410c-b424-3ac8f1dd990c",
+    "3b6d5d64-1718-4a24-ab6f-ea3e1798fca4",
+    "fd8a2e37-fa92-4d66-9ec1-fcda1adbbc4f",
+    "71f21313-0b37-4646-808a-2914b0decb2a",
+    "d5d19d82-aea9-48ea-a452-6c9197fad12a",
+    "8fc76d24-5efa-474f-9e2a-17cdce0375b6",
+    "3c9e999e-7a99-4b5c-a9ed-425bd28d7ef2",
+    "9ffc4b8a-8c02-4ea0-a561-97d97dc0a09f",
+    "fabd4d7d-653c-45f8-bcbd-560490b260ab",
+    "1cd7613e-8f76-4f90-bb1c-ddb2d170d1a1",
+    "6b5dd716-45dc-435d-b9b6-8411f6244afa",
+    "74972fa3-e831-48f1-a82a-0c69455f18a4",
+    "6e405c41-b0cc-4608-b4c1-338567921bc9",
+    "227f7992-c67c-490d-9917-8ca792ff9182",
+    "2f48597b-8427-4f65-8688-7f0dee3e20e6",
+    "2634053e-aeb3-461b-9b28-221c5d00254a"
+  ],
+  "final_argv": [
+    "/home/lxb/kernelx-issue2/run-final/build/cann_add",
+    "5",
+    "20",
+    "10",
+    "/home/lxb/kernelx-issue2/run-final/raw",
+    "/home/lxb/kernelx-issue2/run-final/sidecar.jsonl"
+  ],
+  "completeness": "COMPLETE",
+  "export_status": "KNOWN",
+  "attribution_status": "KNOWN",
+  "expected_task_count": 10,
+  "actual_task_count": 10,
+  "task_mapping": [
+    {
+      "iteration": 0,
+      "rank": 0,
+      "task_ids": [
+        "47:20"
+      ]
+    },
+    {
+      "iteration": 1,
+      "rank": 0,
+      "task_ids": [
+        "47:21"
+      ]
+    },
+    {
+      "iteration": 2,
+      "rank": 0,
+      "task_ids": [
+        "47:22"
+      ]
+    },
+    {
+      "iteration": 3,
+      "rank": 0,
+      "task_ids": [
+        "47:23"
+      ]
+    },
+    {
+      "iteration": 4,
+      "rank": 0,
+      "task_ids": [
+        "47:24"
+      ]
+    },
+    {
+      "iteration": 5,
+      "rank": 0,
+      "task_ids": [
+        "47:25"
+      ]
+    },
+    {
+      "iteration": 6,
+      "rank": 0,
+      "task_ids": [
+        "47:26"
+      ]
+    },
+    {
+      "iteration": 7,
+      "rank": 0,
+      "task_ids": [
+        "47:27"
+      ]
+    },
+    {
+      "iteration": 8,
+      "rank": 0,
+      "task_ids": [
+        "47:28"
+      ]
+    },
+    {
+      "iteration": 9,
+      "rank": 0,
+      "task_ids": [
+        "47:29"
+      ]
+    }
+  ],
+  "quality": [
+    "VALID"
+  ],
+  "reason": null
+}

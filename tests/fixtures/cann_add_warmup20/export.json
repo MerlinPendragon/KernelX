@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/usr/local/Ascend/cann-9.2.0-beta.1/bin/msprof",
+    "--export=on",
+    "--output=/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ"
+  ],
+  "pid": 97639,
+  "process_group": 97639,
+  "owned_pids": [
+    97639,
+    97641,
+    97643,
+    97833,
+    97867
+  ],
+  "started_at": "2026-10-03T16:40:47.868273Z",
+  "ended_at": "2026-10-03T16:40:50.621987Z",
+  "elapsed_seconds": 2.753732812125236,
+  "exit_code": 0,
+  "reason": null,
+  "signals": [],
+  "process_release": "RELEASED"
+}

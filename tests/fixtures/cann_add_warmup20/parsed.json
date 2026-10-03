@@ -1,0 +1,384 @@
+{
+  "parser_version": "msprof-add-v1",
+  "valid": true,
+  "quality": [
+    "VALID"
+  ],
+  "reasons": [],
+  "expected_task_count": 10,
+  "actual_task_count": 10,
+  "raw_rows": [
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "20",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273401.710\t",
+      "Task Duration(us)": "1.680",
+      "Task Wait Time(us)": "0",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "21",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273481.232\t",
+      "Task Duration(us)": "1.620",
+      "Task Wait Time(us)": "77.820000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "22",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273520.713\t",
+      "Task Duration(us)": "1.660",
+      "Task Wait Time(us)": "37.880000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "23",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273539.993\t",
+      "Task Duration(us)": "1.640",
+      "Task Wait Time(us)": "17.590000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "24",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273563.713\t",
+      "Task Duration(us)": "1.640",
+      "Task Wait Time(us)": "22.110000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "25",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273596.034\t",
+      "Task Duration(us)": "1.140",
+      "Task Wait Time(us)": "30.610000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "26",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273615.694\t",
+      "Task Duration(us)": "1.100",
+      "Task Wait Time(us)": "18.610000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "27",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273631.555\t",
+      "Task Duration(us)": "1.060",
+      "Task Wait Time(us)": "14.650000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "28",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273653.955\t",
+      "Task Duration(us)": "1.100",
+      "Task Wait Time(us)": "21.440000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    },
+    {
+      "Device_id": "5",
+      "Model ID": "4294967295",
+      "Task ID": "29",
+      "Stream ID": "47",
+      "Op Name": "aclnnAdd_AddAiCore_Add",
+      "OP Type": "Add",
+      "OP State": "dynamic",
+      "Task Type": "AI_VECTOR_CORE",
+      "Task Start Time(us)": "1791045643273670.016\t",
+      "Task Duration(us)": "1.080",
+      "Task Wait Time(us)": "14.900000",
+      "Block Num": "4",
+      "Mix Block Num": "0",
+      "HF32 Eligible": "NO",
+      "Input Shapes": "\"4096;4096\"",
+      "Input Data Types": "FLOAT;FLOAT",
+      "Input Formats": "ND;ND",
+      "Output Shapes": "\"4096\"",
+      "Output Data Types": "FLOAT",
+      "Output Formats": "ND",
+      "Context ID": "N/A"
+    }
+  ],
+  "invocations": [
+    {
+      "iteration": 0,
+      "rank": 0,
+      "task_ids": [
+        "47:20"
+      ],
+      "task_duration_us": [
+        1.68
+      ],
+      "device_span_us": 1.68,
+      "host_elapsed_us": 114.9,
+      "device_start_us": "1791045643273401.710",
+      "range_name": "kernelx:measure:0"
+    },
+    {
+      "iteration": 1,
+      "rank": 0,
+      "task_ids": [
+        "47:21"
+      ],
+      "task_duration_us": [
+        1.62
+      ],
+      "device_span_us": 1.62,
+      "host_elapsed_us": 38.03,
+      "device_start_us": "1791045643273481.232",
+      "range_name": "kernelx:measure:1"
+    },
+    {
+      "iteration": 2,
+      "rank": 0,
+      "task_ids": [
+        "47:22"
+      ],
+      "task_duration_us": [
+        1.66
+      ],
+      "device_span_us": 1.66,
+      "host_elapsed_us": 17.27,
+      "device_start_us": "1791045643273520.713",
+      "range_name": "kernelx:measure:2"
+    },
+    {
+      "iteration": 3,
+      "rank": 0,
+      "task_ids": [
+        "47:23"
+      ],
+      "task_duration_us": [
+        1.64
+      ],
+      "device_span_us": 1.64,
+      "host_elapsed_us": 14.04,
+      "device_start_us": "1791045643273539.993",
+      "range_name": "kernelx:measure:3"
+    },
+    {
+      "iteration": 4,
+      "rank": 0,
+      "task_ids": [
+        "47:24"
+      ],
+      "task_duration_us": [
+        1.64
+      ],
+      "device_span_us": 1.64,
+      "host_elapsed_us": 20.19,
+      "device_start_us": "1791045643273563.713",
+      "range_name": "kernelx:measure:4"
+    },
+    {
+      "iteration": 5,
+      "rank": 0,
+      "task_ids": [
+        "47:25"
+      ],
+      "task_duration_us": [
+        1.14
+      ],
+      "device_span_us": 1.14,
+      "host_elapsed_us": 17.151,
+      "device_start_us": "1791045643273596.034",
+      "range_name": "kernelx:measure:5"
+    },
+    {
+      "iteration": 6,
+      "rank": 0,
+      "task_ids": [
+        "47:26"
+      ],
+      "task_duration_us": [
+        1.1
+      ],
+      "device_span_us": 1.1,
+      "host_elapsed_us": 15.75,
+      "device_start_us": "1791045643273615.694",
+      "range_name": "kernelx:measure:6"
+    },
+    {
+      "iteration": 7,
+      "rank": 0,
+      "task_ids": [
+        "47:27"
+      ],
+      "task_duration_us": [
+        1.06
+      ],
+      "device_span_us": 1.06,
+      "host_elapsed_us": 14.72,
+      "device_start_us": "1791045643273631.555",
+      "range_name": "kernelx:measure:7"
+    },
+    {
+      "iteration": 8,
+      "rank": 0,
+      "task_ids": [
+        "47:28"
+      ],
+      "task_duration_us": [
+        1.1
+      ],
+      "device_span_us": 1.1,
+      "host_elapsed_us": 16.31,
+      "device_start_us": "1791045643273653.955",
+      "range_name": "kernelx:measure:8"
+    },
+    {
+      "iteration": 9,
+      "rank": 0,
+      "task_ids": [
+        "47:29"
+      ],
+      "task_duration_us": [
+        1.08
+      ],
+      "device_span_us": 1.08,
+      "host_elapsed_us": 12.99,
+      "device_start_us": "1791045643273670.016",
+      "range_name": "kernelx:measure:9"
+    }
+  ]
+}
