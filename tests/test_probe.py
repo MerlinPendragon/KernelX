@@ -1,11 +1,12 @@
 import copy
 import json
+import re
 import subprocess
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from kernelx.probe import Collector, classify, fields, parse_mapping, probe
+from kernelx.probe import BIN_MAPPING, BIN_MAPPING_VERSION, Collector, classify, fields, parse_mapping, probe
 from kernelx.protocol import digest, validate
 
 FIXTURE = Path(__file__).parent / 'fixtures/910b1/environment.json'
@@ -57,18 +58,87 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(entry['output_sha256'], digest(dict(stdout=entry['stdout'], stderr=entry['stderr'])))
         self.assertNotEqual(c.sanitize('VDie ID : 1234'), Collector('00000000-0000-4000-8000-000000000001').sanitize('VDie ID : 1234'))
 
-    def replay(self, mutation=None, server_id=SERVER):
+    def replay(self, mutation=None, server_id=SERVER, redact=True, raw_transform=None):
         records = {tuple(e['argv']): e for e in self.env['evidence']}
         def run(collector, argv):
             original = records.get(tuple(argv))
             if original:
+                original = copy.deepcopy(original)
+                if raw_transform:
+                    raw_transform(original)
                 record = collector.record(argv, original['stdout'], original['stderr'], original['exit_code'], original['execution_status'])
             else:
                 record = collector.record(argv, exit_code=None, status='NOT_FOUND', reason='not in fixture')
             if mutation: mutation(record)
             return record
         with patch.object(Collector, 'run', run), patch('kernelx.probe.platform.machine', return_value='aarch64'):
-            return probe(server_id)
+            return probe(server_id, redact=redact)
+
+    def test_documented_models_identified_in_synthetic_replay(self):
+        # Name replacements test parser coverage, not target hardware acceptance.
+        for model in ('910B1', '910B2', '910B2C', '910B3', '910B4'):
+            def transform(record):
+                record['stdout'] = record['stdout'].replace('910B1', model)
+            result = self.replay(raw_transform=transform)
+            self.assertEqual(len(result['devices']), 8)
+            self.assertTrue(all(d['soc_family']['value'] == 'Ascend 910B' for d in result['devices']))
+            self.assertTrue(all(d['hardware_bin']['value'] == 'Ascend ' + model for d in result['devices']))
+            self.assertTrue(all(d['bin_mapping_version'] == BIN_MAPPING_VERSION for d in result['devices']))
+            self.assertTrue(all(s['hardware_bin'] == 'Ascend ' + model for s in result['support_matrix']))
+            self.assertTrue(all(s['status'] == 'UNVERIFIED' for s in result['support_matrix']))
+            self.assertEqual(BIN_MAPPING['Ascend' + model], BIN_MAPPING[model])
+
+    def test_identity_display_modes_and_redacted_replay_agree(self):
+        def raw_chip(record):
+            if 'board' in record['argv']:
+                record['stdout'] = re.sub(r'redacted:[0-9a-f]{64}', 'CC21EE64 12345678', record['stdout'])
+        public = self.replay(raw_transform=raw_chip)
+        private = self.replay(raw_transform=raw_chip, redact=False)
+        self.assertEqual([d['device_uid'] for d in public['devices']], [d['device_uid'] for d in private['devices']])
+        self.assertTrue(all(d['identity_confidence'] == 'STABLE_CHIP' for d in public['devices'] + private['devices']))
+        self.assertNotIn('CC21EE64', json.dumps(public))
+        self.assertIn('CC21EE64', json.dumps(private))
+        self.assertEqual(Collector(SERVER).identity_token('CC21EE64 12345678'),
+                         Collector(SERVER, redact=False).identity_token('CC21EE64 12345678'))
+        token = Collector(SERVER).identity_token('CC21EE64 12345678')
+        self.assertEqual(Collector(SERVER).identity_token(token), token)
+        # Existing default-redacted v1 UIDs remain stable after this fix.
+        replayed = self.replay()
+        self.assertEqual([d['device_uid'] for d in replayed['devices']], [d['device_uid'] for d in self.env['devices']])
+
+    def test_unavailable_chip_identity_falls_back_in_both_modes(self):
+        for value in ('00000000 00000000', 'NA', 'UNKNOWN'):
+            self.assertIsNone(Collector(SERVER).identity_token(value))
+            def raw_chip(record):
+                if 'board' in record['argv']:
+                    record['stdout'] = re.sub(r'redacted:[0-9a-f]{64}', value, record['stdout'])
+            public, private = self.replay(raw_transform=raw_chip), self.replay(raw_transform=raw_chip, redact=False)
+            self.assertEqual([d['device_uid'] for d in public['devices']], [d['device_uid'] for d in private['devices']])
+            self.assertTrue(all(d['identity_confidence'] == 'LOCATION_ONLY' for d in public['devices']))
+
+    def test_version_context_survives_ip_redaction(self):
+        c = Collector(SERVER)
+        for version in ('8.0.0.1', '8.0.0.2'):
+            text = 'Version=' + version + '\nDriver Version : ' + version + '\nnpu-smi ' + version + '\nmsprof version ' + version
+            text += '\n' + json.dumps({'version': version, 'host': '10.0.0.1'})
+            text += '\nIP Address: 192.168.0.1\nendpoint http://10.0.0.1:80\nVersion=' + version + '; IP=10.1.2.3'
+            text += '\nrequired_package_runtime_version=">=' + version + '"'
+            sanitized = c.sanitize(text)
+            self.assertEqual(sanitized.count(version), 7)
+            for address in ('10.0.0.1', '192.168.0.1', '10.1.2.3'):
+                self.assertNotIn(address, sanitized)
+            self.assertEqual(c.sanitize(sanitized), sanitized)
+
+    def test_different_four_segment_driver_versions_remain_distinct(self):
+        results = []
+        for version in ('8.0.0.1', '8.0.0.2'):
+            def transform(record):
+                if record['argv'] == ['cat', '/usr/local/Ascend/driver/version.info']:
+                    record['stdout'] = record['stdout'].replace('25.5.0', version)
+            result = self.replay(raw_transform=transform)
+            self.assertEqual(result['software']['driver']['value'], version)
+            results.append(result['software']['driver']['value'])
+        self.assertNotEqual(*results)
 
     def test_full_probe_replays_board_and_mapping(self):
         result = self.replay()

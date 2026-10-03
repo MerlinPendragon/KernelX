@@ -29,11 +29,11 @@ Session 终态、attempt 终态、profile 导出状态彼此独立。UUID 不通
 - 证据保留最终 argv、UTC 开始时间、单调耗时、exit code、stdout/stderr、执行状态、解析状态、权限范围、解析器版本、脱敏标识和输出 SHA256。未实现专用解析的原始证据使用 `parse_status=UNKNOWN`。
 - 固件文件无权读取、版本字段为 NA、旧安装文件与当前 ops 版本不同均保留，目录名不作为版本值。msprof 不支持版本查询时保留 UNSUPPORTED，并独立保存已解析路径及可执行文件 SHA256。
 
-脱敏在序列化及哈希之前进行：hostname、用户 home 路径和 IP 被替换；SN/Die ID 使用注册 server UUID 作用域的 SHA256 伪名。同一注册身份内可重放和关联；不同注册身份不共用标识。全零/NA Die ID 不作为身份。伪名用于减少公开身份信息，不等于对可枚举值的密码学匿名保证；需要更强匿名时由部署方使用私有注册映射并限制证据访问。PCIe 是位置数据，默认保留。fixture 中的 hash 校验脱敏后的输出，不能证明未脱敏原文相同。
+脱敏在序列化及哈希之前进行：hostname、用户 home 路径和 IP 被替换；明确的版本字段（包括 JSON 包版本、驱动 Version 字段及 npu-smi/msprof 版本头）保留四段版本号，不作为 IP 替换；SN/Die ID 使用注册 server UUID 作用域的 SHA256 伪名。同一注册身份内可重放和关联；不同注册身份不共用标识。两种展示模式都先将 Die ID 转为同一个服务器作用域伪名再生成 device_uid，脱敏开关仅控制证据展示，不改变芯片身份；已有默认脱敏 v1 fixture 的 UID 保持不变。旧版未脱敏快照的 UID 有缺陷，应按其原始 Die ID 和 server UUID 重算，并在导入时显式关联旧 UID；不能直接把旧 UID 当作另一芯片。身份算法记录在 extensions.identity_version。全零/NA Die ID 不作为身份。伪名用于减少公开身份信息，不等于对可枚举值的密码学匿名保证；需要更强匿名时由部署方使用私有注册映射并限制证据访问。PCIe 是位置数据，默认保留。fixture 中的 hash 校验脱敏后的输出，不能证明未脱敏原文相同。
 
 ## 硬件映射与 BIN
 
-910B1 探测依次读取 `npu-smi info`、`info -l`、`info -m`，对每个真实 accelerator 行查询 `info -t board -i N -c C` 和 `info -t usages -i N -c C`。`-` 逻辑 ID 的 MCU 行不进入 accelerator inventory。board 与 mapping 的完整 Chip Name 都匹配 `910b1-observed-v1` 表才确认 `soc_family="Ascend 910B"`、`hardware_bin="Ascend 910B1"`。不会截尾 B1/B2 猜测，也不外推到其他产品。
+探测依次读取 `npu-smi info`、`info -l`、`info -m`，对每个真实 accelerator 行查询 `info -t board -i N -c C` 和 `info -t usages -i N -c C`。`-` 逻辑 ID 的 MCU 行不进入 accelerator inventory。board 与 mapping 的完整 Chip Name 都匹配 `ascend-910b-products-v2` 白名单且相互一致，才确认对应 SoC/BIN。白名单覆盖 910B1、910B2、910B2C、910B3、910B4，各自保留完整 BIN；接受明确列出的无前缀、Ascend 空格前缀及紧凑前缀，不截尾猜测。型号与 910B 家族关系依据 [Ascend 官方 samples 的固定版本 SOC_TO_SHORT_SOC_MAP](https://gitee.com/ascend/samples/blob/84504315a553ab84e2ccaec6bf95a75a9e68ad66/operator_contrib/CumsumSample/FrameworkLaunch/Cumsum/cmake/util/opdesc_parser.py)，来源写入 extensions.bin_mapping_source。910B1 有真机 fixture；其余型号仅完成基于已知输出格式的名称替换回放，不代表其他型号真机或 benchmark 验收。未知型号、board/mapping 冲突继续降级为 UNKNOWN；库支持矩阵保持 UNVERIFIED。
 
 `device_uid` 使用 server UUID + 有效 Die ID 构造，标记 STABLE_CHIP；无 Die ID 时退为位置身份并标记 LOCATION_ONLY。`card_uid` 是 server UUID 作用域下的 PCIe 位置标识，始终标记 LOCATION_ONLY；不以芯片 Die ID 冒充物理卡 SN。当前 910B1 每个 NPU 有一个 accelerator chip；其他多芯片板卡须添加实机 fixture 和物理板卡关系适配器后才能核算物理卡小时。逻辑 ID 仅是当前快照的 runner 选择器。
 

@@ -1,5 +1,4 @@
 """Read-only, bounded evidence collection. Never initializes torch/NPU runtimes."""
-import getpass
 import hashlib
 import importlib.metadata
 import json
@@ -16,11 +15,14 @@ from pathlib import Path
 
 from .protocol import digest, validate
 
-PARSER_VERSION = "910b1-probe-v1"
-# Full names observed in both mapping and board output on 910B1. No suffix guess.
-BIN_MAPPING = {"Ascend 910B1": ("Ascend 910B", "Ascend 910B1"),
-               "910B1": ("Ascend 910B", "Ascend 910B1")}
-BIN_MAPPING_VERSION = "910b1-observed-v1"
+PARSER_VERSION = "ascend-probe-v2"
+# Explicit product allowlist from Ascend's pinned SOC_TO_SHORT_SOC_MAP.
+# Other names remain unknown; identifying a model does not verify runtime support.
+BIN_MAPPING_SOURCE = "https://gitee.com/ascend/samples/blob/84504315a553ab84e2ccaec6bf95a75a9e68ad66/operator_contrib/CumsumSample/FrameworkLaunch/Cumsum/cmake/util/opdesc_parser.py"
+BIN_MAPPING = {alias: ("Ascend 910B", "Ascend " + model)
+               for model in ("910B1", "910B2", "910B2C", "910B3", "910B4")
+               for alias in (model, "Ascend " + model, "Ascend" + model)}
+BIN_MAPPING_VERSION = "ascend-910b-products-v2"
 LIBRARIES = ("cann-opp", "ops-transformer", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend")
 PACKAGES = ("torch", "torch-npu", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend", "ops-transformer")
 
@@ -92,17 +94,24 @@ class Collector:
         self.timeout = timeout
         self.evidence = []
 
+    def identity_token(self, value):
+        """Same pseudonym in both display modes; also accepts redacted replay."""
+        if not value:
+            return None
+        value = value.strip()
+        if re.fullmatch(r"redacted:[0-9a-f]{64}", value):
+            return value
+        if value.upper() in ("NA", "N/A", "UNKNOWN") or not re.search(r"[1-9A-Fa-f]", value):
+            return None
+        return "redacted:" + hashlib.sha256((self.server_id + value).encode()).hexdigest()
+
     def sanitize(self, text):
         if not self.redact:
             return text
         # Host-local identifiers are pseudonymized before serialization or hashing.
         def redact_identity(match):
             value = match[2].strip()
-            if value.startswith("redacted:"):
-                return match[1] + value
-            if value.upper() in ("NA", "N/A", "UNKNOWN") or not re.search(r"[1-9A-Fa-f]", value):
-                return match[1] + "NA"
-            return match[1] + "redacted:" + hashlib.sha256((self.server_id + value).encode()).hexdigest()
+            return match[1] + (self.identity_token(value) or "NA")
         text = re.sub(r"(?im)^(\s*(?:VDie ID|NDie ID|Die ID|Serial Number|Serial No\.?|SN)\s*:\s*)(.+)$", redact_identity, text)
         hostname = socket.gethostname()
         if hostname:
@@ -111,7 +120,15 @@ class Collector:
         if home != "/":
             text = text.replace(home, "/home/<user>")
         text = re.sub(r"/home/[^/\s]+", "/home/<user>", text)
-        text = re.sub(r"\b(?:\d{1,3}\.){3}\d{1,3}\b", "<ip>", text)
+        # Dotted versions are not addresses. Protect only explicit version fields
+        # and tool version headers, including JSON package metadata.
+        version_context = re.compile(
+            r'(?i)(?:"[\w-]*version(?:_fw)?"\s*:\s*"[^"\n]*"'
+            r'|(?<![\w])(?:[\w-]*version(?:_fw)?)\s*[:=]\s*(?:"[^"\n]*"|[^\s;,"\n]+)'
+            r'|\b(?:npu-smi|msprof|version)\s+\d[\w.\-]*)')
+        protected = [(m.start(), m.end()) for m in version_context.finditer(text)]
+        text = re.sub(r"\b(?:\d{1,3}\.){3}\d{1,3}\b",
+                      lambda m: m[0] if any(start <= m.start() < end for start, end in protected) else "<ip>", text)
         return text
 
     def record(self, argv, stdout="", stderr="", exit_code=0, status=None, duration=0, started=None, reason=None):
@@ -198,9 +215,7 @@ def probe(server_id, redact=True, timeout=15):
             soc = fact(status=status, reason=reason, source=[mapping["evidence_id"], board["evidence_id"]])
             bin_value = fact(status=status, reason=reason, source=soc["source"])
         pcie = from_record(board, "PCIe Bus Info")
-        die = data.get("VDie ID") or data.get("Die ID")
-        if die and (not die.startswith("redacted:")) and (not re.search(r"[1-9A-Fa-f]", die) or die.upper() in ("NA", "N/A")):
-            die = None
+        die = collector.identity_token(data.get("VDie ID")) or collector.identity_token(data.get("Die ID"))
         # PCIe identifies a location, never a replaceable physical card uniquely.
         location = pcie["value"] or ("npu-%d-chip-%d" % (row["npu_id"], row["chip_id"]))
         chip_token = die or location
@@ -275,7 +290,7 @@ def probe(server_id, redact=True, timeout=15):
                     server_id=collector.server_id, captured_at=now(), parser_version=PARSER_VERSION, redacted=redact,
                     host=host, device_inventory=inventory, devices=devices, software=software,
                     support_matrix=matrix, evidence=collector.evidence,
-                    extensions=dict(fingerprints=fingerprints, version_conflicts=conflicts,
+                    extensions=dict(bin_mapping_source=BIN_MAPPING_SOURCE, identity_version="server-die-sha256-v1", fingerprints=fingerprints, version_conflicts=conflicts,
                                     profiler_flags=sorted(set(re.findall(r"--[a-z][a-z-]+", profiler_help["stdout"]))) if profiler_help["execution_status"] == "KNOWN" else [],
                                     runtime_loading="DECLARED_ONLY: no benchmark process or NPU runtime initialized"))
     validate("environment", snapshot)

@@ -89,5 +89,9 @@ class ProtocolTests(unittest.TestCase):
             env['software'][name].update(value='fixture', status='KNOWN', confidence='VERIFIED', reason=None)
         context['preset_sha256'] = 'e'*64
         self.assertNotEqual(key, comparison_key(self.case, env, env['devices'][0], context))
+        env['software']['driver']['value'] = '8.0.0.1'
+        first = comparison_key(self.case, env, env['devices'][0], context)
+        env['software']['driver']['value'] = '8.0.0.2'
+        self.assertNotEqual(first, comparison_key(self.case, env, env['devices'][0], context))
 
 if __name__ == '__main__': unittest.main()

@@ -2,7 +2,7 @@
 
 Ascend 性能采集工程。当前交付 issue #1：协议 v1、只读环境探测、910B1 真实 fixture。采集 Runner、窗口 Agent 与发布器将在后续 issue 实现。
 
-Python ≥3.9，运行与测试不需安装依赖，可直接从仓库执行：
+Python ≥3.9，运行与测试不需安装依赖。probe / validate / case-key 是独立 CLI，运行不依赖 Codex、AI agent 或在线服务，可直接从仓库执行：
 
 ```sh
 python3 -m unittest discover -s tests -v

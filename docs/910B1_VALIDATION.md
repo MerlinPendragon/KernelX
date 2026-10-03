@@ -51,3 +51,14 @@ python3 -m compileall -q kernelx
 最终目标机测试日志：`tests/fixtures/910b1/validation-tests.log`（15 tests，0.392s，OK）。测试传输包在本地与目标机的 SHA256 均为 `3039fcd50ba4415abb9d7a8e60a834dc86bbec20122a98764635ef1a063750ac`；该包包含测试时源码，不包含后来补入的本段日志说明。
 
 测试覆盖：对象键顺序稳定及关键参数变化、版本/required/类型拒绝、非有限值、质量/完整性、证据篡改/悬空引用、未知元数据拒绝分组、MCU 排除、完整 board/mapping 回放、未知规格拒绝猜测、超时/权限/缺命令/错误格式、身份脱敏及跨服务器作用域。
+
+## PR #7 评论修复验收（2026-10-04）
+
+解析器更新为 `ascend-probe-v2`。保留上面的初次 v1 fixture/日志，新增 `tests/fixtures/910b1/environment-review.json`、`review-tests.log` 与 `review-identity-check.json`，避免修改历史证据。
+
+- 型号识别：按固定版本的 Ascend 官方型号定义增加 910B2、910B2C、910B3、910B4 白名单（来源见 PROTOCOL.md）。回归用例将 910B1 board/mapping 名称一致替换，检查完整 BIN 与支持矩阵型号；未知 910B99、冲突仍降级。新增型号仅完成模拟回放，没有其他型号真机验收，库支持仍为 UNVERIFIED。
+- 版本脱敏：保留 key/value、带引号版本声明、JSON package version 和 npu-smi/msprof 版本头中的四段版本；IP 地址仍脱敏。8.0.0.1 与 8.0.0.2 在快照和比较分组中保持不同。
+- 稳定身份：统一原始 Die ID 到服务器作用域伪名的计算；默认脱敏、未脱敏展示、脱敏证据回放生成相同 device_uid。零值/NA/UNKNOWN 的位置降级也不受开关影响。原有默认脱敏 v1 UID 不变；旧未脱敏 UID 的迁移规则见 PROTOCOL.md。
+- 910B1 Python 3.9.9 和本地 Python 3.14.6 均通过 20 项测试，目标机 compileall 通过。
+- 在 910B1 普通 shell 直接运行 `python3 -m kernelx probe`、`validate`、`case-key` 均成功，执行过程不需 AI agent 或在线服务。新快照采集于北京时间 00:00:21，仍发现 8 个 910B1。
+- 实机比较两种展示模式：8 个芯片 device_uid 和 identity_confidence 完全一致，结论见 `review-identity-check.json`。临时未脱敏快照只在目标机用于比较，随后删除，未回传或提交。
