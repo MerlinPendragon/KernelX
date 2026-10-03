@@ -1,0 +1,20 @@
+test_command_outcomes (test_probe.ProbeTests) ... ok
+test_fixture_provenance_and_no_support_inference (test_probe.ProbeTests) ... ok
+test_full_probe_replays_board_and_mapping (test_probe.ProbeTests) ... ok
+test_mapping_fixture_excludes_mcus (test_probe.ProbeTests) ... ok
+test_mapping_parse_error (test_probe.ProbeTests) ... ok
+test_redaction_preserves_replayable_format (test_probe.ProbeTests) ... ok
+test_unknown_board_and_mismatch_fail_closed (test_probe.ProbeTests) ... ok
+test_all_examples_validate (test_protocol.ProtocolTests) ... ok
+test_bad_numbers_rejected (test_protocol.ProtocolTests) ... ok
+test_quality_and_complete_sample_rules (test_protocol.ProtocolTests) ... ok
+test_schema_version_and_required_fields_rejected (test_protocol.ProtocolTests) ... ok
+test_semantic_changes_change_key (test_protocol.ProtocolTests) ... ok
+test_stable_key_for_reordered_objects (test_protocol.ProtocolTests) ... ok
+test_strict_grouping_fail_closed (test_protocol.ProtocolTests) ... ok
+test_unknown_fact_and_evidence_integrity (test_protocol.ProtocolTests) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.392s
+
+OK

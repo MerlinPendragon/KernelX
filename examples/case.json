@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "operator": "Add",
+  "inputs": [
+    {
+      "shape": [
+        8,
+        16
+      ],
+      "dtype": "float16",
+      "layout": "ND",
+      "stride": [
+        16,
+        1
+      ]
+    },
+    {
+      "shape": [
+        8,
+        16
+      ],
+      "dtype": "float16",
+      "layout": "ND",
+      "stride": [
+        16,
+        1
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "shape": [
+        8,
+        16
+      ],
+      "dtype": "float16",
+      "layout": "ND",
+      "stride": [
+        16,
+        1
+      ]
+    }
+  ],
+  "attributes": {},
+  "input_generation": {
+    "algorithm": "uniform",
+    "version": "1",
+    "seed": 17,
+    "input_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "semantic_version": "1"
+}

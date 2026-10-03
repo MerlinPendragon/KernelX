@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "server_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "device_uids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "environment_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "plan_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "plan_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "policy_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "window_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "ended_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "RUNNING",
+        "COMPLETED",
+        "PARTIAL",
+        "SKIPPED",
+        "FAILED"
+      ]
+    },
+    "resource_ledger": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "device_uid": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start_monotonic_ns": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end_monotonic_ns": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "device_uid",
+          "start_monotonic_ns",
+          "end_monotonic_ns"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "reason": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": "latency-v1"
+    }
+  },
+  "required": [
+    "session_id",
+    "server_id",
+    "device_uids",
+    "environment_id",
+    "plan_id",
+    "plan_sha256",
+    "release_id",
+    "policy_id",
+    "policy_version",
+    "window_id",
+    "started_at",
+    "ended_at",
+    "state",
+    "resource_ledger",
+    "reason",
+    "schema_version",
+    "extensions",
+    "protocol_version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kernelx.invalid/schema/v1/session",
+  "$defs": {}
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "session_id": "00000000-0000-4000-8000-000000000003",
+  "server_id": "00000000-0000-4000-8000-000000000004",
+  "device_uids": [
+    "00000000-0000-4000-8000-000000000005"
+  ],
+  "environment_id": "00000000-0000-4000-8000-000000000006",
+  "plan_id": "00000000-0000-4000-8000-000000000001",
+  "plan_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "release_id": "fixture",
+  "policy_id": "00000000-0000-4000-8000-000000000002",
+  "policy_version": 1,
+  "window_id": "fixture-window",
+  "started_at": "2026-10-03T15:30:00Z",
+  "ended_at": "2026-10-03T15:30:00Z",
+  "state": "COMPLETED",
+  "resource_ledger": [
+    {
+      "device_uid": "00000000-0000-4000-8000-000000000005",
+      "start_monotonic_ns": 1,
+      "end_monotonic_ns": 100
+    }
+  ],
+  "reason": null
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "profile_id": "00000000-0000-4000-8000-000000000010",
+  "attempt_id": "00000000-0000-4000-8000-000000000007",
+  "case_key": "case-v1:bb842181d61724cb7c454f69c108e53098ac9063198dbb434f998cff4167d1d5",
+  "preset": "latency-v1",
+  "preset_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "collector_version": {
+    "value": "fixture-v1",
+    "status": "KNOWN",
+    "reason": null,
+    "source": [
+      "fixture"
+    ],
+    "confidence": "DECLARED_ONLY"
+  },
+  "exporter_version": {
+    "value": "fixture-v1",
+    "status": "KNOWN",
+    "reason": null,
+    "source": [
+      "fixture"
+    ],
+    "confidence": "DECLARED_ONLY"
+  },
+  "parser_version": "fixture-v1",
+  "artifact_ids": [
+    "00000000-0000-4000-8000-000000000009"
+  ],
+  "final_argv": [
+    "msprof",
+    "<fixture>"
+  ],
+  "completeness": "COMPLETE",
+  "export_status": "KNOWN",
+  "attribution_status": "KNOWN",
+  "expected_task_count": 2,
+  "actual_task_count": 2,
+  "task_mapping": [
+    {
+      "iteration": 0,
+      "rank": 0,
+      "task_ids": [
+        "a"
+      ]
+    },
+    {
+      "iteration": 1,
+      "rank": 0,
+      "task_ids": [
+        "b"
+      ]
+    }
+  ],
+  "quality": [
+    "VALID"
+  ],
+  "reason": null
+}

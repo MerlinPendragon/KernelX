@@ -1,0 +1,8 @@
+{
+  "server_id": "55dcc47c-f8a8-4f3f-ab2d-c02bd385c470",
+  "devices": 8,
+  "identity_modes_equal": true,
+  "parser_version": "ascend-probe-v2",
+  "public_captured_at": "2026-10-03T16:00:21.609038Z",
+  "private_captured_at": "2026-10-03T16:00:34.295788Z"
+}
