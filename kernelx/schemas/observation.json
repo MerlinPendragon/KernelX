@@ -1,0 +1,183 @@
+{
+  "type": "object",
+  "properties": {
+    "observation_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "environment_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "device_uid": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "case_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "iteration": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rank": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "MEASURE"
+      ]
+    },
+    "task_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "metric": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "enum": [
+            "task_duration_us",
+            "device_span_us",
+            "device_critical_path_us",
+            "host_elapsed_us",
+            "rank_elapsed_us"
+          ]
+        },
+        "unit": {
+          "const": "us"
+        },
+        "boundary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definition_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "unit",
+        "boundary",
+        "definition_version"
+      ],
+      "additionalProperties": false
+    },
+    "raw_samples": {
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0
+      },
+      "minItems": 1
+    },
+    "completeness": {
+      "type": "string",
+      "enum": [
+        "COMPLETE",
+        "PARTIAL",
+        "MISSING"
+      ]
+    },
+    "quality": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "VALID",
+          "CONTENDED",
+          "UNSTABLE",
+          "THERMAL_DRIFT",
+          "VERSION_CHANGED",
+          "METADATA_INCOMPLETE",
+          "INSUFFICIENT_DATA",
+          "ATTRIBUTION_UNKNOWN",
+          "TRACE_MISSING",
+          "UNIT_UNKNOWN"
+        ]
+      },
+      "minItems": 1
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": "latency-v1"
+    }
+  },
+  "required": [
+    "observation_id",
+    "profile_id",
+    "attempt_id",
+    "session_id",
+    "environment_id",
+    "device_uid",
+    "task_id",
+    "case_key",
+    "input_sha256",
+    "seed",
+    "round",
+    "iteration",
+    "rank",
+    "phase",
+    "task_ids",
+    "metric",
+    "raw_samples",
+    "completeness",
+    "quality",
+    "schema_version",
+    "extensions",
+    "protocol_version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kernelx.invalid/schema/v1/observation",
+  "$defs": {}
+}

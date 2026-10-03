@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "attempt_id": "00000000-0000-4000-8000-000000000007",
+  "session_id": "00000000-0000-4000-8000-000000000003",
+  "task_id": "00000000-0000-4000-8000-000000000008",
+  "case_key": "case-v1:bb842181d61724cb7c454f69c108e53098ac9063198dbb434f998cff4167d1d5",
+  "ordinal": 0,
+  "started_at": "2026-10-03T15:30:00Z",
+  "ended_at": "2026-10-03T15:30:00Z",
+  "state": "SUCCEEDED",
+  "exit_code": 0,
+  "process_group": 1234,
+  "release_status": "RELEASED",
+  "released_at": "2026-10-03T15:30:00Z",
+  "evidence_ids": [
+    "fixture"
+  ],
+  "reason": null
+}

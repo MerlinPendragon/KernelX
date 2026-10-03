@@ -1,0 +1,1873 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "environment_id": "0d450c46-1809-4204-a875-efc3ebf2a6ba",
+  "server_id": "55dcc47c-f8a8-4f3f-ab2d-c02bd385c470",
+  "captured_at": "2026-10-03T15:30:52.055008Z",
+  "parser_version": "910b1-probe-v1",
+  "redacted": true,
+  "host": {
+    "hostname": {
+      "value": "<hostname>",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0000"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "architecture": {
+      "value": "aarch64",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0000"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "kernel": {
+      "value": "5.10.0-<ip>.r1526_92.hce2.aarch64",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0000"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "os": {
+      "value": "Linux-5.10.0-<ip>.r1526_92.hce2.aarch64-aarch64-with-glibc2.34",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0000"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "cpu_numa": {
+      "value": "Architecture:                       aarch64\nCPU op-mode(s):                     64-bit\nByte Order:                         Little Endian\nCPU(s):                             192\nOn-line CPU(s) list:                0-191\nVendor ID:                          HiSilicon\nModel name:                         Kunpeng-920\nModel:                              0\nThread(s) per core:                 1\nCore(s) per socket:                 48\nSocket(s):                          4\nStepping:                           0x1\nBogoMIPS:                           200.00\nFlags:                              fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma dcpop asimddp asimdfhm ssbs\nL1d cache:                          12 MiB (192 instances)\nL1i cache:                          12 MiB (192 instances)\nL2 cache:                           96 MiB (192 instances)\nL3 cache:                           192 MiB (8 instances)\nNUMA node(s):                       8\nNUMA node0 CPU(s):                  0-23\nNUMA node1 CPU(s):                  24-47\nNUMA node2 CPU(s):                  48-71\nNUMA node3 CPU(s):                  72-95\nNUMA node4 CPU(s):                  96-119\nNUMA node5 CPU(s):                  120-143\nNUMA node6 CPU(s):                  144-167\nNUMA node7 CPU(s):                  168-191\nVulnerability Gather data sampling: Not affected\nVulnerability Itlb multihit:        Not affected\nVulnerability L1tf:                 Not affected\nVulnerability Mds:                  Not affected\nVulnerability Meltdown:             Not affected\nVulnerability Mmio stale data:      Not affected\nVulnerability Retbleed:             Not affected\nVulnerability Spec rstack overflow: Not affected\nVulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:           Mitigation; __user pointer sanitization\nVulnerability Spectre v2:           Not affected\nVulnerability Srbds:                Not affected\nVulnerability Tsx async abort:      Not affected",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0001"
+      ],
+      "confidence": "VERIFIED"
+    }
+  },
+  "device_inventory": {
+    "value": "8",
+    "status": "KNOWN",
+    "reason": null,
+    "source": [
+      "e0004"
+    ],
+    "confidence": "VERIFIED"
+  },
+  "devices": [
+    {
+      "npu_id": 0,
+      "chip_id": 0,
+      "logical_id": 0,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "486d55c1-4b65-5df3-893f-d18489310bc5",
+      "card_uid": "b219b0c7-6dfe-5ca4-848d-647a66fdefa2",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0005"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0005"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0005"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:C1:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0005"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0006"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0005"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 1,
+      "chip_id": 0,
+      "logical_id": 1,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "4ae994de-4188-553d-a274-d6cf0f3dd00a",
+      "card_uid": "a4e4ade2-4fc1-5a2c-8b02-d5ed61859511",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0007"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0007"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0007"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:01:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0007"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0008"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0007"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 2,
+      "chip_id": 0,
+      "logical_id": 2,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "995f95c1-1263-511b-9df3-17ce4292a7b1",
+      "card_uid": "eefcfe65-0911-5d90-b1ea-43240b17ff6b",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0009"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0009"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0009"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:C2:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0009"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0010"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0009"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 3,
+      "chip_id": 0,
+      "logical_id": 3,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "ef405fc3-012f-5cde-9872-1e99ad375938",
+      "card_uid": "71c3abe7-2355-5d54-9b68-1b84f3a8ad39",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0011"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0011"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0011"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:02:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0011"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0012"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0011"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 4,
+      "chip_id": 0,
+      "logical_id": 4,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "031fc074-5d03-5c65-8fd0-f0e5b93122d2",
+      "card_uid": "92e73069-a9d5-5b78-bd0a-543508d8c79c",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0013"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0013"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0013"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:81:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0013"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0014"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0013"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 5,
+      "chip_id": 0,
+      "logical_id": 5,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+      "card_uid": "84c93100-a9fe-5c72-9d2f-91dcf00c708a",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:41:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0016"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0015"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 6,
+      "chip_id": 0,
+      "logical_id": 6,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "153ef39a-bc55-5509-89f5-6ab115eea813",
+      "card_uid": "0636f987-6718-5edf-aa27-e849df260627",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0017"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0017"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0017"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:82:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0017"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0018"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0017"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    {
+      "npu_id": 7,
+      "chip_id": 0,
+      "logical_id": 7,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "4de9e348-9ecc-5e05-9269-2dc3198d0548",
+      "card_uid": "214edbc6-ecbb-5b8a-a1c4-bdc408898bec",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0019"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0019"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "910b1-observed-v1",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0019"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:42:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0019"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0020"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0019"
+        ],
+        "confidence": "NONE"
+      }
+    }
+  ],
+  "software": {
+    "npu_smi": {
+      "value": "25.5.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0002"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "driver": {
+      "value": "25.5.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0021"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "firmware": {
+      "value": null,
+      "status": "PERMISSION_DENIED",
+      "reason": "permission_denied",
+      "source": [
+        "e0022"
+      ],
+      "confidence": "NONE"
+    },
+    "toolkit": {
+      "value": "9.1.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0023"
+      ],
+      "confidence": "DECLARED_ONLY"
+    },
+    "msprof": {
+      "value": null,
+      "status": "UNSUPPORTED",
+      "reason": "unsupported",
+      "source": [
+        "e0025"
+      ],
+      "confidence": "NONE"
+    },
+    "python": {
+      "value": "3.9.9",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0036"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "search_paths": {
+      "ASCEND_HOME_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1",
+      "ASCEND_TOOLKIT_HOME": "/usr/local/Ascend/cann-9.2.0-beta.1",
+      "ASCEND_OPP_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1/opp",
+      "ASCEND_CUSTOM_OPP_PATH": "",
+      "LD_LIBRARY_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1/lib64:/usr/local/Ascend/cann-9.2.0-beta.1/lib64/plugin/opskernel:/usr/local/Ascend/cann-9.2.0-beta.1/lib64/plugin/nnengine:/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/aarch64:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver",
+      "PYTHONPATH": "/usr/local/Ascend/cann-9.2.0-beta.1/python/site-packages:/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe:"
+    },
+    "packages": [
+      {
+        "name": "torch",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0029"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "torch-npu",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0030"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "sgl-kernel-npu",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0031"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "tile-kernels",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0032"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "deepgemm-ascend",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0033"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "deepep-ascend",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0034"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "ops-transformer",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0035"
+          ],
+          "confidence": "NONE"
+        }
+      }
+    ],
+    "operator_libraries": [
+      {
+        "name": "cann-opp",
+        "role": "kernel_provider",
+        "version": {
+          "value": "9.2.0-beta.1",
+          "status": "KNOWN",
+          "reason": null,
+          "source": [
+            "e0024"
+          ],
+          "confidence": "DECLARED_ONLY"
+        },
+        "resolved_path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp",
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "DECLARED_ONLY",
+        "used_by_case": []
+      },
+      {
+        "name": "ops-transformer",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0035"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "sgl-kernel-npu",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0031"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "tile-kernels",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0032"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "deepgemm-ascend",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0033"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "deepep-ascend",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0034"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      }
+    ]
+  },
+  "support_matrix": [
+    {
+      "library": "cann-opp",
+      "revision": "9.2.0-beta.1",
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0024",
+        "e0026"
+      ]
+    },
+    {
+      "library": "ops-transformer",
+      "revision": null,
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0035",
+        "e0026"
+      ]
+    },
+    {
+      "library": "sgl-kernel-npu",
+      "revision": null,
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0031",
+        "e0026"
+      ]
+    },
+    {
+      "library": "tile-kernels",
+      "revision": null,
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0032",
+        "e0026"
+      ]
+    },
+    {
+      "library": "deepgemm-ascend",
+      "revision": null,
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0033",
+        "e0026"
+      ]
+    },
+    {
+      "library": "deepep-ascend",
+      "revision": null,
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cann": "9.1.0",
+      "python": "3.9.9",
+      "torch_npu": null,
+      "preset": "latency-v1",
+      "status": "UNVERIFIED",
+      "reason": "read-only inventory; runtime revision, preset attribution and case support require runner verification",
+      "verified_at": null,
+      "evidence_ids": [
+        "e0034",
+        "e0026"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "e0000",
+      "argv": [
+        "python",
+        "platform"
+      ],
+      "started_at": "2026-10-03T15:30:39.735221Z",
+      "duration_seconds": 0,
+      "exit_code": 0,
+      "stdout": "{\"hostname\": \"<hostname>\", \"architecture\": \"aarch64\", \"kernel\": \"5.10.0-<ip>.r1526_92.hce2.aarch64\", \"os\": \"Linux-5.10.0-<ip>.r1526_92.hce2.aarch64-aarch64-with-glibc2.34\"}",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "be42ad13ceb8e38ff19303062c67932bdf052969ac2eb77381edd3821d406191"
+    },
+    {
+      "evidence_id": "e0001",
+      "argv": [
+        "lscpu"
+      ],
+      "started_at": "2026-10-03T15:30:39.735478Z",
+      "duration_seconds": 0.09251283900812268,
+      "exit_code": 0,
+      "stdout": "Architecture:                       aarch64\nCPU op-mode(s):                     64-bit\nByte Order:                         Little Endian\nCPU(s):                             192\nOn-line CPU(s) list:                0-191\nVendor ID:                          HiSilicon\nModel name:                         Kunpeng-920\nModel:                              0\nThread(s) per core:                 1\nCore(s) per socket:                 48\nSocket(s):                          4\nStepping:                           0x1\nBogoMIPS:                           200.00\nFlags:                              fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma dcpop asimddp asimdfhm ssbs\nL1d cache:                          12 MiB (192 instances)\nL1i cache:                          12 MiB (192 instances)\nL2 cache:                           96 MiB (192 instances)\nL3 cache:                           192 MiB (8 instances)\nNUMA node(s):                       8\nNUMA node0 CPU(s):                  0-23\nNUMA node1 CPU(s):                  24-47\nNUMA node2 CPU(s):                  48-71\nNUMA node3 CPU(s):                  72-95\nNUMA node4 CPU(s):                  96-119\nNUMA node5 CPU(s):                  120-143\nNUMA node6 CPU(s):                  144-167\nNUMA node7 CPU(s):                  168-191\nVulnerability Gather data sampling: Not affected\nVulnerability Itlb multihit:        Not affected\nVulnerability L1tf:                 Not affected\nVulnerability Mds:                  Not affected\nVulnerability Meltdown:             Not affected\nVulnerability Mmio stale data:      Not affected\nVulnerability Retbleed:             Not affected\nVulnerability Spec rstack overflow: Not affected\nVulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability Spectre v1:           Mitigation; __user pointer sanitization\nVulnerability Spectre v2:           Not affected\nVulnerability Srbds:                Not affected\nVulnerability Tsx async abort:      Not affected\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "2486c0da16d3c01196c1fcbee33acba48c4338a194a62ccf4bc9b77cec4b84a7"
+    },
+    {
+      "evidence_id": "e0002",
+      "argv": [
+        "npu-smi",
+        "info"
+      ],
+      "started_at": "2026-10-03T15:30:39.828404Z",
+      "duration_seconds": 1.149044981924817,
+      "exit_code": 0,
+      "stdout": "+------------------------------------------------------------------------------------------------+\n| npu-smi 25.5.0                   Version: 25.5.0                                               |\n+---------------------------+---------------+----------------------------------------------------+\n| NPU   Name                | Health        | Power(W)    Temp(C)           Hugepages-Usage(page)|\n| Chip                      | Bus-Id        | AICore(%)   Memory-Usage(MB)  HBM-Usage(MB)        |\n+===========================+===============+====================================================+\n| 0     910B1               | OK            | 101.3       51                0    / 0             |\n| 0                         | 0000:C1:00.0  | 0           0    / 0          60523/ 65536         |\n+===========================+===============+====================================================+\n| 1     910B1               | OK            | 96.1        51                0    / 0             |\n| 0                         | 0000:01:00.0  | 0           0    / 0          60190/ 65536         |\n+===========================+===============+====================================================+\n| 2     910B1               | OK            | 101.9       50                0    / 0             |\n| 0                         | 0000:C2:00.0  | 0           0    / 0          3991 / 65536         |\n+===========================+===============+====================================================+\n| 3     910B1               | OK            | 94.5        50                0    / 0             |\n| 0                         | 0000:02:00.0  | 0           0    / 0          61347/ 65536         |\n+===========================+===============+====================================================+\n| 4     910B1               | OK            | 104.7       52                0    / 0             |\n| 0                         | 0000:81:00.0  | 0           0    / 0          58199/ 65536         |\n+===========================+===============+====================================================+\n| 5     910B1               | OK            | 109.1       51                0    / 0             |\n| 0                         | 0000:41:00.0  | 0           0    / 0          3439 / 65536         |\n+===========================+===============+====================================================+\n| 6     910B1               | OK            | 108.1       50                0    / 0             |\n| 0                         | 0000:82:00.0  | 0           0    / 0          3950 / 65536         |\n+===========================+===============+====================================================+\n| 7     910B1               | OK            | 93.2        51                0    / 0             |\n| 0                         | 0000:42:00.0  | 0           0    / 0          59053/ 65536         |\n+===========================+===============+====================================================+\n+---------------------------+---------------+----------------------------------------------------+\n| NPU     Chip              | Process id    | Process name             | Process memory(MB)      |\n+===========================+===============+====================================================+\n| 0       0                 | 2645839       | VLLMEngineCor            | 56981                   |\n+===========================+===============+====================================================+\n| 1       0                 | 2645846       | VLLMEngineCor            | 56729                   |\n+===========================+===============+====================================================+\n| 2       0                 | 785927        |                          | 550                     |\n+===========================+===============+====================================================+\n| 3       0                 | 3865366       | VLLMEngineCor            | 57935                   |\n+===========================+===============+====================================================+\n| 4       0                 | 365609        | VLLMEngineCor            | 54733                   |\n+===========================+===============+====================================================+\n| No running processes found in NPU 5                                                            |\n+===========================+===============+====================================================+\n| 6       0                 | 4159144       | python                   | 532                     |\n+===========================+===============+====================================================+\n| 7       0                 | 2524423       | VLLMEngineCor            | 55512                   |\n+===========================+===============+====================================================+\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "aac3341c4af99797cf23f0e6fea2ea03735c61e3b83fc9384ec39cf44b04ab02"
+    },
+    {
+      "evidence_id": "e0003",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-l"
+      ],
+      "started_at": "2026-10-03T15:30:40.978743Z",
+      "duration_seconds": 0.8061705261934549,
+      "exit_code": 0,
+      "stdout": "\tTotal Count                    : 8\n\n\tNPU ID                         : 0\n\tChip Count                     : 1\n\n\tNPU ID                         : 1\n\tChip Count                     : 1\n\n\tNPU ID                         : 2\n\tChip Count                     : 1\n\n\tNPU ID                         : 3\n\tChip Count                     : 1\n\n\tNPU ID                         : 4\n\tChip Count                     : 1\n\n\tNPU ID                         : 5\n\tChip Count                     : 1\n\n\tNPU ID                         : 6\n\tChip Count                     : 1\n\n\tNPU ID                         : 7\n\tChip Count                     : 1\n\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "UNKNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "ad336e7334c3b7c52fec03c48f46be13d2ac0f30edfe7382e0f2b050fafeaf4a"
+    },
+    {
+      "evidence_id": "e0004",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-m"
+      ],
+      "started_at": "2026-10-03T15:30:41.785414Z",
+      "duration_seconds": 0.5264173441100866,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         Chip ID                        Chip Logic ID                  Chip Name                     \n\t0                              0                              0                              Ascend 910B1\n\t0                              1                              -                              Mcu                           \n\t1                              0                              1                              Ascend 910B1\n\t1                              1                              -                              Mcu                           \n\t2                              0                              2                              Ascend 910B1\n\t2                              1                              -                              Mcu                           \n\t3                              0                              3                              Ascend 910B1\n\t3                              1                              -                              Mcu                           \n\t4                              0                              4                              Ascend 910B1\n\t4                              1                              -                              Mcu                           \n\t5                              0                              5                              Ascend 910B1\n\t5                              1                              -                              Mcu                           \n\t6                              0                              6                              Ascend 910B1\n\t6                              1                              -                              Mcu                           \n\t7                              0                              7                              Ascend 910B1\n\t7                              1                              -                              Mcu                           \n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "6768b9946b8a09565647331023a96a563fc6e4a0c7a7a1abdac3a8839be2cab6"
+    },
+    {
+      "evidence_id": "e0005",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "0",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:42.313013Z",
+      "duration_seconds": 0.530745224095881,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 0\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:e5be45ddb03e8cafed42c909c1d2e41875e5c25964c4915fa9fcbf3be0eb9304\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:C1:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "0a94982a2d01b1e10f2c19963a8e6b979ee57856c1bea54fbcd59d3c48612dc1"
+    },
+    {
+      "evidence_id": "e0006",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "0",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:42.844817Z",
+      "duration_seconds": 0.6773338860366493,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 92\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 3\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "80f796aafe60a555d6e08cc15ac335b41a731b9e4df930fbbe916e7f9cde324b"
+    },
+    {
+      "evidence_id": "e0007",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "1",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:43.523722Z",
+      "duration_seconds": 0.543436650885269,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 1\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:b5b26de0c0e68cb6108f4df1d6e2884bfea3e26d6d9238b1ccf79ec93193e6db\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:01:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "92b465dcff601c2158fa5b56bafb0f154cc7cb09ccb990d6df3f4144fc28caa3"
+    },
+    {
+      "evidence_id": "e0008",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "1",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:44.067815Z",
+      "duration_seconds": 0.6646932091098279,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 91\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 1\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "ddbc936c98cd881f0c6058d57d932ca98190e106ab994855fb61235ac53464e1"
+    },
+    {
+      "evidence_id": "e0009",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "2",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:44.733570Z",
+      "duration_seconds": 0.5260894021485001,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 2\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:fb494a18e37e58f4c90ed987f65fb872c78e0f04198b1ba52663f93b210b07fc\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:C2:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "705ce19dc4932d44916d7148c6be5b41f1bc3091886036f67c0d6968686f06d4"
+    },
+    {
+      "evidence_id": "e0010",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "2",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:45.260253Z",
+      "duration_seconds": 0.6590855098329484,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 6\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 3\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "506d3e8ea541e665db890fc9d0b0e5edc79798ba9651ec035b190369dda31664"
+    },
+    {
+      "evidence_id": "e0011",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "3",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:45.920362Z",
+      "duration_seconds": 0.5350483441725373,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 3\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:94093923490791081b05c2bc202f46676eaf455a45070e5427c322ba34395372\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:02:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "be5a2b2c816a081af042038347216604deda0c53eca19741ab3875f81ae0b76a"
+    },
+    {
+      "evidence_id": "e0012",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "3",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:46.456063Z",
+      "duration_seconds": 0.6647560088895261,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 93\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 7\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "f96a407b95cc00c6f7a6940fb167df0abff2c1d08444fdcf59c57dc73ed4f7ff"
+    },
+    {
+      "evidence_id": "e0013",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "4",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:47.121867Z",
+      "duration_seconds": 0.5322682538535446,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 4\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:5b330d590ef064a38d963064427d8589fbe43d1b2d5ea2f20d59e44be51c4e45\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:81:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "41a0dcf537c60fca22e7e8980cda9365eaf7cab3a926facd488225030a1251b3"
+    },
+    {
+      "evidence_id": "e0014",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "4",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:47.654858Z",
+      "duration_seconds": 0.6734898700378835,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 88\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 2\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "4cf73853cb8b308cd5e3a7550c1a7f2ca2541d96c062f3318233a8e840926352"
+    },
+    {
+      "evidence_id": "e0015",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "5",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:48.329371Z",
+      "duration_seconds": 0.533149239839986,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 5\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:48e6de664c2113fe729c5cb8bbd4e6c7223672880a56ec0ce9340d9c8ecac75a\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:41:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "dfb6fd31eb126b3c9b530f50b6ad235349ae27375d30393e7d96fcf1087627c3"
+    },
+    {
+      "evidence_id": "e0016",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "5",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:48.863261Z",
+      "duration_seconds": 0.6864113579504192,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 5\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 5\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "44d420e2991b57ee20c77cdf052cd3bc814a919b3be7e41013433961cad9a2df"
+    },
+    {
+      "evidence_id": "e0017",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "6",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:49.550816Z",
+      "duration_seconds": 0.5276695329230279,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 6\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:31a43a1e4f974a60fb69f4ad190ecc40cac46f35764ca28a37bbc068921584a3\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:82:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "f5263cf52005e794ff466f33bdd157c6fa3cbdac08ee1acd5de04943b0878f50"
+    },
+    {
+      "evidence_id": "e0018",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "6",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:50.079221Z",
+      "duration_seconds": 0.6663208899553865,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 5\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 1\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "7231cce22bdadd2f39e3b4ddfe35d962e43a6b4bc8f50e471508d013cde7598f"
+    },
+    {
+      "evidence_id": "e0019",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "board",
+        "-i",
+        "7",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:50.746644Z",
+      "duration_seconds": 0.5247503919526935,
+      "exit_code": 0,
+      "stdout": "\tNPU ID                         : 7\n\tChip ID                        : 0\n\tChip Type                      : Ascend\n\tChip Name                      : 910B1\n\tChip Version                   : V1\n\tBoard ID                       : 0x30\n\tPCB ID                         : NA\n\tBOM ID                         : 1\n\tVDie ID                        : redacted:deb0ab2fd459fb377cbebcb655c63bbf9c3993838de413fd3983df263f9a6cf9\n\tNDie ID                        : NA\n\tChip Position ID               : 0\n\tPCIe Bus Info                  : 0000:42:00.0\n\tFirmware Version               : NA\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "dce21711fd05a78905773d4f7145c89e67d67bcd41ec7b4200d0d0e410691647"
+    },
+    {
+      "evidence_id": "e0020",
+      "argv": [
+        "npu-smi",
+        "info",
+        "-t",
+        "usages",
+        "-i",
+        "7",
+        "-c",
+        "0"
+      ],
+      "started_at": "2026-10-03T15:30:51.271949Z",
+      "duration_seconds": 0.6588385088834912,
+      "exit_code": 0,
+      "stdout": "\tDDR Capacity(MB)               : 0\n\tDDR Usage Rate(%)              : 0\n\tDDR Hugepages Total(page)      : 0\n\tDDR Hugepages Usage Rate(%)    : 0\n\tHBM Capacity(MB)               : 65536\n\tHBM Usage Rate(%)              : 90\n\tAicore Usage Rate(%)           : 0\n\tAivector Usage Rate(%)         : 0\n\tAicpu Usage Rate(%)            : 0\n\tCtrlcpu Usage Rate(%)          : 7\n\tDDR Bandwidth Usage Rate(%)    : 0\n\tHBM Bandwidth Usage Rate(%)    : 0\n\tNPU Utilization(%)             : 0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "8b40c4aa9cf52750722ba6406caab2419dffb8fd01e475892def674e273cb755"
+    },
+    {
+      "evidence_id": "e0021",
+      "argv": [
+        "cat",
+        "/usr/local/Ascend/driver/version.info"
+      ],
+      "started_at": "2026-10-03T15:30:51.931785Z",
+      "duration_seconds": 0.002663157880306244,
+      "exit_code": 0,
+      "stdout": "Version=25.5.0\nascendhal_version=7.35.23\naicpu_version=1.0\ntdt_version=1.0\nlog_version=1.0\nprof_version=2.0\ndvppkernels_version=1.1\ntsfw_version=1.0\nInnerversion=V100R001C23SPC005B219\ncompatible_version=[V100R001C19],[V100R001C20],[V100R001C21],[V100R001C22],[V100R001C23]\ncompatible_version_fw=[7.0.0,8.9.9]\npackage_version=25.5.0\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "58235208b8e6db27fe48494e4c7cf58f01708a6c2d810653bcee1dbb219fbf27"
+    },
+    {
+      "evidence_id": "e0022",
+      "argv": [
+        "cat",
+        "/usr/local/Ascend/firmware/version.info"
+      ],
+      "started_at": "2026-10-03T15:30:51.934749Z",
+      "duration_seconds": 0.002386476146057248,
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "cat: /usr/local/Ascend/firmware/version.info: Permission denied\n",
+      "execution_status": "PERMISSION_DENIED",
+      "parse_status": "PERMISSION_DENIED",
+      "reason": "permission_denied",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "7f27e3f5c5de5ee9f115888c7714da09a829c24f1fd1f0dc61d8c14937f9938c"
+    },
+    {
+      "evidence_id": "e0023",
+      "argv": [
+        "cat",
+        "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/ascend_toolkit_install.info"
+      ],
+      "started_at": "2026-10-03T15:30:51.937755Z",
+      "duration_seconds": 0.0025877279695123434,
+      "exit_code": 0,
+      "stdout": "package_name=Ascend-cann-toolkit\nversion=9.1.0\ninnerversion=V100R001C11SPC001B243\ncompatible_version=[V100R001C15],[V100R001C21],[V100R001C23],[V100R001C10]\narch=aarch64\nos=linux\npath=/usr/local/Ascend/cann-9.2.0-beta.1\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "dea40932194f0d55e53c6e2fd5292eb0477233a4b720ea596c341c605dd50ad7"
+    },
+    {
+      "evidence_id": "e0024",
+      "argv": [
+        "cat",
+        "/usr/local/Ascend/cann-9.2.0-beta.1/opp/version.info"
+      ],
+      "started_at": "2026-10-03T15:30:51.941118Z",
+      "duration_seconds": 0.0030930908396840096,
+      "exit_code": 0,
+      "stdout": "Version=9.2.0-beta.1\nversion_dir=cann\nrequired_package_runtime_version=\">=8.5\"\nrequired_package_ge-executor_version=\">=8.5\"\nrequired_package_metadef_version=\">=8.5\"\nrequired_package_asc-devkit_version=\">=8.5\"\nrequired_package_bisheng-compiler_version=\">=8.5\"\ntimestamp=20260805_224858134\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "ef910cd775d73b2031a17fac49481b285c3183607af46fd53eb7b700f5a35447"
+    },
+    {
+      "evidence_id": "e0025",
+      "argv": [
+        "/usr/local/Ascend/cann-9.2.0-beta.1/bin/msprof",
+        "--version"
+      ],
+      "started_at": "2026-10-03T15:30:51.944939Z",
+      "duration_seconds": 0.040447650011628866,
+      "exit_code": 255,
+      "stdout": "\nUsage:\n      msprof [--options]\n\nThis is subcommand for operator optimization situation:\n      op                                Use binary msopprof to operator optimization (msprof op ...)\n\nOptions:\n      --output                          <Optional> Specify the directory that is used for storing data results.\n      --application                     <Optional> Specify application path, considering the risk of privilege escalation, please pay attention to\n\t\t\t\t\t\t   the group of the application and confirm whether it is the same as the user currently.\n\t\t\t\t\t\t   [Note] This option will be discarded in later versions.\n\t\t\t\t\t\t   you can try to use: msprof [msprof arguments] <app> [app arguments]\n      --ascendcl                        <Optional> Show acl profiling data, the default value is on.\n      --ge-api                          <Optional> Specify if report GE event, the default value is off. The possible parameters are 'l0', 'l1' or 'off'.\n      --runtime-api                     <Optional> Show runtime api profiling data, the default value is off.\n      --task-time                       <Optional> Show task profiling data, the default value is on. The possible parameters are 'l0', 'l1', 'l2', 'l3', 'on' or 'off'.\n      --task-memory                     <Optional> Show the memory usage of the operator, the default value is off. The possible parameters are 'on' or 'off'.\n      --ai-core                         <Optional> Turn on / off the ai core profiling, the default value is on when collecting app Profiling.\n      --aic-mode                        <Optional> Set the aic profiling mode to task-based or sample-based.\n\t\t\t\t\t\t   In task-based mode, profiling data will be collected by tasks.\n\t\t\t\t\t\t   In sample-based mode, profiling data will be collected in a specific interval.\n\t\t\t\t\t\t   The default value is task-based in AI task mode, sample-based in system mode.\n      --aic-freq                        <Optional> The aic sampling frequency in hertz, the default value is 100 Hz, the range is 1 to 100 Hz.\n      --environment                     <Optional> User app custom environment variable configuration.\n      --sys-period                      <Optional> Set total sampling period of system profiling in seconds.\n      --sys-devices                     <Optional> Specify the profiling scope by device ID when collect sys profiling.The value is all or ID list (split with ',').\n      --msproftx                        <Optional> Show msproftx and mstx data, the default value is off.\n      --mstx-domain-include             <Optional> Choose to only include mstx events from a comma separated list of domains;\n\t\t\t\t\t\t   `default` filters the mstx default domain;\n\t\t\t\t\t\t   The switch is only applicable when parameter msproftx is set to on;\n\t\t\t\t\t\t   The switch cannot be set with mstx-domain-exclude at the same time.\n      --mstx-domain-exclude             <Optional> Choose to exclude mstx events from a comma separated list of domains;\n\t\t\t\t\t\t   `default` excludes the mstx default domain;\n\t\t\t\t\t\t   The switch is only applicable when parameter msproftx is set to on;\n\t\t\t\t\t\t   The switch cannot be set with mstx-domain-include at the same time.\n      --storage-limit                   <Optional> Specify the output directory volume. range 200MB ~ 4294967295MB.\n      --hccl                            <Optional> Show hccl profiling data, the default value is off. [Note] This option will be discarded in later versions.\n      --model-execution                 <Optional> Show ge model execution profiling data, the default value is off. [Note] This option will be discarded in later versions.\n      --aic-metrics                     <Optional> The aic metrics groups, include ArithmeticUtilization, PipeUtilization, Memory, MemoryL0, ResourceConflictRatio, MemoryUB, L2Cache, MemoryAccess.\n\t\t\t\t\t\t   the default value is PipeUtilization.\n      --python-path                     <Optional> Specify the python interpreter path that is used for analysis, please ensure the python version is 3.7.5 or later.\n      --parse                           <Optional> Switch for using msprof to parse collecting data, the default value is off.\n      --query                           <Optional> Switch for using msprof to query collecting data, the default value is off.\n      --export                          <Optional> Switch for using msprof to export collecting data, the default value is off.\n      --clear                           <Optional> Switch for using msprof to analyze or export data in clear mode, the default value is off.\n      --analyze                         <Optional> Switch for using msprof to analyze collecting data, the default value is off.\n      --rule                            <Optional> Switch specified rule for using msprof to analyze collecting data, include communication, communication_matrix.\n\t\t\t\t\t\t   the default value is communication,communication_matrix.\n      --iteration-id                    <Optional> The export iteration id, only used when argument export is on, the default value is 1.\n      --model-id                        <Optional> The export model id, only used when argument export is on, msprof will export minium accessible model by default.\n      --summary-format                  <Optional> The export summary file format, only used when argument export is on, include csv, json, the default value is csv.\n      --type                            <Optional> The export type, only used when argument `export` is on \n\t\t\t\t\t\t   or when collecting data, include text, db.\n\t\t\t\t\t\t   the default value is text(which will also export the database).\n      --reports                         <Optional> Specify the path that is used for controlling the export scope of collecting results\n      --aicpu                           <Optional> Show aicpu profiling data, the default value is off.\n      --sys-hardware-mem                <Optional> LLC, DDR, HBM acquisition switch, optional on / off, the default value is off.\n      --sys-hardware-mem-freq           <Optional> LLC, DDR, HBM acquisition frequency, range 1 ~ 100, the default value is 50, unit Hz.\n      --llc-profiling                   <Optional> The llc profiling groups, include read, write. the default value is read.\n      --sys-cpu-profiling               <Optional> The CPU acquisition switch, optional on / off,the default value is off.\n      --sys-cpu-freq                    <Optional> The cpu sampling frequency in hertz. the default value is 50 Hz, the range is 1 to 50 Hz.\n      --sys-profiling                   <Optional> The System CPU usage and system memory acquisition switch,the default value is off.\n      --sys-sampling-freq               <Optional> The sys sampling frequency in hertz. the default value is 10 Hz, the range is 1 to 10 Hz.\n      --sys-pid-profiling               <Optional> The CPU usage of the process and the memory acquisition switch of the process,the default value is off.\n      --sys-pid-sampling-freq           <Optional> The pid sampling frequency in hertz. the default value is 10 Hz, the range is 1 to 10 Hz.\n      --sys-io-profiling                <Optional> NIC, ROCE acquisition switch, the default value is off.\n      --sys-io-sampling-freq            <Optional> NIC, ROCE acquisition frequency, range 1 ~ 100, the default value is 100, unit Hz.\n      --instr-profiling                 <Optional> Show instr profiling data, the default value is off.\n      --instr-profiling-freq            <Optional> The instr profiling sampling period in clock-cycle, the default value is 1000 cycle, the range is 300 to 30000 cycle.\n      --sys-interconnection-profiling   <Optional> PCIE, HCCS acquisition switch, the default value is off.\n      --sys-interconnection-freq        <Optional> PCIE, HCCS acquisition frequency, range 1 ~ 50, the default value is 50, unit Hz.\n      --dvpp-profiling                  <Optional> DVPP acquisition switch, the default value is off.\n      --dvpp-freq                       <Optional> DVPP acquisition frequency, range 1 ~ 100, the default value is 50, unit Hz.\n      --l2                              <Optional> L2 Cache and SMMU acquisition switch. The default value is off.\n      --host-sys                        <Optional> The host-sys data type, include cpu, mem, disk, network, osrt, numa\n      --host-sys-pid                    <Optional> Set the PID of the app process for which you want to collect performance data.\n      --host-sys-usage                  <Optional> The host-sys-usage data type, include cpu, mem.(full-platform)\n      --host-sys-usage-freq             <Optional> The sampling frequency in hertz. the default value is 50 Hz the range is 1 to 50 Hz.\n      --dynamic                         <Optional> Dynamic profiling switch, the default value is off.\n      --pid                             <Optional> Dynamic profiling pids of the target processes\n      --delay                           <Optional> Collect start delay time in seconds, range 1 ~ 4294967295s.\n      --duration                        <Optional> Collection duration in seconds, range 1 ~ 4294967295s.\n      --help                            <Optional> help message.\n",
+      "stderr": "/usr/local/Ascend/cann-9.2.0-beta.1/bin/msprof: unrecognized option '--version'\n",
+      "execution_status": "UNSUPPORTED",
+      "parse_status": "UNSUPPORTED",
+      "reason": "unsupported",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "b9734b2eac4d1fac21af50585630c863dd2fe016682b7afc763b0b9f6895e777"
+    },
+    {
+      "evidence_id": "e0026",
+      "argv": [
+        "/usr/local/Ascend/cann-9.2.0-beta.1/bin/msprof",
+        "--help"
+      ],
+      "started_at": "2026-10-03T15:30:51.986612Z",
+      "duration_seconds": 0.0375328091904521,
+      "exit_code": 0,
+      "stdout": "\nUsage:\n      msprof [--options]\n\nThis is subcommand for operator optimization situation:\n      op                                Use binary msopprof to operator optimization (msprof op ...)\n\nOptions:\n      --output                          <Optional> Specify the directory that is used for storing data results.\n      --application                     <Optional> Specify application path, considering the risk of privilege escalation, please pay attention to\n\t\t\t\t\t\t   the group of the application and confirm whether it is the same as the user currently.\n\t\t\t\t\t\t   [Note] This option will be discarded in later versions.\n\t\t\t\t\t\t   you can try to use: msprof [msprof arguments] <app> [app arguments]\n      --ascendcl                        <Optional> Show acl profiling data, the default value is on.\n      --ge-api                          <Optional> Specify if report GE event, the default value is off. The possible parameters are 'l0', 'l1' or 'off'.\n      --runtime-api                     <Optional> Show runtime api profiling data, the default value is off.\n      --task-time                       <Optional> Show task profiling data, the default value is on. The possible parameters are 'l0', 'l1', 'l2', 'l3', 'on' or 'off'.\n      --task-memory                     <Optional> Show the memory usage of the operator, the default value is off. The possible parameters are 'on' or 'off'.\n      --ai-core                         <Optional> Turn on / off the ai core profiling, the default value is on when collecting app Profiling.\n      --aic-mode                        <Optional> Set the aic profiling mode to task-based or sample-based.\n\t\t\t\t\t\t   In task-based mode, profiling data will be collected by tasks.\n\t\t\t\t\t\t   In sample-based mode, profiling data will be collected in a specific interval.\n\t\t\t\t\t\t   The default value is task-based in AI task mode, sample-based in system mode.\n      --aic-freq                        <Optional> The aic sampling frequency in hertz, the default value is 100 Hz, the range is 1 to 100 Hz.\n      --environment                     <Optional> User app custom environment variable configuration.\n      --sys-period                      <Optional> Set total sampling period of system profiling in seconds.\n      --sys-devices                     <Optional> Specify the profiling scope by device ID when collect sys profiling.The value is all or ID list (split with ',').\n      --msproftx                        <Optional> Show msproftx and mstx data, the default value is off.\n      --mstx-domain-include             <Optional> Choose to only include mstx events from a comma separated list of domains;\n\t\t\t\t\t\t   `default` filters the mstx default domain;\n\t\t\t\t\t\t   The switch is only applicable when parameter msproftx is set to on;\n\t\t\t\t\t\t   The switch cannot be set with mstx-domain-exclude at the same time.\n      --mstx-domain-exclude             <Optional> Choose to exclude mstx events from a comma separated list of domains;\n\t\t\t\t\t\t   `default` excludes the mstx default domain;\n\t\t\t\t\t\t   The switch is only applicable when parameter msproftx is set to on;\n\t\t\t\t\t\t   The switch cannot be set with mstx-domain-include at the same time.\n      --storage-limit                   <Optional> Specify the output directory volume. range 200MB ~ 4294967295MB.\n      --hccl                            <Optional> Show hccl profiling data, the default value is off. [Note] This option will be discarded in later versions.\n      --model-execution                 <Optional> Show ge model execution profiling data, the default value is off. [Note] This option will be discarded in later versions.\n      --aic-metrics                     <Optional> The aic metrics groups, include ArithmeticUtilization, PipeUtilization, Memory, MemoryL0, ResourceConflictRatio, MemoryUB, L2Cache, MemoryAccess.\n\t\t\t\t\t\t   the default value is PipeUtilization.\n      --python-path                     <Optional> Specify the python interpreter path that is used for analysis, please ensure the python version is 3.7.5 or later.\n      --parse                           <Optional> Switch for using msprof to parse collecting data, the default value is off.\n      --query                           <Optional> Switch for using msprof to query collecting data, the default value is off.\n      --export                          <Optional> Switch for using msprof to export collecting data, the default value is off.\n      --clear                           <Optional> Switch for using msprof to analyze or export data in clear mode, the default value is off.\n      --analyze                         <Optional> Switch for using msprof to analyze collecting data, the default value is off.\n      --rule                            <Optional> Switch specified rule for using msprof to analyze collecting data, include communication, communication_matrix.\n\t\t\t\t\t\t   the default value is communication,communication_matrix.\n      --iteration-id                    <Optional> The export iteration id, only used when argument export is on, the default value is 1.\n      --model-id                        <Optional> The export model id, only used when argument export is on, msprof will export minium accessible model by default.\n      --summary-format                  <Optional> The export summary file format, only used when argument export is on, include csv, json, the default value is csv.\n      --type                            <Optional> The export type, only used when argument `export` is on \n\t\t\t\t\t\t   or when collecting data, include text, db.\n\t\t\t\t\t\t   the default value is text(which will also export the database).\n      --reports                         <Optional> Specify the path that is used for controlling the export scope of collecting results\n      --aicpu                           <Optional> Show aicpu profiling data, the default value is off.\n      --sys-hardware-mem                <Optional> LLC, DDR, HBM acquisition switch, optional on / off, the default value is off.\n      --sys-hardware-mem-freq           <Optional> LLC, DDR, HBM acquisition frequency, range 1 ~ 100, the default value is 50, unit Hz.\n      --llc-profiling                   <Optional> The llc profiling groups, include read, write. the default value is read.\n      --sys-cpu-profiling               <Optional> The CPU acquisition switch, optional on / off,the default value is off.\n      --sys-cpu-freq                    <Optional> The cpu sampling frequency in hertz. the default value is 50 Hz, the range is 1 to 50 Hz.\n      --sys-profiling                   <Optional> The System CPU usage and system memory acquisition switch,the default value is off.\n      --sys-sampling-freq               <Optional> The sys sampling frequency in hertz. the default value is 10 Hz, the range is 1 to 10 Hz.\n      --sys-pid-profiling               <Optional> The CPU usage of the process and the memory acquisition switch of the process,the default value is off.\n      --sys-pid-sampling-freq           <Optional> The pid sampling frequency in hertz. the default value is 10 Hz, the range is 1 to 10 Hz.\n      --sys-io-profiling                <Optional> NIC, ROCE acquisition switch, the default value is off.\n      --sys-io-sampling-freq            <Optional> NIC, ROCE acquisition frequency, range 1 ~ 100, the default value is 100, unit Hz.\n      --instr-profiling                 <Optional> Show instr profiling data, the default value is off.\n      --instr-profiling-freq            <Optional> The instr profiling sampling period in clock-cycle, the default value is 1000 cycle, the range is 300 to 30000 cycle.\n      --sys-interconnection-profiling   <Optional> PCIE, HCCS acquisition switch, the default value is off.\n      --sys-interconnection-freq        <Optional> PCIE, HCCS acquisition frequency, range 1 ~ 50, the default value is 50, unit Hz.\n      --dvpp-profiling                  <Optional> DVPP acquisition switch, the default value is off.\n      --dvpp-freq                       <Optional> DVPP acquisition frequency, range 1 ~ 100, the default value is 50, unit Hz.\n      --l2                              <Optional> L2 Cache and SMMU acquisition switch. The default value is off.\n      --host-sys                        <Optional> The host-sys data type, include cpu, mem, disk, network, osrt, numa\n      --host-sys-pid                    <Optional> Set the PID of the app process for which you want to collect performance data.\n      --host-sys-usage                  <Optional> The host-sys-usage data type, include cpu, mem.(full-platform)\n      --host-sys-usage-freq             <Optional> The sampling frequency in hertz. the default value is 50 Hz the range is 1 to 50 Hz.\n      --dynamic                         <Optional> Dynamic profiling switch, the default value is off.\n      --pid                             <Optional> Dynamic profiling pids of the target processes\n      --delay                           <Optional> Collect start delay time in seconds, range 1 ~ 4294967295s.\n      --duration                        <Optional> Collection duration in seconds, range 1 ~ 4294967295s.\n      --help                            <Optional> help message.\n",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "UNKNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "3b6a180c7206c4631843883a2b11fb9189eee2b0c3980a291153dc2d39d79c23"
+    },
+    {
+      "evidence_id": "e0027",
+      "argv": [
+        "sha256",
+        "/usr/local/Ascend/cann-9.2.0-beta.1/tools/profiler/bin/msprof"
+      ],
+      "started_at": "2026-10-03T15:30:52.043645Z",
+      "duration_seconds": 0,
+      "exit_code": 0,
+      "stdout": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "477528e16afc7362346baeba029aef51c0f323c3753821e10aaed08f524d2991"
+    },
+    {
+      "evidence_id": "e0028",
+      "argv": [
+        "sha256",
+        "/usr/local/Ascend/cann-9.2.0-beta.1/opp/version.info"
+      ],
+      "started_at": "2026-10-03T15:30:52.044019Z",
+      "duration_seconds": 0,
+      "exit_code": 0,
+      "stdout": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "e598b45f518650055fdd7fd904ca50f23662b6e10870a601f8f9a818373e465c"
+    },
+    {
+      "evidence_id": "e0029",
+      "argv": [
+        "importlib.metadata",
+        "torch"
+      ],
+      "started_at": "2026-10-03T15:30:52.045771Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0030",
+      "argv": [
+        "importlib.metadata",
+        "torch-npu"
+      ],
+      "started_at": "2026-10-03T15:30:52.047180Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0031",
+      "argv": [
+        "importlib.metadata",
+        "sgl-kernel-npu"
+      ],
+      "started_at": "2026-10-03T15:30:52.048568Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0032",
+      "argv": [
+        "importlib.metadata",
+        "tile-kernels"
+      ],
+      "started_at": "2026-10-03T15:30:52.049975Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0033",
+      "argv": [
+        "importlib.metadata",
+        "deepgemm-ascend"
+      ],
+      "started_at": "2026-10-03T15:30:52.051378Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0034",
+      "argv": [
+        "importlib.metadata",
+        "deepep-ascend"
+      ],
+      "started_at": "2026-10-03T15:30:52.052763Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0035",
+      "argv": [
+        "importlib.metadata",
+        "ops-transformer"
+      ],
+      "started_at": "2026-10-03T15:30:52.054180Z",
+      "duration_seconds": 0,
+      "exit_code": null,
+      "stdout": "",
+      "stderr": "",
+      "execution_status": "NOT_FOUND",
+      "parse_status": "NOT_FOUND",
+      "reason": "not installed in probe interpreter",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "cf7c056fa32ec3b94f57da996711bbb842f44b36300fdeec9e78a60a6bbf1a1b"
+    },
+    {
+      "evidence_id": "e0036",
+      "argv": [
+        "python",
+        "version"
+      ],
+      "started_at": "2026-10-03T15:30:52.054475Z",
+      "duration_seconds": 0,
+      "exit_code": 0,
+      "stdout": "3.9.9",
+      "stderr": "",
+      "execution_status": "KNOWN",
+      "parse_status": "KNOWN",
+      "reason": "raw evidence; no parser assigned",
+      "permission_scope": "euid=1015; no privilege elevation",
+      "parser_version": "910b1-probe-v1",
+      "redacted": true,
+      "output_sha256": "e4fd919c7d46e5cece977d1399ba2d33f5ad80ffbfa8e84946464c234a502c47"
+    }
+  ],
+  "extensions": {
+    "fingerprints": {
+      "msprof": {
+        "path": "/usr/local/Ascend/cann-9.2.0-beta.1/tools/profiler/bin/msprof",
+        "sha256": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82",
+        "evidence_id": "e0027"
+      },
+      "cann-opp-version": {
+        "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/version.info",
+        "sha256": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+        "evidence_id": "e0028"
+      }
+    },
+    "version_conflicts": [
+      {
+        "fields": [
+          "toolkit",
+          "cann-opp"
+        ],
+        "reason": "legacy toolkit install metadata and ops version differ; neither proves runtime provider"
+      }
+    ],
+    "profiler_flags": [
+      "--ai-core",
+      "--aic-freq",
+      "--aic-metrics",
+      "--aic-mode",
+      "--aicpu",
+      "--analyze",
+      "--application",
+      "--ascendcl",
+      "--clear",
+      "--delay",
+      "--duration",
+      "--dvpp-freq",
+      "--dvpp-profiling",
+      "--dynamic",
+      "--environment",
+      "--export",
+      "--ge-api",
+      "--hccl",
+      "--help",
+      "--host-sys",
+      "--host-sys-pid",
+      "--host-sys-usage",
+      "--host-sys-usage-freq",
+      "--instr-profiling",
+      "--instr-profiling-freq",
+      "--iteration-id",
+      "--llc-profiling",
+      "--model-execution",
+      "--model-id",
+      "--msproftx",
+      "--mstx-domain-exclude",
+      "--mstx-domain-include",
+      "--options",
+      "--output",
+      "--parse",
+      "--pid",
+      "--python-path",
+      "--query",
+      "--reports",
+      "--rule",
+      "--runtime-api",
+      "--storage-limit",
+      "--summary-format",
+      "--sys-cpu-freq",
+      "--sys-cpu-profiling",
+      "--sys-devices",
+      "--sys-hardware-mem",
+      "--sys-hardware-mem-freq",
+      "--sys-interconnection-freq",
+      "--sys-interconnection-profiling",
+      "--sys-io-profiling",
+      "--sys-io-sampling-freq",
+      "--sys-period",
+      "--sys-pid-profiling",
+      "--sys-pid-sampling-freq",
+      "--sys-profiling",
+      "--sys-sampling-freq",
+      "--task-memory",
+      "--task-time",
+      "--type"
+    ],
+    "runtime_loading": "DECLARED_ONLY: no benchmark process or NPU runtime initialized"
+  }
+}

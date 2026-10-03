@@ -1,12 +1,12 @@
 # KernelX msprof 自动性能采集与稳定性分析设计
 
-状态：设计草案，尚未实现或在目标服务器验证。日期：2026-10-03。
+状态：整体设计草案；issue #1 协议与只读探测已实现并在 910B1 验证，见 [验收记录](docs/910B1_VALIDATION.md)。其余模块待实现。日期：2026-10-03。
 
 ## 1. 目标与前提
 
 KernelX 面向 msprof 算子性能采集：在 Codex 无法连接的服务器上自主部署、按每天 1～2 小时的预约窗口运行、保存和回传数据，并支持跨日期、跨卡、跨服务器的稳定性分析。正确性评测不属于本工程必测范围；仅检查程序执行、采集完整性和性能数据质量，不把执行成功解释为数值正确。
 
-当前工程为空目录。用户已确认目标服务器可主动访问内网存储或服务，采集使用 msprof、只考虑性能。覆盖库为 CANN（包含 ops-transformer 等算子组件）、sgl-kernel-npu、tile-kernels、deepgemm-ascend、deepep-ascend，并允许后续扩展。按 Linux + Ascend NPU、已有可用驱动/CANN 环境规划；具体服务器型号和各库目标版本尚待接入时确认。
+初始规划时工程为空目录；当前协议与探测基础已交付。用户已确认目标服务器可主动访问内网存储或服务，采集使用 msprof、只考虑性能。覆盖库为 CANN（包含 ops-transformer 等算子组件）、sgl-kernel-npu、tile-kernels、deepgemm-ascend、deepep-ascend，并允许后续扩展。按 Linux + Ascend NPU、已有可用驱动/CANN 环境规划；已探测 910B1，其他服务器型号和各库目标版本尚待接入时确认。
 
 必须具备的外部条件：
 

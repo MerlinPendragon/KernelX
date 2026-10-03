@@ -1,0 +1,69 @@
+{
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "RAW_PROF",
+        "CSV",
+        "TRACE",
+        "SIDECAR",
+        "LOG",
+        "ENVIRONMENT"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?Z$"
+    },
+    "redacted": {
+      "type": "boolean"
+    },
+    "media_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": "latency-v1"
+    }
+  },
+  "required": [
+    "artifact_id",
+    "uri",
+    "sha256",
+    "bytes",
+    "kind",
+    "created_at",
+    "redacted",
+    "media_type",
+    "schema_version",
+    "extensions",
+    "protocol_version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kernelx.invalid/schema/v1/artifact",
+  "$defs": {}
+}

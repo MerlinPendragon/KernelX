@@ -1,0 +1,263 @@
+{
+  "type": "object",
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "case_key": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preset": {
+      "type": "string",
+      "minLength": 1
+    },
+    "preset_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "collector_version": {
+      "$ref": "#/$defs/fact"
+    },
+    "exporter_version": {
+      "$ref": "#/$defs/fact"
+    },
+    "parser_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+      },
+      "minItems": 1
+    },
+    "final_argv": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1
+    },
+    "completeness": {
+      "type": "string",
+      "enum": [
+        "COMPLETE",
+        "PARTIAL",
+        "MISSING"
+      ]
+    },
+    "export_status": {
+      "type": "string",
+      "enum": [
+        "KNOWN",
+        "UNKNOWN",
+        "PERMISSION_DENIED",
+        "UNSUPPORTED",
+        "PARSE_ERROR",
+        "NOT_FOUND",
+        "TIMEOUT",
+        "COMMAND_FAILED"
+      ]
+    },
+    "attribution_status": {
+      "type": "string",
+      "enum": [
+        "KNOWN",
+        "UNKNOWN",
+        "PERMISSION_DENIED",
+        "UNSUPPORTED",
+        "PARSE_ERROR",
+        "NOT_FOUND",
+        "TIMEOUT",
+        "COMMAND_FAILED"
+      ]
+    },
+    "expected_task_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "actual_task_count": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "task_mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "iteration": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "task_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "iteration",
+          "rank",
+          "task_ids"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0
+    },
+    "quality": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "VALID",
+          "CONTENDED",
+          "UNSTABLE",
+          "THERMAL_DRIFT",
+          "VERSION_CHANGED",
+          "METADATA_INCOMPLETE",
+          "INSUFFICIENT_DATA",
+          "ATTRIBUTION_UNKNOWN",
+          "TRACE_MISSING",
+          "UNIT_UNKNOWN"
+        ]
+      },
+      "minItems": 1
+    },
+    "reason": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "extensions": {
+      "type": "object"
+    },
+    "protocol_version": {
+      "const": "latency-v1"
+    }
+  },
+  "required": [
+    "profile_id",
+    "attempt_id",
+    "case_key",
+    "preset",
+    "preset_sha256",
+    "collector_version",
+    "exporter_version",
+    "parser_version",
+    "artifact_ids",
+    "final_argv",
+    "completeness",
+    "export_status",
+    "attribution_status",
+    "expected_task_count",
+    "actual_task_count",
+    "task_mapping",
+    "quality",
+    "reason",
+    "schema_version",
+    "extensions",
+    "protocol_version"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kernelx.invalid/schema/v1/profile",
+  "$defs": {
+    "fact": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "KNOWN",
+            "UNKNOWN",
+            "PERMISSION_DENIED",
+            "UNSUPPORTED",
+            "PARSE_ERROR",
+            "NOT_FOUND",
+            "TIMEOUT",
+            "COMMAND_FAILED"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "VERIFIED",
+            "DECLARED_ONLY",
+            "LOCATION_ONLY",
+            "NONE"
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "reason",
+        "source",
+        "confidence"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
