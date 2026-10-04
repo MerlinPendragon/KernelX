@@ -55,6 +55,49 @@ class BootstrapTests(unittest.TestCase):
         self.assertTrue((boot.root/'releases'/first.name).is_dir()); self.assertEqual(boot.tick()['state'],'CURRENT')
         check_installed(boot.root/'releases'/second.name,verify_manifest(second,self.pub))
 
+    def test_invalid_policy_still_recovers_and_uploads_prior_session(self):
+        from kernelx.agent import Agent
+        from kernelx.agent.policy import timestamp
+        from test_agent import fixture_run
+        now=timestamp('2026-10-04T02:10:00+08:00')
+        boot=self.bootstrap(); self.release()
+        agent=Agent(boot.root/'runtime/main/agent',self.config['policy'],self.config['plan'],clock=lambda:now,
+                    runner=lambda root,**kwargs:fixture_run(root,kwargs,now),resource_root=boot.root/'runtime/server-resources',cache_root=boot.root/'runtime')
+        try: self.assertEqual(agent.tick()['terminal'],'COMPLETED')
+        finally: agent.close()
+        Path(self.config['policy']).write_text('{corrupt')
+        boot.tick()
+        from kernelx.agent.storage import Center
+        center=Center(self.config['center_dir'])
+        try: self.assertEqual(center.db.execute('SELECT count(*) FROM observations').fetchone()[0],30)
+        finally: center.close()
+        self.assertEqual(boot.status()['health']['upload'],dict(pending=0,acked=1))
+
+    def test_new_release_cannot_bypass_previous_device_quarantine(self):
+        from kernelx.agent import Agent
+        self.release(); boot=self.bootstrap(); boot.tick(); previous=boot.current()
+        agent=Agent(boot.root/'runtime/main/agent',self.config['policy'],self.config['plan'],resource_root=boot.root/'runtime/server-resources',cache_root=boot.root/'runtime')
+        agent.quarantine(DEVICE,'prior release UNKNOWN'); agent.close()
+        # Signed CPU-only candidate uses a Runner guard: even a regression must
+        # never launch a real benchmark on the development/910B1 test host.
+        source=self.root/'guarded-source'
+        shutil.copytree(self.source/'kernelx',source/'kernelx',ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+        runner=source/'kernelx/runner.py'
+        with runner.open('a') as output: output.write('\ndef collect(*args, **kwargs):\n    raise AssertionError("quarantine bypassed")\n')
+        candidate=build_release(source,self.repo,'b'*40,self.group,self.key,2)
+        atomic_json(self.repo/'latest.json',dict(release_id=candidate.name))
+        policy=json.loads(Path(self.config['policy']).read_text())
+        policy.update(timezone='UTC',valid_from='2000-01-01T00:00:00Z',valid_until='2099-01-01T00:00:00Z')
+        policy['schedules'][0].update(start='00:00',end='23:59'); atomic_json(Path(self.config['policy']),policy)
+        plan=json.loads(Path(self.config['plan']).read_text()); plan.update(valid_from=policy['valid_from'],valid_until=policy['valid_until']); atomic_json(Path(self.config['plan']),plan)
+        self.config['smoke']=True; trial=self.bootstrap()
+        self.assertEqual(trial.tick()['state'],'ROLLED_BACK'); self.assertEqual(trial.current(),previous)
+        agent=Agent(trial.root/('runtime/smoke-'+candidate.name+'/agent'),self.config['policy'],self.config['plan'],resource_root=trial.root/'runtime/server-resources',cache_root=trial.root/'runtime')
+        try:
+            self.assertEqual(agent.status()['attempts'],[])
+            self.assertEqual(agent.status()['devices'][0]['state'],'QUARANTINED')
+        finally: agent.close()
+
     def test_update_excludes_active_session_and_freezes_plan(self):
         self.release(); boot=self.bootstrap(); boot.tick(); candidate=self.release('b'*40)
         self.config['smoke']=True

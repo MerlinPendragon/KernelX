@@ -97,10 +97,18 @@ class Bootstrap:
             with self.db: self.db.execute('UPDATE sessions SET state=?,ended=? WHERE session_id=?',('INTERRUPTED',self.clock(),row['session_id']))
             self.health('last_failure',dict(session_id=row['session_id'],reason='launcher restart during session'))
         # Recover NPU ownership/quarantine using frozen contexts before any smoke.
-        for directory in (self.root/'runtime').glob('*/agent'):
-            agent=Agent(directory, self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
-            try: agent.recover()
-            finally: agent.close()
+        center=Center(self.config['center_dir']); pending=acked=0
+        try:
+            for directory in (self.root/'runtime').glob('*/agent'):
+                agent=Agent(directory,self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
+                try:
+                    agent.recover(); agent.upload(center.import_bundle)
+                    outbox=agent.status()['outbox']
+                    pending+=sum(row['state']!='ACKED' for row in outbox)
+                    acked+=sum(row['state']=='ACKED' for row in outbox)
+                finally: agent.close()
+        finally: center.close()
+        self.health('upload',dict(pending=pending,acked=acked))
 
         journal=self.root/'transition.json'
         if journal.exists():
@@ -198,7 +206,15 @@ class Bootstrap:
             success=result.get('terminal')=='COMPLETED'
             with self.db: self.db.execute('UPDATE sessions SET state=?,ended=?,result=? WHERE session_id=?',('SUCCEEDED' if success else ('FAILED' if result.get('terminal')=='FAILED' else 'IDLE'),self.clock(),json.dumps(result),sid))
             self.health('heartbeat',dict(at=self.clock(),release_id=manifest['release_id']))
-            self.health('upload',dict(pending=sum(r['state']!='ACKED' for r in local['outbox']),acked=sum(r['state']=='ACKED' for r in local['outbox'])))
+            # Preserve the server-wide count; include this just-finished role.
+            pending=acked=0
+            for directory in (self.root/'runtime').glob('*/agent'):
+                ledger=database(directory/'state.db')
+                try:
+                    for row in ledger.execute('SELECT state FROM outbox'):
+                        pending+=row['state']!='ACKED'; acked+=row['state']=='ACKED'
+                finally: ledger.close()
+            self.health('upload',dict(pending=pending,acked=acked))
             if success: self.health('last_success',dict(session_id=sid,release_id=manifest['release_id'],at=self.clock(),smoke=smoke))
             elif result.get('terminal') in ('FAILED','PARTIAL') or any(a['state'] in ('FAILED','INTERRUPTED','REJECTED') for a in local['attempts']): self.health('last_failure',dict(session_id=sid,result=result))
             if smoke and not success: raise ValueError('NPU smoke incomplete: '+str(result))
