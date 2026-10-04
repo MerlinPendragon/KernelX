@@ -57,7 +57,35 @@ def main():
     clear=commands.add_parser('agent-clear-device',help='manually clear quarantine after identity/idle checks')
     for name in ('state','policy','plan'): clear.add_argument('--'+name,type=Path,required=True)
     clear.add_argument('--device-uid',required=True)
+    submit=commands.add_parser('fleet-submit',help='immutable all/selected-library submission with explicit server bindings')
+    submit.add_argument('--control-dir',type=Path,required=True)
+    submit.add_argument('--request',type=Path,required=True)
+    fleetstatus=commands.add_parser('fleet-status',help='global/library/server progress including unsupported gaps')
+    fleetstatus.add_argument('--control-dir',type=Path,required=True)
+    fleetstatus.add_argument('--run-id',required=True)
+    retry=commands.add_parser('fleet-retry',help='explicit new dispatch after failure; preserves previous attempts')
+    retry.add_argument('--control-dir',type=Path,required=True)
+    retry.add_argument('--dispatch-id',required=True)
+    retry.add_argument('--retry-id',required=True)
+    worker=commands.add_parser('fleet-agent-tick',help='actively pull bound work through the filesystem reference API')
+    for name in ('control-dir','state','policy','center-dir'): worker.add_argument('--'+name,type=Path,required=True)
     args = parser.parse_args()
+    if args.command.startswith('fleet-'):
+        from .agent.fleet import Fleet, FleetWorker
+        from .agent.storage import Center
+        fleet=Fleet(args.control_dir); center=None
+        try:
+            if args.command=='fleet-submit': data=dict(run_id=fleet.submit(json.loads(args.request.read_text())))
+            elif args.command=='fleet-status': data=fleet.status(args.run_id)
+            elif args.command=='fleet-retry': data=dict(dispatch_id=fleet.retry(args.dispatch_id,args.retry_id))
+            else:
+                center=Center(args.center_dir)
+                data=FleetWorker(args.state,args.policy,fleet,center.import_bundle).tick()
+            print(json.dumps(data))
+        finally:
+            fleet.close()
+            if center: center.close()
+        return
     if args.command in ('agent-tick','agent-status','agent-clear-device','ingest-bundle','center-entry'):
         from .agent import Agent, Center
         from .agent.transport import HTTPTransport

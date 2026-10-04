@@ -102,6 +102,81 @@ class AgentTests(unittest.TestCase):
             runner=runner or self.runner,release=release or self.release,fault_hook=hook)
         self.addCleanup(agent.close); return agent
 
+    def test_draft_policy_and_plan_can_change_before_window(self):
+        self.now=timestamp('2026-10-04T01:00:00+08:00')
+        self.policy['enabled']=False; self.save_config(); agent=self.agent()
+        self.assertEqual(agent.tick()['state'],'WAITING_WINDOW')
+        self.policy['enabled']=True; self.plan['tasks'][0]['pilot_upper_seconds']=60
+        self.save_config(); self.now=timestamp('2026-10-04T02:10:00+08:00')
+        self.assertEqual(agent.tick()['terminal'],'COMPLETED')
+        self.assertEqual(len(self.calls),1)
+
+    def test_invalid_configuration_does_not_block_outbox(self):
+        for missing in (True,False):
+            with self.subTest(missing=missing):
+                self.save_config(); agent=self.agent(); agent.tick()
+                if missing: (self.root/'policy.json').unlink()
+                else: (self.root/'plan.json').write_text('{corrupt')
+                self.assertEqual(agent.tick(self.center.import_bundle)['state'],'CONFIG_INVALID')
+                self.assertTrue(all(row['state']=='ACKED' for row in agent.status()['outbox']))
+                self.assertFalse(any(Path(row['path']).exists() for row in agent.status()['outbox']))
+        self.assertEqual(len(self.calls),1)
+
+    def test_execution_write_failure_uses_ownership_and_quarantines(self):
+        from unittest.mock import patch
+        def runner(root,**kwargs):
+            Path(root).mkdir()
+            atomic_json(Path(root)/'benchmark-ownership.json',dict(state='RESIDUAL'))
+            return dict(valid=False,device_release='UNKNOWN',reason='execution.json disk full')
+        agent=self.agent(runner=runner)
+        with patch('kernelx.agent.engine.terminate_recorded',return_value='UNKNOWN'):
+            agent.tick()
+        self.assertEqual(agent.status()['devices'][0]['state'],'QUARANTINED')
+        self.assertEqual(agent.status()['attempts'][0]['state'],'FAILED')
+        self.assertEqual(agent.status()['attempts'][0]['release_status'],'UNKNOWN')
+
+    @unittest.skipUnless(sys.platform=='linux','Linux ownership identities required')
+    def test_execution_record_failure_releases_actual_owned_process(self):
+        children=[]
+        def runner(root,**kwargs):
+            Path(root).mkdir()
+            child=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)'],start_new_session=True)
+            children.append(child)
+            identity=process_identity(child.pid)
+            atomic_json(Path(root)/'benchmark-ownership.json',dict(state='RESIDUAL',process_group=child.pid,members=[identity]))
+            return dict(valid=False,device_release='UNKNOWN',reason='execution.json write failed after launch')
+        try:
+            agent=self.agent(runner=runner); agent.tick()
+            children[0].wait(timeout=3)
+            self.assertEqual(agent.status()['attempts'][0]['release_status'],'RELEASED')
+            self.assertEqual(agent.status()['attempts'][0]['state'],'FAILED')
+            self.assertEqual(agent.status()['devices'],[])
+        finally:
+            for child in children:
+                if child.poll() is None: os.killpg(child.pid,signal.SIGKILL); child.wait()
+
+    def test_malformed_final_execution_record_still_registers_failure(self):
+        def runner(root,**kwargs):
+            Path(root).mkdir(); (Path(root)/'execution.json').write_text('{partial')
+            return dict(valid=False,device_release='UNKNOWN',reason='torn execution record')
+        agent=self.agent(runner=runner); agent.tick()
+        attempt=agent.status()['attempts'][0]
+        self.assertEqual(attempt['state'],'FAILED')
+        self.assertTrue(json.loads(attempt['summary'])['execution']['unreadable'])
+        self.assertEqual(agent.status()['devices'][0]['state'],'QUARANTINED')
+
+    def test_execution_write_failure_confirmed_cleanup(self):
+        from unittest.mock import patch
+        def runner(root,**kwargs):
+            Path(root).mkdir(); atomic_json(Path(root)/'benchmark-ownership.json',dict(state='RESIDUAL'))
+            raise OSError('execution.json disk full')
+        agent=self.agent(runner=runner)
+        with patch('kernelx.agent.engine.terminate_recorded',return_value='RELEASED'):
+            agent.tick()
+        self.assertEqual(agent.status()['attempts'][0]['release_status'],'RELEASED')
+        # A thrown runner exception remains quarantined until manual clearance.
+        self.assertEqual(agent.status()['devices'][0]['state'],'QUARANTINED')
+
     def test_60_90_120_minutes_and_duplicate_trigger(self):
         for minutes,end in ((60,'03:00'),(90,'03:30'),(120,'04:00')):
             policy=copy.deepcopy(self.policy); policy['schedules'][0]['end']=end
@@ -134,7 +209,7 @@ class AgentTests(unittest.TestCase):
 
     def test_plan_cannot_expand_devices_or_manifest(self):
         self.plan['tasks'][0]['device_uid']='unauthorized'; self.save_config()
-        with self.assertRaises(ValueError): self.agent().tick()
+        self.assertEqual(self.agent().tick()['state'],'CONFIG_INVALID')
         self.assertEqual(self.calls,[])
 
     def test_wall_clock_jump_cancels_current_reservation(self):

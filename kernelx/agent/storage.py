@@ -112,6 +112,7 @@ class Center:
         CREATE TABLE IF NOT EXISTS entities(kind TEXT, identity TEXT, sha256 TEXT, payload TEXT, PRIMARY KEY(kind,identity));
         CREATE TABLE IF NOT EXISTS observations(observation_id TEXT PRIMARY KEY, sha256 TEXT NOT NULL, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS imports(bundle_id TEXT PRIMARY KEY, receipt TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS fleet_links(bundle_id TEXT PRIMARY KEY, global_run_id TEXT, dispatch_id TEXT, server_id TEXT, device_uid TEXT, agent_attempt_id TEXT, session_id TEXT, attempt_id TEXT);
         CREATE TABLE IF NOT EXISTS bundle_profiles(bundle_id TEXT, profile_id TEXT, PRIMARY KEY(bundle_id,profile_id));
         ''')
 
@@ -129,7 +130,7 @@ class Center:
         device=next(d for d in environment['devices'] if d['device_uid']==observation['device_uid'])
         return dict(observation,case=entity('case',observation['case_key']),
             hardware=dict(device=device,driver=environment['software']['driver'],firmware=environment['software']['firmware']),
-            software=environment['software'],artifact_bundle_ids=[row['bundle_id'] for row in self.db.execute('SELECT bundle_id FROM bundle_profiles WHERE profile_id=?',(observation['profile_id'],))],library_provenance=environment['extensions'].get('library_provenance',{}))
+            software=environment['software'],artifact_bundle_ids=[row['bundle_id'] for row in self.db.execute('SELECT bundle_id FROM bundle_profiles WHERE profile_id=?',(observation['profile_id'],))],fleet_links=[dict(row) for row in self.db.execute('SELECT * FROM fleet_links WHERE session_id=?',(observation['session_id'],))],library_provenance=environment['extensions'].get('library_provenance',{}))
 
     def artifact_path(self,artifact_id):
         row=self.db.execute('SELECT payload FROM entities WHERE kind=? AND identity=?',('artifact',artifact_id)).fetchone()
@@ -141,7 +142,7 @@ class Center:
         raise ValueError('artifact absent or checksum mismatch')
 
     def import_bundle(self,source):
-        with DeviceLock('center-import',self.root/'.locks'):
+        with DeviceLock('center-import',self.root/'.locks',timeout=15):
             return self._import_bundle(source)
 
     def _import_bundle(self,source):
@@ -155,6 +156,10 @@ class Center:
             os.replace(staging,destination); fsync_dir(destination.parent)
         verify_bundle(destination)
         entities,observations,artifacts=complete_case(destination)
+        context_path=destination/'agent-context.json'
+        context=json.loads(context_path.read_text()) if context_path.exists() else {}
+        fleet=context.get('fleet')
+        if fleet and (context['policy']['server_id']!=entities['session']['server_id'] or context['task']['device_uid'] not in entities['session']['device_uids']): raise ValueError('fleet context differs from captured identity')
         receipt=dict(bundle_id=identity,manifest_sha256=digest(manifest),durable=True,observations=len(observations))
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
@@ -168,6 +173,8 @@ class Center:
                 if existing and existing['sha256']!=digest(row): raise ValueError('conflicting observation ID')
                 self.db.execute('INSERT OR IGNORE INTO observations VALUES(?,?,?)',(row['observation_id'],digest(row),json.dumps(row)))
             self.db.execute('INSERT OR IGNORE INTO imports VALUES(?,?)',(identity,json.dumps(receipt)))
+            if fleet:
+                self.db.execute('INSERT OR IGNORE INTO fleet_links VALUES(?,?,?,?,?,?,?,?)',(identity,fleet['global_run_id'],fleet['dispatch_id'],entities['session']['server_id'],context['task']['device_uid'],context['attempt_id'],entities['session']['session_id'],entities['attempt']['attempt_id']))
             self.db.execute('INSERT OR IGNORE INTO bundle_profiles VALUES(?,?)',(identity,entities['profile']['profile_id']))
         # ACK follows synchronous transaction commit and durable artifact publication.
         return receipt

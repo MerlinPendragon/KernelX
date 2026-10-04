@@ -77,3 +77,36 @@ python3 -m kernelx center-entry \
 回传 endpoint。跨型号、其他库、多 rank、长期无人交互连续运行、成本 pilot
 与统计稳定性分别在 #4–#6 验收。本轮默认预热仍为用户要求的 20 次，后续
 依据稳定性分析决定次数，未用 10 次测量宣称达到统计稳定。
+
+## PR #9 审查修复与更新版 issue 补充（2026-10-04）
+
+此前 72 项日志/正式窗口证据保持原样。新增验证如下：
+
+- 910B1 最终 88 项 unittest 全部通过；本机 84 项通过、4 项 Linux 专用跳过。
+  新增执行记录写入失败的所有权回收/隔离、真实 CPU 进程回收、损坏最终记录、
+  窗口前启用/预算修改及损坏/缺失配置仍回传等回归。
+- 两个 CPU 模拟 Agent 的实际采集区间重叠 **0.23154 秒**；共 60 条观测，
+  重复上传仍为 60 条。记录为 review-fleet-simulation.json，明确标 CPU 模拟，
+  不代表两台实际 NPU 服务器。全量模拟覆盖分片/配对、单机失败、新分派重试、
+  断网/重启、回执丢失、跨窗口继续且成功后不按天重测。
+- 910B1 真实全局提交→本机主动拉取→CANN Add 采集→中心事务导入闭环：
+  device 5、20 次预热、10 次测量、180 秒有限窗口、90 秒任务超时、3 秒清理。
+  30 条观测，重复提交返回同一 run，重复 tick 无新 attempt；fleet_links 保存
+  run/dispatch/server/device/Agent attempt/协议 session/attempt 关联。
+- 全局状态 **PARTIAL**：1 个 CANN Add 种子 INGESTED，7 个库适配器/完整清单
+  缺口 ADAPTER_UNCONFIGURED。未将其标为全库已完成，issue #3 保持开放。
+
+真实 run：`d8e6bdbf-bfe0-4876-af74-cd8aa97620be`。
+真实 bundle：`1359e798e6faa9d323a49e1b1ae2b523d1a5394a9a52942c3d4e33bdd9e5917e`。
+设备释放确认 UTC：`2026-10-04T05:36:04.130101Z`（北京时间 13:36:04）。
+
+原始 SQLite、产物和私有冻结配置在：
+`/home/lxb/kernelx-issue3/fleet-acceptance-20261004T053542Z`。
+公开摘要与回归日志位于 `tests/fixtures/agent_910b1/review-*`；新数据库关联
+样例为 `review-fleet-database-row.json`。原始证据另封装为私有
+`artifacts/issue3/review-fleet-evidence.tar.gz`，不提交原始 PROF。
+生产跨机服务、所有库适配器、阶段进度事件和第二台实机验收的具体剩余范围
+见 [FLEET.md](FLEET.md)。
+
+新版私有原始归档 SHA256：
+`e6ca6e44c25e05e51e716f1194cd0a5a5b3177d4434ab41723f94d2492bed33b`。

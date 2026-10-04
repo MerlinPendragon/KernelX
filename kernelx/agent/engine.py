@@ -22,12 +22,13 @@ def utc(clock): return datetime.fromtimestamp(clock,timezone.utc).isoformat().re
 
 
 class Agent:
-    def __init__(self,state,policy,plan,clock=time.time,runner=collect,release=release_check,fault_hook=None):
+    def __init__(self,state,policy,plan,clock=time.time,runner=collect,release=release_check,fault_hook=None,dispatch_context=None):
         self.root=Path(state).resolve(); self.root.mkdir(parents=True,exist_ok=True)
         os.chmod(self.root,0o700)
         self.spool=self.root/'spool'; self.spool.mkdir(exist_ok=True)
         self.policy_path=Path(policy); self.plan_path=Path(plan)
         self.clock=clock; self.runner=runner; self.release=release; self.fault_hook=fault_hook
+        self.dispatch_context=dispatch_context
         self.db=database(self.root/'state.db')
         self.db.executescript('''
         CREATE TABLE IF NOT EXISTS windows(window_id TEXT PRIMARY KEY, start REAL, end REAL, state TEXT, terminal TEXT, reason TEXT, policy_sha256 TEXT, policy TEXT, plan_sha256 TEXT);
@@ -163,7 +164,13 @@ class Agent:
         with DeviceLock('agent-state',self.root/'.locks'):
             self.recover(); self.cleanup()
             # Upload/CPU work can happen outside reservations, NPU tasks cannot.
-            policy,plan=self.configuration(); ph=digest(policy); plan_hash=digest(plan); clock=self.clock()
+            self.upload(transport)
+            try:
+                policy,plan=self.configuration()
+            except (OSError,ValueError,KeyError,TypeError) as exc:
+                with self.db: self.event('configuration','local','INVALID',str(exc))
+                return dict(state='CONFIG_INVALID',reason=str(exc))
+            ph=digest(policy); plan_hash=digest(plan); clock=self.clock()
             for row in self.db.execute('SELECT window_id FROM windows WHERE end<=? AND state!=?',(clock,'CLOSED')).fetchall():
                 states=[task['state'] for task in self.db.execute('SELECT state FROM tasks WHERE window_id=?',(row['window_id'],))]
                 terminal='COMPLETED' if states and all(state=='SUCCEEDED' for state in states) else ('PARTIAL' if 'SUCCEEDED' in states else ('FAILED' if any(state in ('FAILED','INTERRUPTED','REJECTED') for state in states) else 'SKIPPED'))
@@ -175,6 +182,11 @@ class Agent:
                     with self.db:
                         self.db.execute('INSERT INTO windows VALUES(?,?,?,?,?,?,?,?,?)',(window['window_id'],window['start'],window['end'],'WAITING_WINDOW',None,None,ph,json.dumps(policy),plan_hash))
                         self.event('window',window['window_id'],'WAITING_WINDOW','manual reservation')
+                # A future reservation is an editable draft. Freeze only when
+                # entering preflight; never replace a snapshot already used.
+                if row and row['state']=='WAITING_WINDOW' and not self.db.execute('SELECT 1 FROM attempts WHERE window_id=?',(window['window_id'],)).fetchone():
+                    with self.db:
+                        self.db.execute('UPDATE windows SET start=?,end=?,policy_sha256=?,policy=?,plan_sha256=? WHERE window_id=?',(window['start'],window['end'],ph,json.dumps(policy),plan_hash,window['window_id']))
                 if window['end']<=clock:
                     if not row or row['state']!='CLOSED': self.window_state(window['window_id'],'CLOSED','SKIPPED','missed window')
                     continue
@@ -212,12 +224,18 @@ class Agent:
                     self.event('attempt',aid,'RUNNING','frozen plan and policy')
                 outer.mkdir(); fsync_dir(self.spool)
                 context=dict(attempt_id=aid,window_id=wid,task=task,logical_id=device['logical_id'],started=started,policy=policy,plan=plan)
+                if self.dispatch_context: context['fleet']=self.dispatch_context
                 atomic_json(outer/'context.json',context)
                 self.window_state(wid,'RUNNING')
-                result=self.runner(run,server_id=policy['server_id'],device=device['logical_id'],expected_device_uid=device['device_uid'],
-                    window_start=utc(active['start']),window_end=utc(active['end']),authorization_id=policy['reservation_id']+':'+wid,
-                    warmup=task['warmup'],repeats=task['repeats'],timeout=policy['task_timeout_seconds'],cleanup=policy['cleanup_reserve_seconds'],
-                    cancel=lambda:self.revoked(ph,plan_hash,active))
+                try:
+                    result=self.runner(run,server_id=policy['server_id'],device=device['logical_id'],expected_device_uid=device['device_uid'],
+                        window_start=utc(active['start']),window_end=utc(active['end']),authorization_id=policy['reservation_id']+':'+wid,
+                        warmup=task['warmup'],repeats=task['repeats'],timeout=policy['task_timeout_seconds'],cleanup=policy['cleanup_reserve_seconds'],
+                        cancel=lambda:self.revoked(ph,plan_hash,active))
+                except (OSError,ValueError,RuntimeError) as exc:
+                    # The runner may have launched before its final writes failed.
+                    result=dict(valid=False,device_release='UNKNOWN',attempt_state='INTERRUPTED',reason=str(exc))
+                    self.quarantine(device['device_uid'],'runner raised; execution/release unknown')
                 if result.get('valid'):
                     context['finished']=self.clock()
                     atomic_json(outer/'context.json',context)
@@ -228,14 +246,29 @@ class Agent:
                         result=dict(result,valid=False,reason='seal validation failed: '+str(exc))
                 if not result.get('valid'):
                     execution_path=run/'execution.json'
-                    if execution_path.exists():
-                        execution_data=json.loads(execution_path.read_text())
-                        if result.get('device_release')!='RELEASED' or execution_data.get('process_release')!='RELEASED': self.quarantine(device['device_uid'],'process or device release unconfirmed after execution')
-                    terminal='INTERRUPTED' if result.get('attempt_state')=='INTERRUPTED' else ('FAILED' if (run/'attempt.json').exists() else 'REJECTED')
+                    ownership=run/'benchmark-ownership.json'
+                    started_execution=execution_path.exists() or ownership.exists()
+                    if started_execution:
+                        clear=False
+                        try:
+                            if execution_path.exists():
+                                execution_data=json.loads(execution_path.read_text())
+                                clear=result.get('device_release')=='RELEASED' and execution_data.get('process_release')=='RELEASED'
+                            if not clear and ownership.exists():
+                                process_status=terminate_recorded(ownership)
+                                release=self.release(device['logical_id'],[],Collector(policy['server_id']))
+                                clear=process_status=='RELEASED' and release['status']=='RELEASED' and 'no process' in release['evidence']['stdout'].lower()
+                                result=dict(result,recovery_process_release=process_status,recovery_device_release=release)
+                        except (ValueError,OSError,KeyError,TypeError): pass
+                        result=dict(result,device_release='RELEASED' if clear else 'UNKNOWN')
+                        if not clear: self.quarantine(device['device_uid'],'process or device release unconfirmed after execution')
+                    terminal='INTERRUPTED' if result.get('attempt_state')=='INTERRUPTED' else ('FAILED' if started_execution or (run/'attempt.json').exists() else 'REJECTED')
                     failure_summary=dict(result=result)
                     for name in ('attempt','session','execution','device-release','artifacts'):
                         path=run/(name+'.json')
-                        if path.is_file(): failure_summary[name]=json.loads(path.read_text())
+                        if path.is_file():
+                            try: failure_summary[name]=json.loads(path.read_text())
+                            except (OSError,ValueError) as exc: failure_summary[name]=dict(unreadable=True,reason=str(exc))
                     with self.db:
                         self.db.execute('UPDATE attempts SET state=?,ended=?,cost=?,release_status=?,summary=? WHERE attempt_id=?',(terminal,self.clock(),self.clock()-started,result.get('device_release','UNKNOWN'),json.dumps(failure_summary),aid))
                         self.db.execute('UPDATE tasks SET state=?,reason=? WHERE window_id=? AND task_id=?',(terminal,result.get('reason') or str(result.get('quality')),wid,task['task_id']))

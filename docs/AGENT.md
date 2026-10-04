@@ -11,7 +11,8 @@ Runner。部署时由外部 timer 定期执行 `agent-tick`；本 issue 不安�
 星期、窗口、停采日期、清理预留、任务超时与 spool 容量后才可启用。
 `configs/agent-plan.example.json` 冻结 manifest SHA256、preset、case、预热/重复
 次数、pilot 总成本上界和预计产物大小。示例预算是保守声明，不是已测容量。
-修改任何计划/策略字段都视为撤销当前冻结窗口，不在同一窗口重放任务。
+窗口开始前且从未进入预检的 WAITING_WINDOW 为可编辑草稿，允许启用策略和更新预算。
+进入预检后修改计划/策略视为撤销当前冻结窗口，不在同一窗口重放任务。
 
 计划不能扩大允许设备或并发，首版只接受 `max_workers=1`。窗口按 IANA
 时区解释，时间戳及 SQLite 时间均存 UTC；过午夜窗口沿用开始日的 ID。
@@ -56,6 +57,8 @@ SUCCEEDED 与 PENDING outbox。`spool/<agent-attempt>/context.json` 保存冻结
 
 Runner 在 benchmark 启动时及运行中持久保存进程组、PID、Linux boot ID 与 start-time
 证据。重启仅终止仍有匹配身份的本任务组；PID/boot 已变化或证据不足时不发信号。
+执行已开始但 execution.json 写入失败时也检查 benchmark-ownership.json，
+尝试回收已确认身份的本任务进程，重新查询设备；不能确认释放则隔离。
 进程终止后仍单独查询 NPU，不能把 CPU 退出当作设备释放。未知/残留设备
 持久隔离；不会复位共享 NPU。人工处置后可显式解除隔离，CLI 先重新校验
 身份、设备锁和空闲证据：
@@ -72,7 +75,9 @@ SIGKILL 到进程所有权证据发布之间的极短启动区间可能缺乏可
 
 ## 回传与真实数据库样例
 
-上传独立于采集任务状态，失败不产生新 observation，不重新占用 NPU。
+上传独立于采集任务和配置状态：先恢复与重传，再读取新采集配置；策略/计划
+缺失、JSON 损坏或校验失败时返回 CONFIG_INVALID 并记录事件，仍重传已封包
+数据、校验持久回执并清理。失败不产生新 observation，不重新占用 NPU。
 至少一次传输使用 bundle 内容哈希作为幂等键；中心端按 observation_id 和
 各协议实体 ID 去重，同 ID 内容不一致则拒绝整个导入事务。
 
@@ -135,3 +140,5 @@ Agent 校验 ACK 的 ID、manifest hash、durable 和观测数量后才登记 AC
 缓存满、登记前后崩溃、不完整恢复、未知释放隔离、重复上传/丢失 ACK/恢复、
 确认后清理与 PID 复用保护。测试 raw archive 为显式合成 fixture；真实 NPU
 验收记录另见 `ISSUE3_910B1_VALIDATION.md`。
+
+更新版 issue #3 的全局计划、多 Agent 参考控制端与未完成范围见 [FLEET.md](FLEET.md)。
