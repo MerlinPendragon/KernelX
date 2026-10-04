@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "root": "/var/lib/kernelx-bootstrap",
+  "trusted_key": "/etc/kernelx/release.pub",
+  "server_id": "55dcc47c-f8a8-4f3f-ab2d-c02bd385c470",
+  "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+  "policy": "/etc/kernelx/server-policy.json",
+  "plan": "/etc/kernelx/agent-plan.json",
+  "center_dir": "/var/lib/kernelx-center",
+  "source": "/srv/kernelx-repository",
+  "smoke": true,
+  "run_agent": false,
+  "max_package_bytes": 134217728,
+  "disk_reserve_bytes": 1073741824
+}

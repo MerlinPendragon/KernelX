@@ -1,0 +1,11 @@
+[Unit]
+Description=KernelX autonomous signed release polling
+
+[Timer]
+OnBootSec=2min
+OnUnitInactiveSec=5min
+Unit=kernelx-bootstrap.service
+AccuracySec=10s
+
+[Install]
+WantedBy=timers.target

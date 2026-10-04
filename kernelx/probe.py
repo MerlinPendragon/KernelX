@@ -304,7 +304,8 @@ def probe(server_id, redact=True, timeout=15):
         match = re.search(r"(?im)^\s*(?:msprof\s+)?version\s*[:=]?\s*(\d+[^\s]*)\s*$", profiler_version["stdout"])
         msprof = fact(match[1], "KNOWN", None, [profiler_version["evidence_id"]], "VERIFIED") if match else fact(status="PARSE_ERROR", reason="unrecognized msprof version format", source=[profiler_version["evidence_id"]])
     fingerprints = {}
-    for name, path in (("msprof", Path(profiler).resolve()), ("cann-opp-version", opp / "version.info")):
+    provider_files=[('cann-'+name,root/'lib64'/('lib'+name+'.so')) for name in ('opapi','nnopbase','ascendcl','msprofiler')]
+    for name, path in [("msprof", Path(profiler).resolve()), ("cann-opp-version", opp / "version.info")]+provider_files:
         try:
             sha = hashlib.sha256(path.read_bytes()).hexdigest()
             record = collector.record(["sha256", str(path)], sha)
@@ -358,5 +359,7 @@ def probe(server_id, redact=True, timeout=15):
                                     profiler_flags=sorted(set(re.findall(r"--[a-z][a-z-]+", profiler_help["stdout"]))) if profiler_help["execution_status"] == "KNOWN" else [],
                                     runtime_loading="DECLARED_ONLY: no benchmark process or NPU runtime initialized"))
     snapshot["extensions"]["library_provenance"] = library_provenance
+    if os.environ.get('KERNELX_RELEASE_ID'):
+        snapshot['extensions']['release']=dict(release_id=os.environ['KERNELX_RELEASE_ID'],git_commit=os.environ.get('KERNELX_GIT_COMMIT'))
     validate("environment", snapshot)
     return snapshot

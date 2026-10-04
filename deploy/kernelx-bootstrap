@@ -1,0 +1,6 @@
+#!/bin/sh
+set -eu
+# This file only changes the environment of the KernelX child process.
+if [ -f /etc/kernelx/ascend-env.sh ]; then . /etc/kernelx/ascend-env.sh; fi
+cd /opt/kernelx/bootstrap
+exec /usr/bin/python3 -B -m kernelx bootstrap-tick --config /etc/kernelx/bootstrap.json

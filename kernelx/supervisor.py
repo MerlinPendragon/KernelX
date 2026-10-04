@@ -60,13 +60,13 @@ def terminate_recorded(path,grace=1):
     return 'RESIDUAL' if group_members(pgid) else 'RELEASED'
 
 
-def run_owned(argv, log, timeout, grace=2.0, env=None, pass_fds=(), cancel=None, ownership_path=None):
+def run_owned(argv, log, timeout, grace=2.0, env=None, pass_fds=(), cancel=None, ownership_path=None, cwd=None):
     if timeout <= 0 or grace < 0:
         raise ValueError('positive timeout and nonnegative grace required')
     started, start = now(), time.monotonic()
     reason, signals, seen = None, [], set()
     with Path(log).open('w') as output:
-        proc = subprocess.Popen(argv, stdout=output, stderr=subprocess.STDOUT, env=env, pass_fds=pass_fds, start_new_session=True)
+        proc = subprocess.Popen(argv, stdout=output, stderr=subprocess.STDOUT, env=env, pass_fds=pass_fds, start_new_session=True, cwd=cwd)
         pgid = proc.pid
         seen.add(proc.pid)
         identities={}
