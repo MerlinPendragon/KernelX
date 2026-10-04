@@ -36,8 +36,94 @@ def main():
     parse.add_argument("--warmup", type=int, default=20)
     parse.add_argument("--repeats", type=int, default=10)
     parse.add_argument("--output", type=Path, required=True)
+    tick = commands.add_parser('agent-tick', help='one durable reservation tick; repeat with an external timer')
+    tick.add_argument('--state',type=Path,required=True)
+    tick.add_argument('--policy',type=Path,required=True)
+    tick.add_argument('--plan',type=Path,required=True)
+    destination=tick.add_mutually_exclusive_group()
+    destination.add_argument('--center-dir',type=Path)
+    destination.add_argument('--upload-url')
+    tick.add_argument('--token-env')
+    status=commands.add_parser('agent-status',help='persistent windows, attempts, uploads and audit ledger')
+    status.add_argument('--state',type=Path,required=True)
+    status.add_argument('--output',type=Path)
+    ingest=commands.add_parser('ingest-bundle',help='durable idempotent central reference import')
+    ingest.add_argument('--center-dir',type=Path,required=True)
+    ingest.add_argument('--bundle',type=Path,required=True)
+    entry=commands.add_parser('center-entry',help='join a persisted observation with case, hardware and library versions')
+    entry.add_argument('--center-dir',type=Path,required=True)
+    entry.add_argument('--observation-id')
+    entry.add_argument('--output',type=Path)
+    clear=commands.add_parser('agent-clear-device',help='manually clear quarantine after identity/idle checks')
+    for name in ('state','policy','plan'): clear.add_argument('--'+name,type=Path,required=True)
+    clear.add_argument('--device-uid',required=True)
+    submit=commands.add_parser('fleet-submit',help='immutable all/selected-library submission with explicit server bindings')
+    submit.add_argument('--control-dir',type=Path,required=True)
+    submit.add_argument('--request',type=Path,required=True)
+    fleetstatus=commands.add_parser('fleet-status',help='global/library/server progress including unsupported gaps')
+    fleetstatus.add_argument('--control-dir',type=Path,required=True)
+    fleetstatus.add_argument('--run-id',required=True)
+    retry=commands.add_parser('fleet-retry',help='explicit new dispatch after failure; preserves previous attempts')
+    retry.add_argument('--control-dir',type=Path,required=True)
+    retry.add_argument('--dispatch-id',required=True)
+    retry.add_argument('--retry-id',required=True)
+    worker=commands.add_parser('fleet-agent-tick',help='actively pull bound work through the filesystem reference API')
+    for name in ('control-dir','state','policy','center-dir'): worker.add_argument('--'+name,type=Path,required=True)
+    fleetclear=commands.add_parser('fleet-clear-device',help='manually clear the shared server quarantine after identity/idle checks')
+    for name in ('state','policy'): fleetclear.add_argument('--'+name,type=Path,required=True)
+    fleetclear.add_argument('--device-uid',required=True)
     args = parser.parse_args()
-    if args.command == "parse-cann-add":
+    if args.command=='fleet-clear-device':
+        from .agent.fleet import FleetWorker
+        FleetWorker(args.state,args.policy,None).clear_device(args.device_uid)
+        print(json.dumps(dict(device_uid=args.device_uid,state='READY')))
+        return
+    if args.command.startswith('fleet-'):
+        from .agent.fleet import Fleet, FleetWorker
+        from .agent.storage import Center
+        fleet=Fleet(args.control_dir); center=None
+        try:
+            if args.command=='fleet-submit': data=dict(run_id=fleet.submit(json.loads(args.request.read_text())))
+            elif args.command=='fleet-status': data=fleet.status(args.run_id)
+            elif args.command=='fleet-retry': data=dict(dispatch_id=fleet.retry(args.dispatch_id,args.retry_id))
+            else:
+                center=Center(args.center_dir)
+                data=FleetWorker(args.state,args.policy,fleet,center.import_bundle).tick()
+            print(json.dumps(data))
+        finally:
+            fleet.close()
+            if center: center.close()
+        return
+    if args.command in ('agent-tick','agent-status','agent-clear-device','ingest-bundle','center-entry'):
+        from .agent import Agent, Center
+        from .agent.transport import HTTPTransport
+        if args.command in ('ingest-bundle','center-entry'):
+            center=Center(args.center_dir)
+            try:
+                data=center.import_bundle(args.bundle) if args.command=='ingest-bundle' else center.entry(args.observation_id)
+                if getattr(args,'output',None): args.output.write_text(json.dumps(data,indent=2)+'\n')
+                else: print(json.dumps(data))
+            finally: center.close()
+            return
+        agent=Agent(args.state,getattr(args,'policy',''),getattr(args,'plan',''))
+        center=None
+        try:
+            if args.command=='agent-status':
+                data=agent.status()
+                if args.output: args.output.write_text(json.dumps(data,indent=2)+'\n')
+                else: print(json.dumps(data))
+            elif args.command=='agent-clear-device':
+                agent.clear_device(args.device_uid); print(json.dumps(dict(device_uid=args.device_uid,state='READY')))
+            else:
+                transport=None
+                if args.center_dir:
+                    center=Center(args.center_dir); transport=center.import_bundle
+                elif args.upload_url: transport=HTTPTransport(args.upload_url,args.token_env)
+                print(json.dumps(agent.tick(transport)))
+        finally:
+            agent.close()
+            if center: center.close()
+    elif args.command == "parse-cann-add":
         from .profile_parser import parse_add
         def select(pattern):
             paths = list(args.exports.glob(pattern))

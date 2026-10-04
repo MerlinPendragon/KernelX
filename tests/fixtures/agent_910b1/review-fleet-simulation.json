@@ -1,0 +1,24 @@
+{
+  "evidence_type": "CPU_SIMULATION_NOT_REAL_MULTI_SERVER",
+  "servers": [
+    "0ac6125a-3987-4d57-b7c1-328c2c17558f",
+    "108dd3d9-a1f8-4a2f-b7b3-61b720eff6fb"
+  ],
+  "monotonic_intervals": {
+    "0": [
+      1206411.783106576,
+      1206412.014650139
+    ],
+    "1": [
+      1206411.783055676,
+      1206412.017906382
+    ]
+  },
+  "overlap_seconds": 0.231543563073501,
+  "counts": {
+    "INGESTED": 2,
+    "ADAPTER_UNCONFIGURED": 13
+  },
+  "observations": 60,
+  "duplicate_upload_observations": 60
+}

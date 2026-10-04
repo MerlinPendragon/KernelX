@@ -48,6 +48,8 @@ flowchart LR
 
 ## 3. 无人值守部署与恢复
 
+当前实现进度（2026-10-04）：#1 协议/探测、#2 固定 CANN Add Runner 和 #3 单 worker 预约 Agent/WAL 恢复/幂等中心导入已实现并在 910B1 验证，全局分派参考控制端已补充；更新版 #3 全库与生产多服务器集成尚未完成，issue 保持开放（见 [范围](docs/FLEET.md)）。#3 提供 timer 调用的独立 CLI，不安装长期预约；#4 发布/启动、#5 扩展库与多 rank、#6 成本与稳定性分析仍待实现。详见 [Agent](docs/AGENT.md) 与 [实机验收](docs/ISSUE3_910B1_VALIDATION.md)。
+
 ### 3.1 发布物
 
 每个 release 是不可变制品，包含采集程序、锁定依赖、探测适配器、用例清单和 manifest。各库分别锁定版本与环境，避免 Python、torch_npu、CANN 或 JIT 工具链要求冲突。manifest 至少有：
