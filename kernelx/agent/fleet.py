@@ -12,7 +12,7 @@ from pathlib import Path
 from .engine import Agent
 from .policy import read_policy, timestamp
 from .storage import atomic_json, database
-from ..cann_adapter import CannAddAdapter
+from ..cann_adapter import CannAddAdapter,PRESET
 from ..device_lock import DeviceLock
 from ..protocol import digest
 
@@ -74,11 +74,17 @@ class Fleet:
                     elif library!='cann-opp':
                         state,reason='ADAPTER_UNCONFIGURED','independent component performance catalog unavailable'
                     else:
-                        cap=server['capabilities'].get('cann-add',{})
+                        cap=server['capabilities'].get('cann-opp',server['capabilities'].get('cann-add',{}))
                         state=cap.get('status','UNVERIFIED'); reason=cap.get('reason','no measured support-matrix attestation')
-                        evidence={'soc','bin','cann','library_version','library_commit','preset','manifest_sha256','environment_sha256','evidence_uri'}
-                        if state=='VERIFIED' and (not evidence<=set(cap) or cap['manifest_sha256']!=digest(manifest) or cap['preset']!='latency-v1' or not cap['environment_sha256'] or not cap['evidence_uri']):
-                            state,reason='UNVERIFIED','incomplete/stale capability tuple or manifest/preset mismatch'
+                        if 'environment_tuple' in cap:
+                            binding=cap['environment_tuple'];proof=cap.get('evidence',{})
+                            matched=(binding.get('library')=='cann-opp' and binding.get('manifest_sha256')==digest(manifest) and binding.get('preset_sha256')==digest(PRESET) and cap.get('tuple_sha256')==digest(binding) and cap.get('manifest_sha256')==digest(manifest) and proof.get('valid') is True and proof.get('provider_verified') is True and proof.get('bundle_sha256') and proof.get('evidence_uri'))
+                            if state=='VERIFIED' and not matched:state,reason='UNVERIFIED','incomplete/stale inventory capability evidence'
+                        else:
+                            evidence={'soc','bin','cann','library_version','library_commit','preset','manifest_sha256','environment_sha256','evidence_uri'}
+                            if state=='VERIFIED' and (not evidence<=set(cap) or cap['manifest_sha256']!=digest(manifest) or cap['preset']!='latency-v1' or not cap['environment_sha256'] or not cap['evidence_uri']):
+                                state,reason='UNVERIFIED','incomplete/stale capability tuple or manifest/preset mismatch'
+
                         if state not in ('VERIFIED','UNSUPPORTED','UNVERIFIED'): raise ValueError('invalid capability status')
                     if state=='VERIFIED': eligible.append(server)
                     else: rejected.append((server,state,reason))

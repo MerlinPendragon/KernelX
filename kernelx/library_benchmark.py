@@ -87,7 +87,7 @@ def _invoke(spec,cleanup):
     if Path('/proc/self/maps').is_file():mapped=sorted({line[line.find('/'):].strip() for line in Path('/proc/self/maps').read_text().splitlines() if '/' in line and '.so' in line})
     # Module identity is evidence; imported Python alone does not prove JIT kernel
     # provenance. Verification remains DECLARED_ONLY until JIT paths are linked.
-    Path(str(path)+'.providers.json').write_text(json.dumps(dict(loaded_files=[module.__file__]+mapped,version=getattr(module,'__version__',None),git_commit=None,provider_confirmed=False,jit_artifacts=[],framework=dict(torch=torch.__version__,torch_npu=getattr(torch_npu,'__version__',None)),communication=dict(backend='hccl') if lib=='deepep-ascend' else None)))
+    Path(str(path)+'.providers.json').write_text(json.dumps(dict(certification_status='UNIMPLEMENTED',certification_reason='observed module/mappings only; backend extension/JIT source association is not implemented',loaded_files=[module.__file__]+mapped,version=getattr(module,'__version__',None),git_commit=None,provider_confirmed=False,jit_artifacts=[],framework=dict(torch=torch.__version__,torch_npu=getattr(torch_npu,'__version__',None)),communication=dict(backend='hccl') if lib=='deepep-ascend' else None)))
 
 
 

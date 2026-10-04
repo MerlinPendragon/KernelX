@@ -62,10 +62,19 @@ python3 -m kernelx library-inventory --environment environment.json \
 将输出中的逐库 capability 放入 `fleet-submit` 的服务器 `capabilities`。扩展库的
 `VERIFIED` 必须匹配冻结 manifest、环境 tuple 和实际 profile/provider 证据；未知或不支持
 组合不会排队。独立入口通过同一 FleetWorker/Agent/Runner 进行 case 绑定、监督、释放确认、
-封包和中心导入。首次兼容性 pilot 使用 `collect-library`，参数与 `collect-cann-add` 相同，
+封包和中心导入。诊断性采集使用 `collect-library`，参数与 `collect-cann-add` 相同，
 另加 `--library` 和 `--case-index`，只允许已安装、未判定 UNSUPPORTED 的组合。
-`SupportMatrix.attest_bundle` 校验完整 sealed bundle 和加载来源；`DECLARED_ONLY` 不能升级为已验证。
-多 case full 目录需要逐 case 证据，单个 bundle 不证明全部 case。
+当前四个扩展库的 runtime provider 认证明确为 `UNIMPLEMENTED`：尚未实现实际加载的
+extension/JIT 制品与冻结源代码的可验证关联。采集保留文件哈希与版本信息，返回
+`DECLARED_ONLY`，不能通过确认布尔值或一次成功运行升级为 `VERIFIED`。这些后端的首次认证
+pilot（包括 DeepEP 首次联合 rank 认证）仍未实现，生产调度保持阻塞。
+
+`SupportMatrix.attest_bundle` 校验 sealed bundle、设备、preset 和 provider 状态；当前诊断性
+扩展库 bundle 会被明确拒绝。对于具备已认证 provider 的证据，API 持久保存逐 case 认证并按
+完整环境 tuple、scope manifest 和 preset 汇总：full 缺 case 保持 `UNVERIFIED`，覆盖全部
+冻结 case 后才为 `VERIFIED`。不同 BIN、软件或 scope 的证据不能互补。CPU 回归中的
+受控 provider fixture 只验证该汇总边界，不代表扩展库的实际认证。CANN 实测认证输出的
+inventory 可直接交给 Fleet，并保留旧 `cann-add` capability 格式兼容性。
 
 DeepEP 使用 `group-submit / group-rank-tick / group-status`，与独立 shard/paired dispatch 分开。
 请求必须包含 `mode=communication-group`、`library=deepep-ascend`、有效期、pilot 上界、

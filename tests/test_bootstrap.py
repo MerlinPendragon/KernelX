@@ -49,6 +49,34 @@ class BootstrapTests(unittest.TestCase):
         boot=Bootstrap(self.config,host_probe=lambda _:self.environment,**kwargs); self.addCleanup(boot.close); return boot
 
 
+    def test_pr10_original_bootstrap_installs_current_catalog_release(self):
+        candidate=self.release()
+        stable=self.root/'pr10'
+        shutil.copytree(self.source/'kernelx',stable/'kernelx',ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+        fixture=self.source/'tests/fixtures/stable_pr10'
+        for name in ('release.py','bootstrap.py'):
+            shutil.copyfile(fixture/name,stable/'kernelx'/name)
+        atomic_json(self.root/'bootstrap.json',self.config)
+        atomic_json(self.root/'environment.json',self.environment)
+        script="""import json,sys
+from kernelx.bootstrap import Bootstrap
+from kernelx.release import verify_manifest
+config=json.load(open(sys.argv[1])); env=json.load(open(sys.argv[2]))
+manifest=verify_manifest(sys.argv[3], config['trusted_key'])
+assert len([f for f in manifest['files'] if '/catalogs/' in f['path']])==4
+assert not any('/catalogs/' in f for f in manifest['case_manifests'])
+boot=Bootstrap(config,host_probe=lambda _:env)
+try:
+    result=boot.tick()
+    assert result['state']=='HEALTHY',result
+    assert boot.current()==manifest['release_id']
+    installed=boot.root/'releases'/manifest['release_id']
+    assert len(list(installed.rglob('catalogs/*.json')))==4
+finally: boot.close()
+"""
+        process=subprocess.run([sys.executable,'-B','-c',script,str(self.root/'bootstrap.json'),str(self.root/'environment.json'),str(candidate)],cwd=stable,env=dict(os.environ,PYTHONPATH=str(stable)),capture_output=True,text=True,timeout=30)
+        self.assertEqual(process.returncode,0,process.stdout+process.stderr)
+
     def test_candidate_case_manifest_upgrade_with_stable_bootstrap(self):
         self.release(); boot=self.bootstrap(); boot.tick()
         source=self.root/'new-case'

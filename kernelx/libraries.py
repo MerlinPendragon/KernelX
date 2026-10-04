@@ -38,6 +38,7 @@ class SupportMatrix:
     def __init__(self,root):
         self.root=Path(root);self.root.mkdir(parents=True,exist_ok=True)
         self.db=database(self.root/'support.db')
+        self.db.execute('CREATE TABLE IF NOT EXISTS case_attestations(identity TEXT,case_key TEXT,evidence TEXT,PRIMARY KEY(identity,case_key))')
         self.db.execute('CREATE TABLE IF NOT EXISTS support(identity TEXT PRIMARY KEY, library TEXT,status TEXT,reason TEXT,checked_at TEXT,environment_tuple TEXT,evidence TEXT)')
     def close(self):self.db.close()
     def lookup(self,binding):
@@ -57,14 +58,30 @@ class SupportMatrix:
         registry=Registry();adapter=registry.get(library)
         expected=adapter.manifest if library=='cann-opp' else adapter.manifest(scope)
         keys={expected['case_key']} if library=='cann-opp' else {r['case_key'] for r in expected['cases']}
-        if len(keys)!=1:raise ValueError('one bundle cannot attest an entire multi-case manifest')
         if manifest['case_key'] not in keys:raise ValueError('measured case outside frozen manifest')
+        session=json.loads((root/'session.json').read_text())
+        profile=json.loads((root/'profile.json').read_text())
+        if device_uid not in session['device_uids'] or profile['preset_sha256']!=digest(PRESET):raise ValueError('attestation device/preset mismatch')
         provider=environment['extensions'].get('runtime_host_providers',{})
         verified=provider.get('status')=='VERIFIED_HOST_PROVIDER' if library=='cann-opp' else provider.get('load_status')=='VERIFIED'
+        if provider.get('certification_status')=='UNIMPLEMENTED':raise ValueError('runtime provider certification is UNIMPLEMENTED for this backend')
         if not verified:raise ValueError('DECLARED_ONLY cannot attest runtime support')
         binding=environment_tuple(environment,device_uid,library,digest(expected))
         if library!='cann-opp' and binding['revision']['commit']!=adapter.catalog['upstream']['commit']:raise ValueError('frozen revision not established')
-        self.record(binding,'VERIFIED','sealed measured profile and loaded provider',dict(valid=True,provider_verified=True,case_key=manifest['case_key'],bundle_sha256=digest(sealed),bundle_id=sealed['bundle_id'],evidence_uri=str(root.resolve())))
+        evidence=dict(valid=True,provider_verified=True,case_key=manifest['case_key'],bundle_sha256=digest(sealed),bundle_id=sealed['bundle_id'],evidence_uri=str(root.resolve()))
+        identity=digest(binding)
+        # Serialize aggregation across collector processes. Different scope hashes
+        # or software/BIN tuples cannot fill each other's coverage gaps.
+        from .device_lock import DeviceLock
+        with DeviceLock('support-attestation',self.root/'.locks',timeout=15):
+            with self.db:
+                self.db.execute('INSERT OR REPLACE INTO case_attestations VALUES(?,?,?)',(identity,manifest['case_key'],json.dumps(evidence)))
+                rows=self.db.execute('SELECT case_key,evidence FROM case_attestations WHERE identity=?',(identity,)).fetchall()
+                covered={r['case_key'] for r in rows}&keys
+                case_evidence={r['case_key']:json.loads(r['evidence']) for r in rows if r['case_key'] in keys}
+                aggregate=dict(evidence,case_evidence=case_evidence,required_case_keys=sorted(keys),missing_case_keys=sorted(keys-covered),scope=scope)
+                complete=covered==keys
+                self.record(binding,'VERIFIED' if complete else 'UNVERIFIED','all frozen cases have sealed provider/profile evidence' if complete else 'missing frozen case attestations: '+str(len(keys-covered)),aggregate)
         return self.lookup(binding)
 
     def rows(self):return [dict(r) for r in self.db.execute('SELECT * FROM support ORDER BY library,identity')]
@@ -113,7 +130,7 @@ class CatalogAdapter:
         else:status='UNVERIFIED';reason='installed candidate requires measured provider/attribution and frozen-revision attestation for this exact tuple'
         evidence=dict(environment_id=environment['environment_id'],source=self.catalog['upstream']['requirements_source'],expected_upstream_commit=self.catalog['upstream']['commit'],actual_provenance=environment['extensions'].get('library_provenance',{}).get(self.library),load_status='DECLARED_ONLY')
         if matrix and status!='VERIFIED':matrix.record(binding,status,reason,evidence)
-        return dict(library=self.library,status=status,reason=reason,checked_at=cached['checked_at'] if status=='VERIFIED' else now(),environment_tuple=binding,tuple_sha256=digest(binding),manifest=manifest,manifest_sha256=digest(manifest),resources=self.enumerate_cases(scope)[0]['resources'],evidence=json.loads(cached['evidence']) if status=='VERIFIED' else evidence)
+        return dict(library=self.library,status=status,reason=reason,checked_at=cached['checked_at'] if status=='VERIFIED' else now(),environment_tuple=binding,tuple_sha256=digest(binding),manifest=manifest,manifest_sha256=digest(manifest),provider_certification=dict(status='UNIMPLEMENTED',reason='no validated runtime extension/JIT source association; diagnostic collection cannot certify this backend'),resources=self.enumerate_cases(scope)[0]['resources'],evidence=json.loads(cached['evidence']) if status=='VERIFIED' else evidence)
     def cache_key(self,environment,device_uid,compiler_fingerprints,scope='core'):
         if not compiler_fingerprints or any(not v for v in compiler_fingerprints.values()):raise ValueError('known compiler fingerprints required')
         return digest(dict(environment=environment_tuple(environment,device_uid,self.library,digest(self.manifest(scope))),compiler=compiler_fingerprints,backend='ascend',upstream=self.catalog['upstream'],entry=self.catalog['entry']))
@@ -131,7 +148,7 @@ class CatalogAdapter:
         files=[]
         for path in sorted(set(data.get('loaded_files',[]))):
             p=Path(path).resolve();files.append(dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest() if p.is_file() else None))
-        return dict(library=self.library,version=data.get('version'),git_commit=data.get('git_commit'),repository=self.catalog['upstream']['repository'],loaded_files=files,jit_artifacts=data.get('jit_artifacts',[]),framework=data.get('framework'),communication=data.get('communication'),load_status='VERIFIED' if data.get('provider_confirmed') is True and files and all(r['sha256'] for r in files) else 'DECLARED_ONLY')
+        return dict(certification_status='UNIMPLEMENTED',certification_reason='backend-specific loaded extension/JIT-to-frozen-source association has not been implemented',library=self.library,version=data.get('version'),git_commit=data.get('git_commit'),repository=self.catalog['upstream']['repository'],loaded_files=files,jit_artifacts=data.get('jit_artifacts',[]),framework=data.get('framework'),communication=data.get('communication'),load_status='DECLARED_ONLY')
     def prepare(self,device,warmup,repeats,raw,sidecar,case_index=0,rank=0):
         if type(warmup) is not int or type(repeats) is not int or not 1<=warmup<=1000 or not 1<=repeats<=1000:raise ValueError('bounded repeat policy required')
         case=self.enumerate_cases('full')[case_index]
@@ -158,7 +175,7 @@ class Registry:
                 adapter=CannAddAdapter();manifest=adapter.manifest
                 binding=environment_tuple(environment,device_uid,name,digest(manifest));cached=matrix.lookup(binding) if matrix else None
                 status=cached['status'] if cached else 'UNVERIFIED'
-                result.append(dict(library=name,status=status,reason=cached['reason'] if cached else 'frozen Add seed; requires actual runtime/profile validation',manifest=manifest,manifest_sha256=digest(manifest),environment_tuple=binding,tuple_sha256=digest(binding),resources=dict(mode='independent',min_ranks=1),scope_definition='Add seed only; no exhaustive CANN/ops catalog claim'))
+                result.append(dict(library=name,status=status,reason=cached['reason'] if cached else 'frozen Add seed; requires actual runtime/profile validation',manifest=manifest,manifest_sha256=digest(manifest),environment_tuple=binding,tuple_sha256=digest(binding),evidence=json.loads(cached['evidence']) if cached else {},checked_at=cached['checked_at'] if cached else now(),resources=dict(mode='independent',min_ranks=1),scope_definition='Add seed only; no exhaustive CANN/ops catalog claim'))
             else:result.append(dict(library=name,status='ADAPTER_UNCONFIGURED',reason='independent component has no executable frozen performance entry; not replaced by aggregate OPP version',resources=None,manifest=None,manifest_sha256=None))
         return result
 
