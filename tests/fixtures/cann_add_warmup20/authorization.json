@@ -1,0 +1,8 @@
+{
+  "authorization_id": "user-20261004-all-devices-current-test",
+  "device_id": 5,
+  "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+  "window_start": "2026-10-03T16:40:26Z",
+  "window_end": "2026-10-03T16:45:26Z",
+  "cleanup_reserve_seconds": 3
+}

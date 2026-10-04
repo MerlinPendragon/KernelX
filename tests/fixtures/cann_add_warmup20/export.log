@@ -1,0 +1,19 @@
+[INFO] Start profiling....
+[INFO] Start export data in PROF_000001_20261004004043216_00097281GQJPQKLJ.
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: Start analyzing data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/host" ...
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: It may take few minutes, please be patient ...
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: Analysis data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/host" finished.
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: Start analyzing data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5" ...
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: It may take few minutes, please be patient ...
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_common.py: Analysis data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5" finished.
+Sun 04 Oct 2026 00:40:48 [INFO] [MSVP] [97643] msprof_export.py: All collected data will be exported, path is: /home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_export.py: The data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/host" has been analyzed. Parsing phase will be skipped.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_export.py: The data in "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5" has been analyzed. Parsing phase will be skipped.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_export.py: All collected data will be exported, path is: /home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_export.py: All collected data will be exported, path is: /home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_export.py: There is no summary data to export for "/home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/device_5"
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_common.py: Start exporting summary output_file.
+Sun 04 Oct 2026 00:40:49 [INFO] [MSVP] [97867] msprof_common.py: End exporting summary output_file.The file is stored in the /home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ/mindstudio_profiler_output path.
+[INFO] Export all data in PROF_000001_20261004004043216_00097281GQJPQKLJ done.
+[INFO] Profiling finished.
+[INFO] Process profiling data complete. Data is saved in /home/lxb/kernelx-issue2/run-final/raw/PROF_000001_20261004004043216_00097281GQJPQKLJ

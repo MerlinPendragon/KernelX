@@ -1,6 +1,6 @@
 # KernelX msprof 自动性能采集与稳定性分析设计
 
-状态：整体设计草案；issue #1 协议与只读探测已实现并在 910B1 验证，见 [验收记录](docs/910B1_VALIDATION.md)。其余模块待实现。日期：2026-10-03。
+状态：整体设计草案；issue #1 协议/探测和 issue #2 CANN Add 采集闭环已实现并在 910B1 验证，见 [探测验收](docs/910B1_VALIDATION.md)及 [采集验收](docs/ISSUE2_910B1_VALIDATION.md)。其余模块待实现。更新：2026-10-04。
 
 ## 1. 目标与前提
 
@@ -301,7 +301,7 @@ BIN 必须与 Board ID、固件版本、算子二进制文件分开：
 
 ### 7.2 算子库版本与指纹
 
-`operator_libraries` 是数组，覆盖 CANN OPP/ops 与 ops-transformer 等组件、sgl-kernel-npu、tile-kernels、deepgemm-ascend、deepep-ascend 以及后续库。每个条目含 `name / role / version / version_status / resolved_path / package_id / repository_url / git_commit / dirty_tree_hash / artifact_sha256 / version_source / used_by_case`。区分用例所属库、实际 kernel 提供者和底层依赖，不能把所有库版本浓缩成一个 CANN 版本。
+`operator_libraries` 是数组，覆盖 CANN OPP/ops、ops-nn、ops-transformer 等独立组件、sgl-kernel-npu、tile-kernels、deepgemm-ascend、deepep-ascend 以及后续库。每个条目含 `name / role / version / version_status / resolved_path / package_id / repository_url / git_commit / dirty_tree_hash / artifact_sha256 / version_source / used_by_case`。区分用例所属库、实际 kernel 提供者和底层依赖，不能把所有库版本浓缩成一个 CANN 版本。Toolkit 版本与各算子库版本分别存储；不能用 Toolkit 或聚合 OPP 的版本代填 ops-nn、ops-transformer。未取得某组件版本时仍保留该组件条目，并记录 null、状态及原因。
 
 版本探测在 Runner 实际环境中执行。优先记录实际加载的库路径及构建 ID/哈希，再关联版本文件/包元信息；解析符号链接，保存运行时搜索路径与自定义库优先级。容器内软件版本与宿主驱动版本分别采集。
 
@@ -346,10 +346,46 @@ BIN 必须与 Board ID、固件版本、算子二进制文件分开：
   "driver_version": "<probe-value>",
   "firmware_version": "<probe-value>",
   "toolkit_version": "<runner-environment-value>",
-  "operator_library_name": "<resolved-library>",
-  "operator_library_version": null,
-  "operator_library_version_status": "UNKNOWN",
-  "operator_library_fingerprint": "<artifact-sha256>",
+  "operator_libraries": [
+    {
+      "name": "ops-nn",
+      "role": "kernel_provider",
+      "version": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "component version metadata has not been collected",
+        "source": [],
+        "confidence": "NONE"
+      },
+      "resolved_path": null,
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "dirty_tree_sha256": null,
+      "artifact_sha256": null,
+      "load_status": "DECLARED_ONLY",
+      "used_by_case": []
+    },
+    {
+      "name": "ops-transformer",
+      "role": "kernel_provider",
+      "version": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "component version metadata has not been collected",
+        "source": [],
+        "confidence": "NONE"
+      },
+      "resolved_path": null,
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "dirty_tree_sha256": null,
+      "artifact_sha256": null,
+      "load_status": "DECLARED_ONLY",
+      "used_by_case": []
+    }
+  ],
   "protocol_version": "msprof-v1",
   "profile_id": "<uuid>",
   "msprof_version": "<probe-value>",

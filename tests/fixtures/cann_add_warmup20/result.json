@@ -1,0 +1,13 @@
+{
+  "valid": true,
+  "output": "/home/lxb/kernelx-issue2/run-final",
+  "attempt_state": "SUCCEEDED",
+  "quality": [
+    "VALID"
+  ],
+  "device_release": "RELEASED",
+  "released_by_hard_cutoff": true,
+  "observations": 30,
+  "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+  "authorization_id": "user-20261004-all-devices-current-test"
+}

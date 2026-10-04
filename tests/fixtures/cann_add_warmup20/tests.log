@@ -1,0 +1,43 @@
+test_command_outcomes (test_probe.ProbeTests) ... ok
+test_different_four_segment_driver_versions_remain_distinct (test_probe.ProbeTests) ... ok
+test_documented_models_identified_in_synthetic_replay (test_probe.ProbeTests) ... ok
+test_fixture_provenance_and_no_support_inference (test_probe.ProbeTests) ... ok
+test_full_probe_replays_board_and_mapping (test_probe.ProbeTests) ... ok
+test_identity_display_modes_and_redacted_replay_agree (test_probe.ProbeTests) ... ok
+test_mapping_fixture_excludes_mcus (test_probe.ProbeTests) ... ok
+test_mapping_parse_error (test_probe.ProbeTests) ... ok
+test_redaction_preserves_replayable_format (test_probe.ProbeTests) ... ok
+test_unavailable_chip_identity_falls_back_in_both_modes (test_probe.ProbeTests) ... ok
+test_unknown_board_and_mismatch_fail_closed (test_probe.ProbeTests) ... ok
+test_version_context_survives_ip_redaction (test_probe.ProbeTests) ... ok
+test_decimal_precision_detects_sub_float_ulp_mismatch (test_profile_parser.ParserTests) ... ok
+test_duplicate_task_ids_rejected (test_profile_parser.ParserTests) ... ok
+test_missing_task_rejected (test_profile_parser.ParserTests) ... ok
+test_missing_trace_preserves_csv_but_invalidates (test_profile_parser.ParserTests) ... ok
+test_nonfinite_and_negative_duration_rejected (test_profile_parser.ParserTests) ... ok
+test_overlapping_ranges_rejected (test_profile_parser.ParserTests) ... ok
+test_phase_order_and_release_required (test_profile_parser.ParserTests) ... ok
+test_real_fixture_and_row_order (test_profile_parser.ParserTests) ... ok
+test_unknown_units_rejected (test_profile_parser.ParserTests) ... ok
+test_wrong_device_trace_rejected (test_profile_parser.ParserTests) ... ok
+test_formal_run_profiles_only_ten_measurements (test_profile_parser.Warmup20DeliveryTests) ... ok
+test_linked_protocol_entities_and_real_fault_evidence (test_profile_parser.Warmup20DeliveryTests) ... ok
+test_all_examples_validate (test_protocol.ProtocolTests) ... ok
+test_bad_numbers_rejected (test_protocol.ProtocolTests) ... ok
+test_quality_and_complete_sample_rules (test_protocol.ProtocolTests) ... ok
+test_schema_version_and_required_fields_rejected (test_protocol.ProtocolTests) ... ok
+test_semantic_changes_change_key (test_protocol.ProtocolTests) ... ok
+test_stable_key_for_reordered_objects (test_protocol.ProtocolTests) ... ok
+test_strict_grouping_fail_closed (test_protocol.ProtocolTests) ... ok
+test_unknown_fact_and_evidence_integrity (test_protocol.ProtocolTests) ... ok
+test_descendant_killed_when_parent_exits (test_supervisor.SupervisorTests) ... ok
+test_no_early_or_soft_cutoff_start (test_supervisor.SupervisorTests) ... ok
+test_normal_exit_and_failure (test_supervisor.SupervisorTests) ... ok
+test_rejected_window_has_failure_record_and_no_attempt (test_supervisor.SupervisorTests) ... ok
+test_release_status_not_inferred_from_unknown_format (test_supervisor.SupervisorTests) ... ok
+test_timeout_leaves_external_task_alive (test_supervisor.SupervisorTests) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 5.532s
+
+OK

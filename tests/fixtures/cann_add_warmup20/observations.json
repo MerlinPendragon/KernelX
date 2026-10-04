@@ -1,0 +1,1052 @@
+[
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "1d22fc45-257b-4a9c-9c89-8bcefec3d86d",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 0,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:20"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.68
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "e6aa6e3b-bef3-4862-81d2-794a9ea027c1",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 0,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:20"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.68
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "4f1ea242-2520-4028-89c3-e7aecbaf72f6",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 0,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:20"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      114.9
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "81f469f3-6bbf-4fa3-8466-6e9e10b99b49",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 1,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:21"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.62
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "d39aaf30-a845-4d52-a311-4ba3d320a3d8",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 1,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:21"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.62
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "c7540ad7-aaf9-40a6-aca1-b17dbf633893",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 1,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:21"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      38.03
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "d0d9dadd-0f76-4e84-b8ea-185320c12c7c",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 2,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:22"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.66
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "b5e5607f-d399-4895-b48e-e3866728e92a",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 2,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:22"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.66
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "9dac9ada-d61b-40f8-9014-c97fc1d45398",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 2,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:22"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      17.27
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "9e03502e-8156-4dfc-8b76-f392de3311bb",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 3,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:23"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.64
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "18a010ad-455e-4568-b2b7-2008b12e3277",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 3,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:23"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.64
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "f3474927-ab18-4689-959a-5a66d6fd92d1",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 3,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:23"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      14.04
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "c2b4a8c2-d6ad-4f18-92f5-cfa5780f3202",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 4,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:24"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.64
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "60144402-23c8-4ae3-a4ac-a74e5656c9d9",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 4,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:24"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.64
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "733d9b2b-3c9a-47c1-b09b-744bec8c7b29",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 4,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:24"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      20.19
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "8af5e2eb-43ee-4d21-b6d0-671894cf5d85",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 5,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:25"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.14
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "444a9ed6-572f-41b5-bc96-1b26128e5e90",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 5,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:25"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.14
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "5b8d801b-f667-4518-98cd-e62fe717ea9f",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 5,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:25"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      17.151
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "2e009050-5735-49c9-84c4-3b7a72084dc4",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 6,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:26"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.1
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "0eb5115c-4065-4c54-b331-8004aca9cf2c",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 6,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:26"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.1
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "0405444f-64d1-4d30-b9a4-259187e3414f",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 6,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:26"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      15.75
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "d3416740-ad7a-4649-aeb8-2182ad5061a5",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 7,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:27"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.06
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "15013a5a-a90f-42cb-9e8e-0646b8dae24a",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 7,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:27"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.06
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "49415297-80e9-4ccd-aa5a-0c4b836ba86d",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 7,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:27"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      14.72
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "da8fa0f2-a56c-4672-847b-fc8a88df563b",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 8,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:28"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.1
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "94d7fe4f-bf8f-410b-abc8-c62d3e07b8d5",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 8,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:28"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.1
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "2cff259b-c2d4-4c56-9d06-23d4c55a95e9",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 8,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:28"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      16.31
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "e0ec36c4-2964-42f1-9c8d-b406f16d5c22",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 9,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:29"
+    ],
+    "metric": {
+      "name": "task_duration_us",
+      "unit": "us",
+      "boundary": "single trace-matched Add task",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.08
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "43273a1c-aa2c-4be2-950a-bb5a65a80c7e",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 9,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:29"
+    ],
+    "metric": {
+      "name": "device_span_us",
+      "unit": "us",
+      "boundary": "matched device task end minus start",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      1.08
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  },
+  {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "observation_id": "dcfe389a-332e-4707-911a-37af5e26c968",
+    "profile_id": "a0e379c2-b738-4d35-86d5-474fdb2150f3",
+    "attempt_id": "a93d4a65-b14d-4708-8886-d7cc4431c1d6",
+    "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+    "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "task_id": "901ca38c-10b7-4803-8b75-6bf72023b5a3",
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+    "seed": 0,
+    "round": 0,
+    "iteration": 9,
+    "rank": 0,
+    "phase": "MEASURE",
+    "task_ids": [
+      "47:29"
+    ],
+    "metric": {
+      "name": "host_elapsed_us",
+      "unit": "us",
+      "boundary": "monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling",
+      "definition_version": "1"
+    },
+    "raw_samples": [
+      12.99
+    ],
+    "completeness": "COMPLETE",
+    "quality": [
+      "VALID"
+    ]
+  }
+]

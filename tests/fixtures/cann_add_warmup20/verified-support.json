@@ -1,0 +1,17 @@
+{
+  "library": "cann-opp",
+  "revision": "sha256:3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+  "soc": "Ascend 910B",
+  "hardware_bin": "Ascend 910B1",
+  "cann": "loaded-runtime-sha256:bda08ad5a060c5541e2f1542e2074886df27b53ec68939c9f8b3bca53f1393cf",
+  "python": "3.9.9",
+  "torch_npu": null,
+  "preset": "latency-v1",
+  "status": "VERIFIED",
+  "reason": "only frozen Add case case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba with this runtime fingerprint and preset was verified",
+  "verified_at": "2026-10-03T16:40:50.795341Z",
+  "evidence_ids": [
+    "e0024",
+    "e0026"
+  ]
+}

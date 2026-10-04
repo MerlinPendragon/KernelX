@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "plan_id": "65e13818-68a9-4988-a4fd-0b505707c838",
+  "plan_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656",
+  "case_manifest_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656",
+  "policy_id": "40a53451-256a-402d-bde2-a95f89a5a838",
+  "policy_version": 1,
+  "valid_from": "2026-10-03T16:40:26Z",
+  "valid_until": "2026-10-03T16:45:26Z",
+  "case_keys": [
+    "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba"
+  ],
+  "preset": "latency-v1",
+  "budget_seconds": 300.0,
+  "cleanup_reserve_seconds": 3,
+  "priorities": {
+    "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba": 1
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "manifest_version": 1,
+  "library_id": "cann-opp",
+  "implementation": "aclnnAdd",
+  "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+  "case": {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "operator": "Add",
+    "inputs": [
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      },
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      }
+    ],
+    "attributes": {
+      "alpha": 1
+    },
+    "input_generation": {
+      "algorithm": "constant-f32-le-ones",
+      "version": "1",
+      "seed": 0,
+      "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9"
+    },
+    "semantic_version": "1"
+  }
+}

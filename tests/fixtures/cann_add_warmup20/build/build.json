@@ -1,0 +1,33 @@
+{
+  "argv": [
+    "c++",
+    "-std=c++17",
+    "-O2",
+    "/home/lxb/kernelx-issue2/kernelx/native/cann_add.cpp",
+    "-I/usr/local/Ascend/cann-9.2.0-beta.1/include",
+    "-L/usr/local/Ascend/cann-9.2.0-beta.1/lib64",
+    "-Wl,-rpath,/usr/local/Ascend/cann-9.2.0-beta.1/lib64",
+    "-lopapi",
+    "-lnnopbase",
+    "-lascendcl",
+    "-lmsprofiler",
+    "-ldl",
+    "-o",
+    "/home/lxb/kernelx-issue2/run-final/build/cann_add"
+  ],
+  "pid": 97227,
+  "process_group": 97227,
+  "owned_pids": [
+    97227,
+    97228
+  ],
+  "started_at": "2026-10-03T16:40:38.868097Z",
+  "ended_at": "2026-10-03T16:40:41.181651Z",
+  "elapsed_seconds": 2.31370569486171,
+  "exit_code": 0,
+  "reason": null,
+  "signals": [],
+  "process_release": "RELEASED",
+  "source_sha256": "69ba83869d91d87fd17c0496cfeef5b73039b0cc938e0ada154f861432184f8e",
+  "binary_sha256": "1f59fd92be5d69ccd54927dd042f922ee01c6e5a012962d753cf973b7853c982"
+}

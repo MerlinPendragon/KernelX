@@ -1,0 +1,88 @@
+[
+  {
+    "name": "timeout",
+    "cli_exit_code": 1,
+    "external_sentinel_alive": true,
+    "profiling_active_before_termination": true,
+    "execution": {
+      "argv": [
+        "/home/lxb/kernelx-issue2/run-timeout/build/cann_add",
+        "5",
+        "20",
+        "10",
+        "/home/lxb/kernelx-issue2/run-timeout/raw",
+        "/home/lxb/kernelx-issue2/run-timeout/sidecar.jsonl"
+      ],
+      "pid": 90010,
+      "process_group": 90010,
+      "owned_pids": [
+        90010
+      ],
+      "started_at": "2026-10-03T16:34:14.416301Z",
+      "ended_at": "2026-10-03T16:34:20.339695Z",
+      "elapsed_seconds": 5.92348030814901,
+      "exit_code": -15,
+      "reason": "TIMEOUT",
+      "signals": [
+        "SIGTERM"
+      ],
+      "process_release": "RELEASED"
+    },
+    "result": {
+      "valid": false,
+      "output": "/home/lxb/kernelx-issue2/run-timeout",
+      "attempt_state": "FAILED",
+      "quality": [
+        "INSUFFICIENT_DATA"
+      ],
+      "device_release": "RELEASED",
+      "released_by_hard_cutoff": true,
+      "observations": 0,
+      "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+      "authorization_id": "user-20261004-all-devices-current-test"
+    }
+  },
+  {
+    "name": "interrupt",
+    "cli_exit_code": 1,
+    "external_sentinel_alive": true,
+    "profiling_active_before_termination": true,
+    "execution": {
+      "argv": [
+        "/home/lxb/kernelx-issue2/run-interrupt/build/cann_add",
+        "5",
+        "20",
+        "10",
+        "/home/lxb/kernelx-issue2/run-interrupt/raw",
+        "/home/lxb/kernelx-issue2/run-interrupt/sidecar.jsonl"
+      ],
+      "pid": 90687,
+      "process_group": 90687,
+      "owned_pids": [
+        90687
+      ],
+      "started_at": "2026-10-03T16:34:36.605711Z",
+      "ended_at": "2026-10-03T16:34:38.959746Z",
+      "elapsed_seconds": 2.354060606798157,
+      "exit_code": -15,
+      "reason": "INTERRUPTED",
+      "signals": [
+        "SIGTERM"
+      ],
+      "process_release": "RELEASED"
+    },
+    "result": {
+      "valid": false,
+      "output": "/home/lxb/kernelx-issue2/run-interrupt",
+      "attempt_state": "INTERRUPTED",
+      "quality": [
+        "INSUFFICIENT_DATA"
+      ],
+      "device_release": "RELEASED",
+      "released_by_hard_cutoff": true,
+      "observations": 0,
+      "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+      "authorization_id": "user-20261004-all-devices-current-test"
+    }
+  }
+]

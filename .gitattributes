@@ -1,0 +1,2 @@
+# Keep raw msprof CSV bytes (including trailing timestamp tabs) for hash checks.
+tests/fixtures/**/*.csv -text whitespace=-blank-at-eol

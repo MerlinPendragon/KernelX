@@ -1,12 +1,13 @@
 import copy
 import json
+import importlib.metadata
 import re
 import subprocess
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
-from kernelx.probe import BIN_MAPPING, BIN_MAPPING_VERSION, Collector, classify, fields, parse_mapping, probe
+from kernelx.probe import BIN_MAPPING, BIN_MAPPING_VERSION, Collector, classify, fields, parse_mapping, probe, _library_provenance
 from kernelx.protocol import digest, validate
 
 FIXTURE = Path(__file__).parent / 'fixtures/910b1/environment.json'
@@ -15,6 +16,42 @@ SERVER = '55dcc47c-f8a8-4f3f-ab2d-c02bd385c470'
 class ProbeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls): cls.env = json.loads(FIXTURE.read_text())
+
+    def test_package_git_provenance(self):
+        commit = 'a' * 40
+        dist = Mock(version='1.2.3')
+        dist.read_text.return_value = json.dumps(dict(url='https://example.org/ops.git', vcs_info=dict(vcs='git', commit_id=commit)))
+        with patch('kernelx.probe.importlib.metadata.distribution', return_value=dist):
+            result = _library_provenance(Collector(SERVER), 'ops-nn')
+        self.assertEqual(result['package_id'], 'ops-nn==1.2.3')
+        self.assertEqual(result['git_commit'], commit)
+        self.assertEqual(result['commit_status'], 'KNOWN')
+        self.assertEqual(result['confidence'], 'DECLARED_ONLY')
+        self.assertTrue(result['commit_source'])
+
+    def test_no_invented_commit_without_source(self):
+        with patch('kernelx.probe.importlib.metadata.distribution', side_effect=importlib.metadata.PackageNotFoundError):
+            result = _library_provenance(Collector(SERVER), 'tile-kernels')
+        self.assertIsNone(result['git_commit'])
+        self.assertEqual(result['commit_status'], 'UNKNOWN')
+        self.assertTrue(result['commit_reason'])
+
+    def test_explicit_repo_records_commit_and_dirty_state(self):
+        collector = Collector(SERVER)
+        outputs = [str(Path('/tmp/library').resolve()), 'b' * 40, 'https://example.org/library.git', ' M kernel.cpp']
+        def run(argv):
+            return collector.record(argv, outputs.pop(0))
+        with patch('kernelx.probe.importlib.metadata.distribution', side_effect=importlib.metadata.PackageNotFoundError), patch.object(collector, 'run', side_effect=run):
+            result = _library_provenance(collector, 'tile-kernels', '/tmp/library')
+        self.assertEqual(result['git_commit'], 'b' * 40)
+        self.assertTrue(result['source_tree_dirty'])
+
+    def test_parent_repo_not_attributed_to_library(self):
+        collector = Collector(SERVER)
+        with patch('kernelx.probe.importlib.metadata.distribution', side_effect=importlib.metadata.PackageNotFoundError), patch.object(collector, 'run', return_value=collector.record(['git'], '/tmp')):
+            result = _library_provenance(collector, 'ops-transformer', '/tmp/library')
+        self.assertIsNone(result['git_commit'])
+        self.assertEqual(result['commit_status'], 'UNKNOWN')
 
     def test_mapping_fixture_excludes_mcus(self):
         record = copy.deepcopy(next(e for e in self.env['evidence'] if e['argv'] == ['npu-smi', 'info', '-m']))

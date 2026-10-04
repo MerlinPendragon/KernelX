@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "session_id": "d4561672-fd11-4b82-9ffe-49eadd4f1be7",
+  "server_id": "55dcc47c-f8a8-4f3f-ab2d-c02bd385c470",
+  "device_uids": [
+    "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae"
+  ],
+  "environment_id": "5a875843-31fc-462e-9914-fbb01a3f5e50",
+  "plan_id": "65e13818-68a9-4988-a4fd-0b505707c838",
+  "plan_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656",
+  "release_id": "source:ceedda1ff713d870e07af95cd30aafb2acade04855e0672862d4f607e93604be",
+  "policy_id": "40a53451-256a-402d-bde2-a95f89a5a838",
+  "policy_version": 1,
+  "window_id": "user-20261004-all-devices-current-test",
+  "started_at": "2026-10-03T16:40:41.897122Z",
+  "ended_at": "2026-10-03T16:40:46.510352Z",
+  "state": "COMPLETED",
+  "resource_ledger": [
+    {
+      "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+      "start_monotonic_ns": 1159662027575239,
+      "end_monotonic_ns": 1159667326113470
+    }
+  ],
+  "reason": null
+}

@@ -13,7 +13,7 @@ dependencies = []
 kernelx = "kernelx.__main__:main"
 
 [tool.setuptools.package-data]
-kernelx = ["schemas/*.json"]
+kernelx = ["schemas/*.json", "manifests/*.json", "native/*.cpp"]
 
 [tool.setuptools.packages.find]
 include = ["kernelx*"]
