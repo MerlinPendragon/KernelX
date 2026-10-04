@@ -66,6 +66,35 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(record['parse_status'], 'PARSE_ERROR')
         self.assertTrue(record['reason'])
 
+    def test_950dt_mapping_with_slot_and_urma_logs(self):
+        output = ('npu-smi[406]: URMA|liburma|Start to init liburma.\n'
+                  '  NPU ID  Slot ID  Chip ID  Chip Phy-ID  Chip Name\n' +
+                  ''.join(f'  {i}  {i}  0  {i}  Ascend950DT\n' for i in range(8)) +
+                  'npu-smi[406]: Finish to uninit liburma.\n')
+        record = Collector(SERVER).record(['npu-smi', 'info', '-m'], output)
+        with patch.dict('os.environ', {}, clear=True):
+            rows = parse_mapping(record)
+        self.assertEqual(rows, [dict(npu_id=i, chip_id=0, logical_id=i,
+                                    chip_name_raw='Ascend950DT') for i in range(8)])
+        self.assertEqual(record['parse_status'], 'KNOWN')
+
+    def test_physical_mapping_rejects_non_direct_or_remapped_ids(self):
+        header = 'NPU ID  Slot ID  Chip ID  Chip Phy-ID  Chip Name\n'
+        for row, env in [('0  0  0  2  Ascend950DT', {}),
+                         ('0  0  1  0  Ascend950DT', {}),
+                         ('0  0  0  0  Ascend950DT', {'ASCEND_RT_VISIBLE_DEVICES': '0'}),
+                         ('0  0  0  0  Ascend950DT', {'ASCEND_VISIBLE_DEVICES': '0'})]:
+            with self.subTest(row=row, env=env), patch.dict('os.environ', env, clear=True):
+                record = Collector(SERVER).record(['npu-smi', 'info', '-m'], header + row)
+                self.assertEqual(parse_mapping(record), [])
+                self.assertEqual(record['parse_status'], 'PARSE_ERROR')
+
+    def test_mapping_unknown_header_is_not_guessed(self):
+        record = Collector(SERVER).record(['npu-smi', 'info', '-m'],
+            'NPU ID  Slot ID  Unknown ID  Chip Name\n0  0  0  Ascend950DT\n')
+        self.assertEqual(parse_mapping(record), [])
+        self.assertEqual(record['parse_status'], 'PARSE_ERROR')
+
     def test_command_outcomes(self):
         self.assertEqual(classify(1, 'Permission denied'), 'PERMISSION_DENIED')
         self.assertEqual(classify(0, 'Error parameter of -t'), 'UNSUPPORTED')

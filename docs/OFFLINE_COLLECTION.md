@@ -6,7 +6,7 @@ Torch/torch_npu 和对应算子库；执行上游 pytest CI 另需已有 pytest 
 
 ```bash
 source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh
-unset ASCEND_RT_VISIBLE_DEVICES
+unset ASCEND_RT_VISIBLE_DEVICES ASCEND_VISIBLE_DEVICES
 python3 kernelx_overnight.py --self-test
 python3 kernelx_overnight.py --inventory > installed-ci-versions.json
 nohup python3 -u kernelx_overnight.py --device 0 --hours 8 \
@@ -97,6 +97,10 @@ DeepEP 多 rank 通信同样登记形状和参数来源，并标记需要联合 
 
 本机仅完成 CPU 自检、真实导出 fixture 回放和匹配/shape 回归，没有在 950DT 运行。
 现有采集器要求 logical_id==npu_id 且 chip_id==0；未知 npu-smi/export 格式会拒绝结果。
+v0.1.1 修复 950DT 的五列表头（含 Slot ID、Chip Phy-ID）被旧解析器错位读取的问题。
+此表头仅支持无可见设备重映射、Chip ID 为 0 且 NPU ID 与 Chip Phy-ID 相等的直连布局；
+不将任意物理 ID 表视为逻辑 ID 映射。此次修复使用服务器提供的输出回放验证，
+不代表已完成 950DT 的 profiler、编译和设备释放格式验证。
 
 ## 从源码重建单文件
 

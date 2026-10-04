@@ -80,13 +80,31 @@ def parse_mapping(record):
     if record["execution_status"] != "KNOWN":
         return []
     rows = []
+    columns = None
     for line in record["stdout"].splitlines():
-        match = re.match(r"^\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*$", line)
-        if match:
-            rows.append(dict(npu_id=int(match[1]), chip_id=int(match[2]), logical_id=int(match[3]), chip_name_raw=match[4]))
+        if line.strip().startswith("NPU ID"):
+            columns = re.split(r"\s{2,}", line.strip())
+            continue
+        if columns == ["NPU ID", "Chip ID", "Chip Logic ID", "Chip Name"]:
+            match = re.fullmatch(r"\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*", line)
+            if match:
+                rows.append(dict(npu_id=int(match[1]), chip_id=int(match[2]), logical_id=int(match[3]), chip_name_raw=match[4]))
+        elif columns == ["NPU ID", "Slot ID", "Chip ID", "Chip Phy-ID", "Chip Name"]:
+            match = re.fullmatch(r"\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*", line)
+            if not match:
+                continue
+            # This table has no logical-ID column. Support only the bare-host
+            # direct layout observed on 950DT, never a general Phy->Logic mapping.
+            npu, slot, chip, physical = map(int, match.group(1, 2, 3, 4))
+            if chip != 0 or npu != physical or any(name in os.environ for name in
+                    ("ASCEND_RT_VISIBLE_DEVICES", "ASCEND_VISIBLE_DEVICES")):
+                record["parse_status"] = "PARSE_ERROR"
+                record["reason"] = "Physical-ID table requires chip 0, NPU ID == Phy-ID and no device visibility remapping"
+                return []
+            rows.append(dict(npu_id=npu, chip_id=chip, logical_id=physical, chip_name_raw=match[5]))
     record["parse_status"] = "KNOWN" if rows else "PARSE_ERROR"
     if not rows:
-        record["reason"] = "No accelerator rows in npu-smi mapping; MCU rows are excluded"
+        record["reason"] = "No accelerator rows in a recognized npu-smi mapping header; MCU rows are excluded"
     return rows
 
 

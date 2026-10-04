@@ -237,7 +237,8 @@ def main():
             print(json.dumps(matrix,ensure_ascii=False,indent=2))
             return 0
         if sys.platform!='linux': parser.error('real profiling requires Linux/Ascend')
-        if 'ASCEND_RT_VISIBLE_DEVICES' in os.environ: parser.error('confirm direct IDs, then unset ASCEND_RT_VISIBLE_DEVICES')
+        if any(name in os.environ for name in ('ASCEND_RT_VISIBLE_DEVICES','ASCEND_VISIBLE_DEVICES')):
+            parser.error('confirm direct IDs, then unset ASCEND_RT_VISIBLE_DEVICES and ASCEND_VISIBLE_DEVICES')
         from kernelx.device_lock import DeviceLock
         data = args.data_dir.resolve()
         data.mkdir(parents=True,exist_ok=True)
@@ -327,7 +328,8 @@ def run(args,parser,data,runtime,matrix,requested):
     json_write(session/'environment.json',snapshot)
     targets = [d for d in snapshot['devices'] if d['logical_id']==args.device]
     if len(targets)!=1 or targets[0]['npu_id']!=args.device or targets[0]['chip_id']!=0:
-        raise RuntimeError('current Runner requires logical_id == npu_id and chip_id == 0; see '+str(session/'environment.json'))
+        mappings = [{key:d[key] for key in ('logical_id','npu_id','chip_id')} for d in snapshot['devices']]
+        raise RuntimeError('device '+str(args.device)+' requires one direct mapping (logical_id == npu_id, chip_id == 0); parsed='+str(mappings)+'; see '+str(session/'environment.json'))
     device_uid = targets[0]['device_uid']
     json_write(session/'matrix.json',dict(source_commit=SOURCE_COMMIT,payload_sha256=PAYLOAD_SHA256,
                model_sources=MODEL_SOURCES,selected_cases=matrix,skipped_libraries=skip,filtered_cases=filtered_cases,
