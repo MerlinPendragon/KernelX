@@ -10,12 +10,13 @@ import socket
 import subprocess
 import time
 import uuid
+from urllib.parse import unquote, urlparse
 from datetime import datetime, timezone
 from pathlib import Path
 
 from .protocol import digest, validate
 
-PARSER_VERSION = "ascend-probe-v2"
+PARSER_VERSION = "ascend-probe-v3"
 # Explicit product allowlist from Ascend's pinned SOC_TO_SHORT_SOC_MAP.
 # Other names remain unknown; identifying a model does not verify runtime support.
 BIN_MAPPING_SOURCE = "https://gitee.com/ascend/samples/blob/84504315a553ab84e2ccaec6bf95a75a9e68ad66/operator_contrib/CumsumSample/FrameworkLaunch/Cumsum/cmake/util/opdesc_parser.py"
@@ -23,8 +24,8 @@ BIN_MAPPING = {alias: ("Ascend 910B", "Ascend " + model)
                for model in ("910B1", "910B2", "910B2C", "910B3", "910B4")
                for alias in (model, "Ascend " + model, "Ascend" + model)}
 BIN_MAPPING_VERSION = "ascend-910b-products-v2"
-LIBRARIES = ("cann-opp", "ops-transformer", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend")
-PACKAGES = ("torch", "torch-npu", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend", "ops-transformer")
+LIBRARIES = ("cann-opp", "ops-nn", "ops-transformer", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend")
+PACKAGES = ("torch", "torch-npu", "ops-nn", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend", "ops-transformer")
 
 
 def now():
@@ -178,6 +179,64 @@ def _package(collector, name):
         return fact(status="NOT_FOUND", reason=record["reason"], source=[record["evidence_id"]]), None
 
 
+
+def _library_provenance(collector, name, configured_root=None):
+    """Package provenance and explicitly associated source trees, never guessed repos."""
+    result = dict(package_id=None, repository_url=None, git_commit=None)
+    sources = []
+    root = configured_root
+    commit_reason = "no Git provenance in installed package or configured source tree"
+    try:
+        dist = importlib.metadata.distribution(name)
+        result["package_id"] = name + "==" + dist.version
+        raw = dist.read_text("direct_url.json")
+        if raw:
+            record = collector.record(["package-direct-url", name], raw)
+            sources.append(record["evidence_id"])
+            try:
+                data = json.loads(raw)
+                vcs = data.get("vcs_info", {})
+                if vcs.get("vcs") == "git" and re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", vcs.get("commit_id", "")):
+                    result.update(repository_url=data.get("url"), git_commit=vcs["commit_id"])
+                    commit_reason = None
+                # Editable local installs explicitly identify their source directory.
+                if not root and data.get("dir_info", {}).get("editable") and urlparse(data.get("url", "")).scheme == "file":
+                    root = unquote(urlparse(data["url"]).path)
+            except (ValueError, TypeError, AttributeError):
+                commit_reason = "invalid package direct_url.json"
+    except importlib.metadata.PackageNotFoundError:
+        pass
+    if root:
+        root = str(Path(root).resolve())
+        record = collector.run(["git", "-C", root, "rev-parse", "--show-toplevel"])
+        sources.append(record["evidence_id"])
+        # A configured library root must itself be the repository root. This avoids
+        # attributing a parent workspace's unrelated commit to an installed library.
+        if record["exit_code"] == 0 and record["stdout"].strip() == collector.sanitize(root):
+            head = collector.run(["git", "-C", root, "rev-parse", "HEAD"])
+            sources.append(head["evidence_id"])
+            value = head["stdout"].strip()
+            if head["exit_code"] == 0 and re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", value):
+                result["git_commit"] = value
+                commit_reason = None
+                origin = collector.run(["git", "-C", root, "config", "--get", "remote.origin.url"])
+                sources.append(origin["evidence_id"])
+                result["repository_url"] = origin["stdout"].strip() if origin["exit_code"] == 0 else None
+                state = collector.run(["git", "-C", root, "status", "--porcelain", "--untracked-files=all"])
+                sources.append(state["evidence_id"])
+                result["source_tree_dirty"] = bool(state["stdout"].strip()) if state["exit_code"] == 0 else None
+            else:
+                commit_reason = "configured source tree HEAD unavailable"
+        else:
+            commit_reason = "source directory is not a confirmed Git repository root"
+        result["source_root"] = collector.sanitize(root)
+    result["repository_url"] = collector.sanitize(result["repository_url"]) if result["repository_url"] else None
+    result.update(commit_source=sources, commit_reason=commit_reason,
+                  commit_status="KNOWN" if commit_reason is None else "UNKNOWN",
+                  confidence="DECLARED_ONLY" if commit_reason is None else "NONE")
+    return result
+
+
 def probe(server_id, redact=True, timeout=15):
     collector = Collector(server_id, redact, timeout)
     host_record = collector.record(["python", "platform"], json.dumps(dict(hostname=socket.gethostname(), architecture=platform.machine(), kernel=platform.release(), os=platform.platform())))
@@ -260,12 +319,17 @@ def probe(server_id, redact=True, timeout=15):
         package_rows.append(dict(name=name, version=version))
         package_paths[name] = path
     packages = {p["name"]: p["version"] for p in package_rows}
-    libraries = []
+    library_roots = json.loads(os.environ.get("KERNELX_LIBRARY_ROOTS", "{}"))
+    if not isinstance(library_roots, dict) or any(name not in LIBRARIES or not isinstance(path, str) or not path for name, path in library_roots.items()):
+        raise ValueError("KERNELX_LIBRARY_ROOTS must map supported library names to source repository paths")
+    libraries, library_provenance = [], {}
     for name in LIBRARIES:
         version = opp_version if name == "cann-opp" else packages[name]
+        provenance = _library_provenance(collector, name, library_roots.get(name))
+        library_provenance[name] = provenance
         libraries.append(dict(name=name, role="kernel_provider", version=version,
                               resolved_path=collector.sanitize(str(opp)) if name == "cann-opp" else package_paths[name],
-                              package_id=None, repository_url=None, git_commit=None, dirty_tree_sha256=None,
+                              package_id=provenance["package_id"], repository_url=provenance["repository_url"], git_commit=provenance["git_commit"], dirty_tree_sha256=None,
                               artifact_sha256=None, load_status="DECLARED_ONLY" if version["status"] == "KNOWN" else "NOT_FOUND", used_by_case=[]))
     conflicts = []
     if toolkit["value"] and opp_version["value"] and toolkit["value"] != opp_version["value"]:
@@ -282,7 +346,7 @@ def probe(server_id, redact=True, timeout=15):
     groups = {(d["soc_family"]["value"], d["hardware_bin"]["value"]) for d in devices} or {(None, None)}
     for soc, bin_name in sorted(groups, key=str):
         for lib in libraries:
-            matrix.append(dict(library=lib["name"], revision=lib["version"]["value"], soc=soc, hardware_bin=bin_name,
+            matrix.append(dict(library=lib["name"], revision=lib["version"]["value"] or lib["git_commit"], soc=soc, hardware_bin=bin_name,
                                cann=toolkit["value"], python=software["python"]["value"], torch_npu=packages["torch-npu"]["value"],
                                preset="latency-v1", status="UNVERIFIED", reason="read-only inventory; runtime revision, preset attribution and case support require runner verification",
                                verified_at=None, evidence_ids=lib["version"]["source"] + [profiler_help["evidence_id"]]))
@@ -293,5 +357,6 @@ def probe(server_id, redact=True, timeout=15):
                     extensions=dict(bin_mapping_source=BIN_MAPPING_SOURCE, identity_version="server-die-sha256-v1", fingerprints=fingerprints, version_conflicts=conflicts,
                                     profiler_flags=sorted(set(re.findall(r"--[a-z][a-z-]+", profiler_help["stdout"]))) if profiler_help["execution_status"] == "KNOWN" else [],
                                     runtime_loading="DECLARED_ONLY: no benchmark process or NPU runtime initialized"))
+    snapshot["extensions"]["library_provenance"] = library_provenance
     validate("environment", snapshot)
     return snapshot

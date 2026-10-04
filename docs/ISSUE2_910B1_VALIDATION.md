@@ -45,3 +45,14 @@ python3 -m kernelx parse-cann-add \
 ```
 
 独立离线 CLI 在开发机和 910B1 都返回 valid=true。实际设备运行/窗口参数、低开销 preset、环境未知值及故障测试入口详见 [CANN Runner](CANN_RUNNER.md)。重复实机采集必须使用新的输出目录和当时有效的人工设备授权。
+
+
+### 算子库版本与 Git 来源增量验证
+
+逐库来源探测支持安装包版本、Git 安装 commit 和显式源码仓库的 HEAD/origin；
+工作区修改状态与来源证据保留在环境快照。缺失项不由 Toolkit 版本代填。
+
+在既有 910B1 隔离目录运行 `python3 -m unittest discover -s tests -q`，
+42 项测试全部通过（5.727 秒）。本地 41 项通过，1 项 Linux 专用检查跳过；
+compileall 和 diff whitespace 检查通过。本次为离线增量验证，未重跑 NPU
+性能采集；正式 20 次预热 fixture 保持原样。

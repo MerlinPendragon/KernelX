@@ -25,3 +25,20 @@ python3 -m kernelx validate environment environment.json
 - [设计](DESIGN.md) / [效率模型](EFFICIENCY_REPORT.md)
 
 `kernelx/schemas/` 为 Draft 2020-12 JSON Schema，`kernelx/types.py` 为配套 TypedDict。`kernelx.protocol.validate` 还校验事实状态、证据哈希与来源引用等业务约束，消费者必须调用它，不能只做字段类型检查。
+
+### 算子库版本与源码来源
+
+环境快照的 `software.operator_libraries` 分别记录 `cann-opp`、`ops-nn`、
+`ops-transformer`、`sgl-kernel-npu`、`tile-kernels`、`deepgemm-ascend` 和
+`deepep-ascend` 的版本、Git commit、仓库 URL 和制品哈希。
+安装包版本从包元数据读取；Git 安装的 commit 从 `direct_url.json` 读取。
+源码部署可通过 `KERNELX_LIBRARY_ROOTS` 指定每个库的仓库根目录，例如：
+
+```sh
+export KERNELX_LIBRARY_ROOTS='{"ops-nn":"/path/to/ops-nn","ops-transformer":"/path/to/ops-transformer","sgl-kernel-npu":"/path/to/sgl-kernel-npu","tile-kernels":"/path/to/tile-kernels"}'
+```
+
+源码仓库记录 HEAD、origin 和工作区是否有修改。没有独立包版本元数据的
+源码库版本保持未知，不能用 Toolkit 版本代填。Git 来源、未知原因、证据 ID
+及工作区状态保存在 `extensions.library_provenance`。这些信息声明源码来源，
+实际运行的库仍由 Runner 的加载路径和制品哈希验证；不修改历史采集快照。
