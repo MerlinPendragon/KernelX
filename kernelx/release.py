@@ -72,7 +72,7 @@ def build_release(source,repository,commit,group,key,sequence=1):
         manifest=dict(schema_version=1,sequence=sequence,git_commit=commit,protocol_version='latency-v1',compatibility=group,
             artifact=dict(name='payload.tar.gz',bytes=artifact.stat().st_size,sha256=sha(artifact),unpacked_bytes=sum(f['bytes'] for f in files)),
             files=files,schemas={f['path']:f['sha256'] for f in files if '/schemas/' in f['path']},
-            case_manifests={f['path']:f['sha256'] for f in files if '/manifests/' in f['path']},
+            case_manifests={f['path']:f['sha256'] for f in files if '/manifests/' in f['path'] or '/catalogs/' in f['path']},
             dependencies=dict(python_min=[3,9],python_packages=[],signature='RSA-PSS-SHA256',openssl_min='1.1.1',native_dependencies='host CANN; fingerprinted separately; never installed by bootstrap'))
         manifest['release_id']=digest(manifest); atomic_json(staging/'manifest.json',manifest)
         openssl(['dgst','-sha256','-sign',str(key),'-sigopt','rsa_padding_mode:pss','-sigopt','rsa_pss_saltlen:-1','-out',str(staging/'manifest.sig'),str(staging/'manifest.json')])
@@ -110,7 +110,7 @@ def verify_manifest(directory,key):
         paths.add(row['path'])
     if sum(row['bytes'] for row in manifest['files'])!=artifact['unpacked_bytes'] or not paths: raise ValueError('unpacked size mismatch')
     for field,component in (('schemas','schemas'),('case_manifests','manifests')):
-        expected={row['path']:row['sha256'] for row in manifest['files'] if component in Path(row['path']).parts}
+        expected={row['path']:row['sha256'] for row in manifest['files'] if component in Path(row['path']).parts or (field=='case_manifests' and 'catalogs' in Path(row['path']).parts)}
         if not expected or manifest[field]!=expected: raise ValueError('schema/case manifest index mismatch')
     return manifest
 
@@ -156,5 +156,7 @@ def self_test():
     adapter=CannAddAdapter(); validate('case',adapter.manifest['case'])
     if case_key(adapter.manifest['case'])!=adapter.manifest['case_key']: raise ValueError('case key mismatch')
     # Read every shipped schema/manifest; no runtime, compiler or NPU initialized.
+    from .libraries import Registry
+    Registry() # validates every catalog case/key without importing frameworks
     for path in Path(__file__).parent.glob('schemas/*.json'): json.loads(path.read_text())
     return dict(healthy=True,protocol='latency-v1',stdlib_only=True,npu_used=False)

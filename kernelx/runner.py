@@ -56,8 +56,13 @@ def release_check(device, owned_pids, collector):
     return dict(status=status,checked_at=now(),evidence=record)
 
 
-def _collect(output,server_id,device,window_start,window_end,authorization_id,repeats=10,warmup=20,timeout=90,cleanup=3,cancel=None,expected_device_uid=None):
+def _collect(output,server_id,device,window_start,window_end,authorization_id,repeats=10,warmup=20,timeout=90,cleanup=3,cancel=None,expected_device_uid=None,adapter_library=None,case_index=0,rank=0,before_launch=None,child_environment=None):
+    from .cost_ledger import CostLedger
+    costs=CostLedger()
     benchmark_env = dict(os.environ)
+    if child_environment:
+        if set(child_environment)-{'RANK','WORLD_SIZE','MASTER_ADDR','MASTER_PORT'}:raise ValueError('invalid group environment')
+        benchmark_env.update(child_environment)
     if 'ASCEND_RT_VISIBLE_DEVICES' in benchmark_env:
         raise ValueError('ASCEND_RT_VISIBLE_DEVICES is unsupported; unset it before collecting with direct device IDs')
     if cancel is not None and cancel(): raise ValueError('reservation revoked before preparation')
@@ -68,7 +73,10 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     root=Path(output).resolve()
     root.mkdir(parents=True,exist_ok=False)  # never overwrite or combine profiles
     os.chmod(root,0o700)
-    adapter=CannAddAdapter()
+    if adapter_library:
+        from .libraries import FrozenPerformanceAdapter
+        adapter=FrozenPerformanceAdapter(adapter_library,case_index,rank)
+    else:adapter=CannAddAdapter()
     manifest=adapter.manifest; case=manifest['case']; key=manifest['case_key']
     save(root/'manifest.json',manifest); save(root/'preset.json',PRESET)
     collector=Collector(server_id)
@@ -79,9 +87,15 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         raise ValueError('registered device identity does not match logical ID')
     if target[0]['chip_id'] != 0 or target[0]['npu_id'] != device:
         raise ValueError('first adapter requires direct device/NPU ID and chip 0 mapping')
+    if adapter_library:
+        candidate=adapter.adapter.capabilities(env,target[0]['device_uid'],'full')
+        if candidate['status']=='UNSUPPORTED':raise RuntimeError(candidate['reason'])
     capabilities=adapter.capabilities(); save(root/'capabilities.json',capabilities)
     if capabilities['status']=='UNSUPPORTED': raise RuntimeError(capabilities['reason'])
-    binary=adapter.build(root/'build')
+    save(root/'environment.json',env,'environment')
+    costs.mark('preflight_and_environment')
+    binary=adapter.build(root/'build',environment=env)
+    costs.mark('compile_or_cache_lookup')
     raw=root/'raw'; raw.mkdir(mode=0o700)
     sidecar=root/'sidecar.jsonl'
     session_id,attempt_id,task_id,profile_id,plan_id,policy_id=[str(uuid.uuid4()) for _ in range(6)]
@@ -104,6 +118,7 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         if before['status']!='RELEASED' or not re.search(r'no process|no running process',before['evidence']['stdout'],re.I):
             raise RuntimeError('device preflight has external occupancy or unknown status')
         if cancel is not None and cancel(): raise ValueError('reservation revoked before benchmark')
+        if before_launch:before_launch()
         remaining=window_budget(start,end,cleanup)
         wall_deadline=time.monotonic()+end-time.time()
         began_ns=time.monotonic_ns()
@@ -117,6 +132,10 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         release['by_hard_cutoff']=release['status']=='RELEASED' and utc(release['checked_at'])<=end
         released_ns=time.monotonic_ns()
         save(root/'device-release.json',release)
+    if adapter_library and sidecar.is_file() and release['by_hard_cutoff']:
+        with sidecar.open('a') as stream:stream.write(json.dumps(dict(phase='RELEASED',rank=rank,host_release_evidence=release['evidence']['evidence_id']))+'\n')
+    sidecar_rows=[json.loads(line) for line in sidecar.read_text().splitlines()] if sidecar.is_file() else []
+    costs.native(sidecar_rows,began_ns,released_ns)
     reason=execution['reason']
     succeeded=execution['exit_code']==0 and not reason and execution['process_release']=='RELEASED' and release['by_hard_cutoff']
     state='SUCCEEDED' if succeeded else ('INTERRUPTED' if reason=='INTERRUPTED' else 'FAILED')
@@ -132,11 +151,12 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         # Evidence IDs from the initial probe and this collector occupy separate namespaces.
         evidence['evidence_id']='runtime-'+evidence['evidence_id']
         env['evidence'].append(evidence)
-        env['software']['operator_libraries'].append(dict(name='cann-aclnn-api',role='api_provider',
+        env['software']['operator_libraries'].append(dict(name=adapter_library or 'cann-aclnn-api',role='api_provider',
              version=fact(status='UNKNOWN',reason='loaded API fingerprint observed; semantic version not established',source=[evidence['evidence_id']]),
              resolved_path=versions['api_path'],package_id=None,repository_url=None,git_commit=None,dirty_tree_sha256=None,
              artifact_sha256=versions['api_sha256'],load_status='VERIFIED' if versions['status']=='VERIFIED_HOST_PROVIDER' else 'DECLARED_ONLY',used_by_case=[key]))
         env['extensions']['runtime_host_providers']=versions
+        if adapter_library:env['extensions']['candidate_provider']=versions
     env['extensions']['manual_authorization_id']=authorization_id
     save(root/'environment.json',env,'environment')
     profile_dirs=list(raw.glob('PROF_*'))
@@ -144,14 +164,19 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     if succeeded and len(profile_dirs)==1:
         export=run_owned([adapter.msprof,'--export=on','--output='+str(profile_dirs[0])],root/'export.log',120)
         save(root/'export.json',export)
+    costs.mark('provider_resolution_and_export')
     exports=list(raw.glob('PROF_*/mindstudio_profiler_output'))
     def select(pattern):
         paths=list(exports[0].glob(pattern)) if len(exports)==1 else []
         return paths[0] if len(paths)==1 else root/'MISSING'
-    parsed=parse_add(select('op_summary_*.csv'),select('msprof_[0-9]*.json'),select('msprof_tx_*.json'),sidecar,device,repeats,warmup)
+    if adapter_library:
+        from .profile_parser import parse_ranges
+        parsed=parse_ranges(select('op_summary_*.csv'),select('msprof_[0-9]*.json'),select('msprof_tx_*.json'),sidecar,device,repeats,warmup,rank)
+    else:parsed=parse_add(select('op_summary_*.csv'),select('msprof_[0-9]*.json'),select('msprof_tx_*.json'),sidecar,device,repeats,warmup)
     if not succeeded or not export or export['exit_code']!=0 or export['reason']:
         parsed.update(valid=False,quality=['INSUFFICIENT_DATA'],reasons=['benchmark/release/export incomplete'],invocations=[])
     save(root/'parsed.json',parsed)
+    costs.mark('parse_and_validate')
     valid=parsed['valid']
     if valid and versions and versions['status']=='VERIFIED_HOST_PROVIDER':
         for entry in env['support_matrix']:
@@ -167,6 +192,11 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     files=[(root/'raw-prof.tar.gz','RAW_PROF'),(sidecar,'SIDECAR'),(root/'environment.json','ENVIRONMENT'),(root/'benchmark.log','LOG')]
     for directory in exports:
         files.extend((path,'CSV' if path.suffix=='.csv' else 'TRACE') for path in directory.iterdir() if path.suffix in ('.csv','.json'))
+    costs.mark('compress_and_index')
+    build=json.loads((root/'build/build.json').read_text())
+    cost_snapshot=costs.snapshot(build.get('cache_state','UNKNOWN'),build.get('cache_key'),sum(p.stat().st_size for p in root.rglob('*') if p.is_file()))
+    save(root/'cost.json',cost_snapshot)
+    files.append((root/'cost.json','LOG'))
     indexed={path for path,_ in files}
     for path in list(root.glob('*.json')) + [root/'build/build.json',root/'build/build.log',root/'export.log']:
         if path not in indexed:
@@ -178,19 +208,19 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         validate('artifact',artifact); artifacts.append(artifact)
     save(root/'artifacts.json',artifacts)
     version=fact(status='UNKNOWN',reason='msprof API version unavailable; executable fingerprint in environment',source=['environment:'+env['environment_id']])
-    profile=envelope(profile_id=profile_id,attempt_id=attempt_id,case_key=key,preset='latency-v1',preset_sha256=digest(PRESET),collector_version=version,exporter_version=version,parser_version=PARSER_VERSION,
+    profile=envelope(profile_id=profile_id,attempt_id=attempt_id,case_key=key,preset='latency-v1',preset_sha256=digest(PRESET),collector_version=version,exporter_version=version,parser_version=parsed['parser_version'],
                      artifact_ids=[a['artifact_id'] for a in artifacts],final_argv=argv,completeness='COMPLETE' if valid else 'PARTIAL',
                      export_status='KNOWN' if export and export['exit_code']==0 else 'COMMAND_FAILED',attribution_status='KNOWN' if valid else 'PARSE_ERROR',
-                     expected_task_count=repeats,actual_task_count=parsed['actual_task_count'],task_mapping=[dict(iteration=i['iteration'],rank=0,task_ids=i['task_ids']) for i in parsed['invocations']],
+                     expected_task_count=repeats,actual_task_count=parsed['actual_task_count'],task_mapping=[dict(iteration=i['iteration'],rank=rank,task_ids=i['task_ids']) for i in parsed['invocations']],
                      quality=parsed['quality'],reason='; '.join(parsed['reasons']) or None)
     save(root/'profile.json',profile,'profile')
     observations=[]
     for invocation in parsed['invocations']:
-        for metric,samples,boundary in [('task_duration_us',invocation['task_duration_us'],'single trace-matched Add task'),
+        for metric,samples,boundary in [('task_duration_us',invocation['task_duration_us'],'raw duration of each trace-correlated device task'),
                                         ('device_span_us',[invocation['device_span_us']],'matched device task end minus start'),
                                         ('host_elapsed_us',[invocation['host_elapsed_us']],'monotonic immediately before rangeStart through rangeStop including stream synchronize under profiling')]:
             observation=envelope(observation_id=str(uuid.uuid4()),profile_id=profile_id,attempt_id=attempt_id,session_id=session_id,environment_id=env['environment_id'],device_uid=target[0]['device_uid'],
-                 task_id=task_id,case_key=key,input_sha256=case['input_generation']['input_sha256'],seed=0,round=0,iteration=invocation['iteration'],rank=0,phase='MEASURE',task_ids=invocation['task_ids'],
+                 task_id=task_id,case_key=key,input_sha256=case['input_generation']['input_sha256'],seed=0,round=0,iteration=invocation['iteration'],rank=rank,phase='MEASURE',task_ids=invocation['task_ids'],
                  metric=dict(name=metric,unit='us',boundary=boundary,definition_version='1'),raw_samples=samples,completeness='COMPLETE',quality=['VALID'])
             validate('observation',observation); observations.append(observation)
     save(root/'observations.json',observations)
@@ -198,9 +228,12 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     session=envelope(session_id=session_id,server_id=server_id,device_uids=[target[0]['device_uid']],environment_id=env['environment_id'],plan_id=plan_id,plan_sha256=plan['plan_sha256'],release_id='source:'+digest(dict(manifest=manifest,source_sha256=build['source_sha256'],binary_sha256=build['binary_sha256'])),
                      policy_id=policy_id,policy_version=1,window_id=authorization_id,started_at=execution['started_at'],ended_at=execution['ended_at'],state='COMPLETED' if valid else 'FAILED',
                      resource_ledger=[dict(device_uid=target[0]['device_uid'],start_monotonic_ns=began_ns,end_monotonic_ns=released_ns if release['status']=='RELEASED' else None)],reason=profile['reason'])
+    session['extensions']['cost']=cost_snapshot
+    session['extensions']['repeat_policy']=dict(warmup=warmup,repeats=repeats)
     save(root/'session.json',session,'session')
     result=dict(valid=valid,output=str(root),attempt_state=state,quality=parsed['quality'],device_release=release['status'],
                 released_by_hard_cutoff=release['by_hard_cutoff'],observations=len(observations),case_key=key,authorization_id=authorization_id)
+    result['cost']=cost_snapshot
     save(root/'result.json',result)
     return result
 
@@ -209,6 +242,8 @@ def collect(output, **kwargs):
     """Persist preflight/startup failures without inventing a successful attempt."""
     root=Path(output)
     if root.exists(): raise FileExistsError('run output must not already exist')
+    from .cost_ledger import CostLedger
+    failure_costs=CostLedger()
     previous=signal.getsignal(signal.SIGTERM)
     def interrupt(signum,frame): raise KeyboardInterrupt()
     signal.signal(signal.SIGTERM,interrupt)
@@ -218,6 +253,9 @@ def collect(output, **kwargs):
         root.mkdir(parents=True,exist_ok=True)
         result=dict(valid=False,output=str(root),quality=['INSUFFICIENT_DATA'],reason=str(exc),observations=0,
                     phase='STARTUP_OR_PIPELINE_FAILURE',device_release='UNKNOWN')
+        failure_costs.mark('failed_pipeline_unpartitioned')
+        result['cost']=failure_costs.snapshot('UNKNOWN',None,sum(p.stat().st_size for p in root.rglob('*') if p.is_file()))
+        save(root/'cost.json',result['cost'])
         save(root/'failure.json',result)
         return result
     finally:

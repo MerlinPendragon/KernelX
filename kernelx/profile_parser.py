@@ -36,7 +36,15 @@ def events(path):
 
 
 def parse_add(op_summary, trace, tx_trace, sidecar, device_id, repeats, warmup):
-    result = dict(parser_version=PARSER_VERSION, valid=False, quality=[], reasons=[],
+    return _parse(op_summary,trace,tx_trace,sidecar,device_id,repeats,warmup)
+
+
+def parse_ranges(op_summary,trace,tx_trace,sidecar,device_id,repeats,warmup,rank=0):
+    return _parse(op_summary,trace,tx_trace,sidecar,device_id,repeats,warmup,operator=None,rank=rank)
+
+
+def _parse(op_summary,trace,tx_trace,sidecar,device_id,repeats,warmup,operator='Add',rank=0):
+    result = dict(parser_version=PARSER_VERSION if operator else 'msprof-range-taskset-v1', valid=False, quality=[], reasons=[],
                   expected_task_count=repeats, actual_task_count=0, raw_rows=[], invocations=[])
     try:
         if not Path(op_summary).is_file():
@@ -47,9 +55,9 @@ def parse_add(op_summary, trace, tx_trace, sidecar, device_id, repeats, warmup):
                 raise InvalidProfile('UNIT_UNKNOWN', 'required named columns with explicit us units missing')
             rows = list(reader)
         result['raw_rows'] = rows
-        tasks = [r for r in rows if r['Device_id'] == str(device_id) and r['OP Type'] == 'Add']
+        tasks = [r for r in rows if r['Device_id'] == str(device_id) and (operator is None or r['OP Type']==operator)]
         result['actual_task_count'] = len(tasks)
-        if len(tasks) != repeats or len(rows) != len(tasks):
+        if (operator is not None and len(tasks)!=repeats) or not tasks or len(rows)!=len(tasks):
             raise InvalidProfile('INSUFFICIENT_DATA', 'profile must contain exactly the declared Add task set')
         for path in (trace, tx_trace, sidecar):
             if not Path(path).is_file():
@@ -60,7 +68,7 @@ def parse_add(op_summary, trace, tx_trace, sidecar, device_id, repeats, warmup):
         if (len(warmups) != warmup or any(p.get('profile_active') is not False for p in warmups)
             or [p.get('iteration') for p in warmups] != list(range(warmup))
             or len(measures) != repeats or [p.get('iteration') for p in measures] != list(range(repeats))
-            or any(p.get('profile_active') is not True or p.get('rank') != 0 for p in measures)):
+            or any(p.get('profile_active') is not True or p.get('rank') != rank for p in measures)):
             raise InvalidProfile('ATTRIBUTION_UNKNOWN', 'incomplete or inconsistent phase/iteration sidecar')
         phase_names = [p['phase'] for p in phases]
         if phase_names != ['WARMUP']*warmup + ['PROFILE_START'] + ['MEASURE']*repeats + ['PROFILE_STOP','RELEASED']:
@@ -90,7 +98,7 @@ def parse_add(op_summary, trace, tx_trace, sidecar, device_id, repeats, warmup):
             if key in lookup:
                 raise InvalidProfile('ATTRIBUTION_UNKNOWN', 'duplicate device trace task identity')
             lookup[key] = event
-        if len(lookup) != repeats:
+        if len(lookup) != len(tasks):
             raise InvalidProfile('ATTRIBUTION_UNKNOWN', 'unexpected or missing device trace tasks')
         assigned = {m['range_name']: [] for m in measures}
         if set(assigned) != set(ranges):
@@ -109,17 +117,18 @@ def parse_add(op_summary, trace, tx_trace, sidecar, device_id, repeats, warmup):
             assigned[candidates[0]].append((row,start,duration))
         for measure in measures:
             matches = assigned[measure['range_name']]
-            if len(matches) != 1:
+            if not matches or (operator is not None and len(matches)!=1):
                 raise InvalidProfile('ATTRIBUTION_UNKNOWN', 'expected exactly one Add task per invocation')
             row,start,duration = matches[0]
+            span=max(t+d for _,t,d in matches)-min(t for _,t,_ in matches)
             host_ns = measure['end_monotonic_ns']-measure['start_monotonic_ns']
             if host_ns < 0:
                 raise InvalidProfile('ATTRIBUTION_UNKNOWN', 'non-monotonic host sidecar')
-            result['invocations'].append(dict(iteration=measure['iteration'], rank=0,
-                task_ids=[row['Stream ID']+':'+row['Task ID']], task_duration_us=[float(duration)],
-                device_span_us=float(duration), host_elapsed_us=host_ns/1000,
-                device_start_us=str(start), range_name=measure['range_name']))
-        result.update(valid=True, quality=['VALID'])
+            result['invocations'].append(dict(iteration=measure['iteration'], rank=rank,
+                task_ids=[r['Stream ID']+':'+r['Task ID'] for r,_,_ in matches], task_duration_us=[float(d) for _,_,d in matches],
+                device_span_us=float(span), host_elapsed_us=host_ns/1000,
+                device_start_us=str(min(t for _,t,_ in matches)), range_name=measure['range_name']))
+        result.update(valid=True, quality=['VALID'],parser_version=PARSER_VERSION if operator else 'msprof-range-taskset-v1')
     except InvalidProfile as exc:
         result['quality'] = [exc.label]; result['reasons'] = [str(exc)]; result['invocations'] = []
     except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:

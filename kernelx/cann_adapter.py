@@ -42,7 +42,19 @@ class CannAddAdapter:
     def attribution_spec(self): return dict(operator='Add', tasks_per_invocation=1, boundary='profiling starts after warmup; unique synchronous msproftx range')
     def metric_spec(self): return dict(task_duration_us='single matched task', device_span_us='matched task end minus start', host_elapsed_us='monotonic launch to stream synchronization under profiler')
 
-    def build(self, output):
+    def build(self, output, environment=None):
+        output=Path(output);output.mkdir(parents=True,exist_ok=True)
+        cache=os.environ.get('KERNELX_NATIVE_CACHE_ROOT')
+        if cache:
+            if environment is None:raise ValueError('actual environment snapshot required for cached build')
+            from .build_cache import cached_build
+            return cached_build(self,output,environment,cache,self._compile)
+        binary=self._compile(output)
+        data=json.loads((output/'build.json').read_text());data.update(cache_state='DISABLED',cache_key=None,compile_elapsed_seconds=data['elapsed_seconds'])
+        (output/'build.json').write_text(json.dumps(data,indent=2)+'\n')
+        return binary
+
+    def _compile(self, output):
         output=Path(output); output.mkdir(parents=True, exist_ok=True)
         binary=output/'cann_add'
         argv=['c++','-std=c++17','-O2',str(self.base/'native/cann_add.cpp'),'-I'+str(self.home/'include'),'-L'+str(self.home/'lib64'),'-Wl,-rpath,'+str(self.home/'lib64'),'-lopapi','-lnnopbase','-lascendcl','-lmsprofiler','-ldl','-o',str(binary)]

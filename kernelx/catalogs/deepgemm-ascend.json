@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "library": "deepgemm-ascend",
+  "catalog_version": "pilot-v1",
+  "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+  "upstream": {
+    "repository": "https://github.com/deepseek-ai/DeepGEMM-Ascend",
+    "commit": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "requirements_source": "https://github.com/deepseek-ai/DeepGEMM-Ascend/blob/8491bbb4b8c02a094a2318965f50c70438a3e73c/README.md"
+  },
+  "package": "deep_gemm",
+  "entry": "bf16-gemm-nt",
+  "requirements": {
+    "python_min": [
+      3,
+      10
+    ],
+    "dependencies": [
+      "torch",
+      "torch-npu",
+      "deep-jit"
+    ],
+    "soc_prefixes": [
+      "950"
+    ],
+    "versions_min": {
+      "cann": [
+        9,
+        2,
+        0
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepgemm-ascend"
+        },
+        "operator": "bf16-gemm-nt",
+        "inputs": [
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              256,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              128,
+              256
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              256,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:04b5766859b9ca1d8e3605479a906f496e98f92ed58d5b60e50b949f24425a6c",
+      "core": true,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepgemm-ascend"
+        },
+        "operator": "bf16-gemm-nt",
+        "inputs": [
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              256,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              1024,
+              256
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              256,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:57137b5a956b1d93064fc46458d3bffaa68740965a8ccef611c12c90e5d9da11",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepgemm-ascend"
+        },
+        "operator": "bf16-gemm-nt",
+        "inputs": [
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              256,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              4096,
+              256
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              256,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:8c99d00e2730f2fb63d5ddc76d8aa503e7f634177fe0b674e0b63b694ccb16b1",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    }
+  ]
+}

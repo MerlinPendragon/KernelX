@@ -26,6 +26,8 @@ BIN_MAPPING = {alias: ("Ascend 910B", "Ascend " + model)
 BIN_MAPPING_VERSION = "ascend-910b-products-v2"
 LIBRARIES = ("cann-opp", "ops-nn", "ops-transformer", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend")
 PACKAGES = ("torch", "torch-npu", "ops-nn", "sgl-kernel-npu", "tile-kernels", "deepgemm-ascend", "deepep-ascend", "ops-transformer")
+PACKAGE_ALIASES = {'deepgemm-ascend':'deep_gemm','deepep-ascend':'deep_ep'}
+PACKAGES += ('deep_gemm','deep_ep','triton','tilelang','deep-jit')
 
 
 def now():
@@ -325,11 +327,12 @@ def probe(server_id, redact=True, timeout=15):
         raise ValueError("KERNELX_LIBRARY_ROOTS must map supported library names to source repository paths")
     libraries, library_provenance = [], {}
     for name in LIBRARIES:
-        version = opp_version if name == "cann-opp" else packages[name]
-        provenance = _library_provenance(collector, name, library_roots.get(name))
+        package_name = PACKAGE_ALIASES.get(name,name)
+        version = opp_version if name == "cann-opp" else packages[package_name]
+        provenance = _library_provenance(collector, package_name, library_roots.get(name))
         library_provenance[name] = provenance
         libraries.append(dict(name=name, role="kernel_provider", version=version,
-                              resolved_path=collector.sanitize(str(opp)) if name == "cann-opp" else package_paths[name],
+                              resolved_path=collector.sanitize(str(opp)) if name == "cann-opp" else package_paths[package_name],
                               package_id=provenance["package_id"], repository_url=provenance["repository_url"], git_commit=provenance["git_commit"], dirty_tree_sha256=None,
                               artifact_sha256=None, load_status="DECLARED_ONLY" if version["status"] == "KNOWN" else "NOT_FOUND", used_by_case=[]))
     conflicts = []

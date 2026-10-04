@@ -1,0 +1,869 @@
+[
+  {
+    "library": "cann-opp",
+    "status": "VERIFIED",
+    "reason": "sealed measured profile and loaded provider",
+    "manifest": {
+      "manifest_version": 1,
+      "library_id": "cann-opp",
+      "implementation": "aclnnAdd",
+      "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {},
+        "operator": "Add",
+        "inputs": [
+          {
+            "shape": [
+              4096
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              1
+            ]
+          },
+          {
+            "shape": [
+              4096
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              4096
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "alpha": 1
+        },
+        "input_generation": {
+          "algorithm": "constant-f32-le-ones",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9"
+        },
+        "semantic_version": "1"
+      }
+    },
+    "manifest_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656",
+    "environment_tuple": {
+      "library": "cann-opp",
+      "revision": {
+        "version": "9.2.0-beta.1",
+        "commit": null,
+        "dirty_tree_sha256": null,
+        "artifact": null
+      },
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cpu_arch": "aarch64",
+      "cann": {
+        "toolkit": "9.1.0",
+        "fingerprints": {
+          "cann-ascendcl": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480",
+          "cann-msprofiler": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce",
+          "cann-nnopbase": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a",
+          "cann-opapi": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+          "cann-opp-version": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+          "msprof": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82"
+        }
+      },
+      "python": "3.9.9",
+      "packages": {
+        "torch": null,
+        "torch-npu": null,
+        "ops-nn": null,
+        "sgl-kernel-npu": null,
+        "tile-kernels": null,
+        "deepgemm-ascend": null,
+        "deepep-ascend": null,
+        "ops-transformer": null,
+        "deep_gemm": null,
+        "deep_ep": null,
+        "triton": null,
+        "tilelang": null,
+        "deep-jit": null
+      },
+      "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+      "manifest_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656"
+    },
+    "tuple_sha256": "735d0433eab7a32efb3d5e8a32bddcd26ed9e89409683311697fbeda416d457a",
+    "resources": {
+      "mode": "independent",
+      "min_ranks": 1
+    },
+    "scope_definition": "Add seed only; no exhaustive CANN/ops catalog claim"
+  },
+  {
+    "library": "ops-nn",
+    "status": "ADAPTER_UNCONFIGURED",
+    "reason": "independent component has no executable frozen performance entry; not replaced by aggregate OPP version",
+    "resources": null,
+    "manifest": null,
+    "manifest_sha256": null
+  },
+  {
+    "library": "ops-transformer",
+    "status": "ADAPTER_UNCONFIGURED",
+    "reason": "independent component has no executable frozen performance entry; not replaced by aggregate OPP version",
+    "resources": null,
+    "manifest": null,
+    "manifest_sha256": null
+  },
+  {
+    "library": "sgl-kernel-npu",
+    "status": "UNSUPPORTED",
+    "reason": "DEPENDENCIES_NOT_INSTALLED:torch,torch-npu,triton; LIBRARY_NOT_INSTALLED",
+    "checked_at": "2026-10-04T12:13:15.736571+00:00",
+    "environment_tuple": {
+      "library": "sgl-kernel-npu",
+      "revision": {
+        "version": null,
+        "commit": null,
+        "dirty_tree_sha256": null,
+        "artifact": null
+      },
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cpu_arch": "aarch64",
+      "cann": {
+        "toolkit": "9.1.0",
+        "fingerprints": {
+          "cann-ascendcl": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480",
+          "cann-msprofiler": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce",
+          "cann-nnopbase": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a",
+          "cann-opapi": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+          "cann-opp-version": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+          "msprof": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82"
+        }
+      },
+      "python": "3.9.9",
+      "packages": {
+        "torch": null,
+        "torch-npu": null,
+        "ops-nn": null,
+        "sgl-kernel-npu": null,
+        "tile-kernels": null,
+        "deepgemm-ascend": null,
+        "deepep-ascend": null,
+        "ops-transformer": null,
+        "deep_gemm": null,
+        "deep_ep": null,
+        "triton": null,
+        "tilelang": null,
+        "deep-jit": null
+      },
+      "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+      "manifest_sha256": "b32bb17497283d1d80f07250647ebcfd26be8086d3efea474ccf405997774edb"
+    },
+    "tuple_sha256": "cd958947fdcf2ed46b1f3dfa98e0a7f84b16b6a5ddf7ccd7c978a0609dab87ca",
+    "manifest": {
+      "schema_version": 1,
+      "library": "sgl-kernel-npu",
+      "catalog_version": "pilot-v1",
+      "scope": "core",
+      "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+      "upstream": {
+        "repository": "https://github.com/sgl-project/sgl-kernel-npu",
+        "commit": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+        "requirements_source": "https://github.com/sgl-project/sgl-kernel-npu/blob/653e519cf9556b0cc8d9e7966aa4551eb65143ae/README.md"
+      },
+      "requirements": {
+        "python_min": [
+          3,
+          9
+        ],
+        "dependencies": [
+          "torch",
+          "torch-npu",
+          "triton"
+        ],
+        "soc_prefixes": [
+          "910B",
+          "950",
+          "910_93"
+        ]
+      },
+      "entry": "fused-sigmoid-mul",
+      "cases": [
+        {
+          "case": {
+            "schema_version": 1,
+            "protocol_version": "latency-v1",
+            "extensions": {
+              "library": "sgl-kernel-npu"
+            },
+            "operator": "fused-sigmoid-mul",
+            "inputs": [
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              },
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              }
+            ],
+            "attributes": {},
+            "input_generation": {
+              "algorithm": "seeded-ones-v1",
+              "version": "1",
+              "seed": 0,
+              "input_sha256": null
+            },
+            "semantic_version": "1"
+          },
+          "case_key": "case-v1:cba65b5035c20c562e6da88b86116afcc9e502c4fac45d14975960b6eed83c45",
+          "core": true,
+          "resources": {
+            "mode": "independent",
+            "min_ranks": 1,
+            "even_ranks": false,
+            "same_environment_group": true,
+            "transport": []
+          }
+        }
+      ]
+    },
+    "manifest_sha256": "b32bb17497283d1d80f07250647ebcfd26be8086d3efea474ccf405997774edb",
+    "resources": {
+      "mode": "independent",
+      "min_ranks": 1,
+      "even_ranks": false,
+      "same_environment_group": true,
+      "transport": []
+    },
+    "evidence": {
+      "environment_id": "e744f66c-9e77-44fe-bbed-0b5d19c2bd1e",
+      "source": "https://github.com/sgl-project/sgl-kernel-npu/blob/653e519cf9556b0cc8d9e7966aa4551eb65143ae/README.md",
+      "expected_upstream_commit": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+      "actual_provenance": {
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "commit_source": [],
+        "commit_reason": "no Git provenance in installed package or configured source tree",
+        "commit_status": "UNKNOWN",
+        "confidence": "NONE"
+      },
+      "load_status": "DECLARED_ONLY"
+    }
+  },
+  {
+    "library": "tile-kernels",
+    "status": "UNSUPPORTED",
+    "reason": "UPSTREAM_SOC_NOT_SUPPORTED; PYTHON_TOO_OLD; DEPENDENCIES_NOT_INSTALLED:torch,torch-npu,tilelang; VERSION_UNATTESTED:torch; VERSION_UNATTESTED:torch-npu; VERSION_UNATTESTED:tilelang; VERSION_TOO_OLD:cann; LIBRARY_NOT_INSTALLED",
+    "checked_at": "2026-10-04T12:13:15.738093+00:00",
+    "environment_tuple": {
+      "library": "tile-kernels",
+      "revision": {
+        "version": null,
+        "commit": null,
+        "dirty_tree_sha256": null,
+        "artifact": null
+      },
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cpu_arch": "aarch64",
+      "cann": {
+        "toolkit": "9.1.0",
+        "fingerprints": {
+          "cann-ascendcl": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480",
+          "cann-msprofiler": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce",
+          "cann-nnopbase": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a",
+          "cann-opapi": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+          "cann-opp-version": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+          "msprof": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82"
+        }
+      },
+      "python": "3.9.9",
+      "packages": {
+        "torch": null,
+        "torch-npu": null,
+        "ops-nn": null,
+        "sgl-kernel-npu": null,
+        "tile-kernels": null,
+        "deepgemm-ascend": null,
+        "deepep-ascend": null,
+        "ops-transformer": null,
+        "deep_gemm": null,
+        "deep_ep": null,
+        "triton": null,
+        "tilelang": null,
+        "deep-jit": null
+      },
+      "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+      "manifest_sha256": "61d4d77e9339bd0f32d664f4c29069189a9dcc471da0d52bb2eaa1ed5a3b95a7"
+    },
+    "tuple_sha256": "b4406d836e2614e084790aea0625d0f8d9b8039d0e3cac5a557160b8f14d873f",
+    "manifest": {
+      "schema_version": 1,
+      "library": "tile-kernels",
+      "catalog_version": "pilot-v1",
+      "scope": "core",
+      "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+      "upstream": {
+        "repository": "https://github.com/deepseek-ai/TileKernels",
+        "commit": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+        "requirements_source": "https://github.com/deepseek-ai/TileKernels/blob/66258df6175d2f630ffecb04c5ab66bff8a2ae6a/README.md"
+      },
+      "requirements": {
+        "python_min": [
+          3,
+          12
+        ],
+        "dependencies": [
+          "torch",
+          "torch-npu",
+          "tilelang"
+        ],
+        "soc_prefixes": [
+          "950"
+        ],
+        "versions_min": {
+          "torch": [
+            2,
+            13,
+            0
+          ],
+          "torch-npu": [
+            2,
+            13,
+            0
+          ],
+          "tilelang": [
+            0,
+            1,
+            15
+          ],
+          "cann": [
+            9,
+            2,
+            0
+          ]
+        }
+      },
+      "entry": "per-token-cast",
+      "cases": [
+        {
+          "case": {
+            "schema_version": 1,
+            "protocol_version": "latency-v1",
+            "extensions": {
+              "library": "tile-kernels"
+            },
+            "operator": "per-token-cast",
+            "inputs": [
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "float8_e4m3fn",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              },
+              {
+                "shape": [
+                  128,
+                  4
+                ],
+                "dtype": "float32",
+                "layout": "ND",
+                "stride": [
+                  4,
+                  1
+                ]
+              }
+            ],
+            "attributes": {
+              "fmt": "e4m3",
+              "num_per_channels": 128
+            },
+            "input_generation": {
+              "algorithm": "seeded-ones-v1",
+              "version": "1",
+              "seed": 0,
+              "input_sha256": null
+            },
+            "semantic_version": "1"
+          },
+          "case_key": "case-v1:520cdc7bd0c422d695e20a9fbbecdde87dd3c506eb1fffa3085c2d001708ce70",
+          "core": true,
+          "resources": {
+            "mode": "independent",
+            "min_ranks": 1,
+            "even_ranks": false,
+            "same_environment_group": true,
+            "transport": []
+          }
+        }
+      ]
+    },
+    "manifest_sha256": "61d4d77e9339bd0f32d664f4c29069189a9dcc471da0d52bb2eaa1ed5a3b95a7",
+    "resources": {
+      "mode": "independent",
+      "min_ranks": 1,
+      "even_ranks": false,
+      "same_environment_group": true,
+      "transport": []
+    },
+    "evidence": {
+      "environment_id": "e744f66c-9e77-44fe-bbed-0b5d19c2bd1e",
+      "source": "https://github.com/deepseek-ai/TileKernels/blob/66258df6175d2f630ffecb04c5ab66bff8a2ae6a/README.md",
+      "expected_upstream_commit": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+      "actual_provenance": {
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "commit_source": [],
+        "commit_reason": "no Git provenance in installed package or configured source tree",
+        "commit_status": "UNKNOWN",
+        "confidence": "NONE"
+      },
+      "load_status": "DECLARED_ONLY"
+    }
+  },
+  {
+    "library": "deepgemm-ascend",
+    "status": "UNSUPPORTED",
+    "reason": "UPSTREAM_SOC_NOT_SUPPORTED; PYTHON_TOO_OLD; DEPENDENCIES_NOT_INSTALLED:torch,torch-npu; VERSION_TOO_OLD:cann; LIBRARY_NOT_INSTALLED",
+    "checked_at": "2026-10-04T12:13:15.739193+00:00",
+    "environment_tuple": {
+      "library": "deepgemm-ascend",
+      "revision": {
+        "version": null,
+        "commit": null,
+        "dirty_tree_sha256": null,
+        "artifact": null
+      },
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cpu_arch": "aarch64",
+      "cann": {
+        "toolkit": "9.1.0",
+        "fingerprints": {
+          "cann-ascendcl": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480",
+          "cann-msprofiler": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce",
+          "cann-nnopbase": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a",
+          "cann-opapi": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+          "cann-opp-version": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+          "msprof": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82"
+        }
+      },
+      "python": "3.9.9",
+      "packages": {
+        "torch": null,
+        "torch-npu": null,
+        "ops-nn": null,
+        "sgl-kernel-npu": null,
+        "tile-kernels": null,
+        "deepgemm-ascend": null,
+        "deepep-ascend": null,
+        "ops-transformer": null,
+        "deep_gemm": null,
+        "deep_ep": null,
+        "triton": null,
+        "tilelang": null,
+        "deep-jit": null
+      },
+      "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+      "manifest_sha256": "22c699bf4984a3642940ca6e48d2e22e0336b09a7ec70efa2e7781549dc64a70"
+    },
+    "tuple_sha256": "551a0d4a9fc39105a9c0af992e1713fe265c966665ee2bfbb362ee1bf21b045a",
+    "manifest": {
+      "schema_version": 1,
+      "library": "deepgemm-ascend",
+      "catalog_version": "pilot-v1",
+      "scope": "core",
+      "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+      "upstream": {
+        "repository": "https://github.com/deepseek-ai/DeepGEMM-Ascend",
+        "commit": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+        "requirements_source": "https://github.com/deepseek-ai/DeepGEMM-Ascend/blob/8491bbb4b8c02a094a2318965f50c70438a3e73c/README.md"
+      },
+      "requirements": {
+        "python_min": [
+          3,
+          10
+        ],
+        "dependencies": [
+          "torch",
+          "torch-npu",
+          "deep-jit"
+        ],
+        "soc_prefixes": [
+          "950"
+        ],
+        "versions_min": {
+          "cann": [
+            9,
+            2,
+            0
+          ]
+        }
+      },
+      "entry": "bf16-gemm-nt",
+      "cases": [
+        {
+          "case": {
+            "schema_version": 1,
+            "protocol_version": "latency-v1",
+            "extensions": {
+              "library": "deepgemm-ascend"
+            },
+            "operator": "bf16-gemm-nt",
+            "inputs": [
+              {
+                "shape": [
+                  128,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              },
+              {
+                "shape": [
+                  256,
+                  512
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  512,
+                  1
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "shape": [
+                  128,
+                  256
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  256,
+                  1
+                ]
+              }
+            ],
+            "attributes": {},
+            "input_generation": {
+              "algorithm": "seeded-ones-v1",
+              "version": "1",
+              "seed": 0,
+              "input_sha256": null
+            },
+            "semantic_version": "1"
+          },
+          "case_key": "case-v1:04b5766859b9ca1d8e3605479a906f496e98f92ed58d5b60e50b949f24425a6c",
+          "core": true,
+          "resources": {
+            "mode": "independent",
+            "min_ranks": 1,
+            "even_ranks": false,
+            "same_environment_group": true,
+            "transport": []
+          }
+        }
+      ]
+    },
+    "manifest_sha256": "22c699bf4984a3642940ca6e48d2e22e0336b09a7ec70efa2e7781549dc64a70",
+    "resources": {
+      "mode": "independent",
+      "min_ranks": 1,
+      "even_ranks": false,
+      "same_environment_group": true,
+      "transport": []
+    },
+    "evidence": {
+      "environment_id": "e744f66c-9e77-44fe-bbed-0b5d19c2bd1e",
+      "source": "https://github.com/deepseek-ai/DeepGEMM-Ascend/blob/8491bbb4b8c02a094a2318965f50c70438a3e73c/README.md",
+      "expected_upstream_commit": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+      "actual_provenance": {
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "commit_source": [],
+        "commit_reason": "no Git provenance in installed package or configured source tree",
+        "commit_status": "UNKNOWN",
+        "confidence": "NONE"
+      },
+      "load_status": "DECLARED_ONLY"
+    }
+  },
+  {
+    "library": "deepep-ascend",
+    "status": "UNSUPPORTED",
+    "reason": "UPSTREAM_SOC_NOT_SUPPORTED; PYTHON_TOO_OLD; DEPENDENCIES_NOT_INSTALLED:torch,torch-npu; VERSION_TOO_OLD:cann; LIBRARY_NOT_INSTALLED",
+    "checked_at": "2026-10-04T12:13:15.740320+00:00",
+    "environment_tuple": {
+      "library": "deepep-ascend",
+      "revision": {
+        "version": null,
+        "commit": null,
+        "dirty_tree_sha256": null,
+        "artifact": null
+      },
+      "soc": "Ascend 910B",
+      "hardware_bin": "Ascend 910B1",
+      "cpu_arch": "aarch64",
+      "cann": {
+        "toolkit": "9.1.0",
+        "fingerprints": {
+          "cann-ascendcl": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480",
+          "cann-msprofiler": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce",
+          "cann-nnopbase": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a",
+          "cann-opapi": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+          "cann-opp-version": "529d6c96f5aa7d06004b9bb7befd8e86df1d1b35e52610a2524700e3217e75be",
+          "msprof": "75541a2535f1dc9b39484b833b0454a002d0eabd68d7673006f52cb00e73dc82"
+        }
+      },
+      "python": "3.9.9",
+      "packages": {
+        "torch": null,
+        "torch-npu": null,
+        "ops-nn": null,
+        "sgl-kernel-npu": null,
+        "tile-kernels": null,
+        "deepgemm-ascend": null,
+        "deepep-ascend": null,
+        "ops-transformer": null,
+        "deep_gemm": null,
+        "deep_ep": null,
+        "triton": null,
+        "tilelang": null,
+        "deep-jit": null
+      },
+      "preset_sha256": "aed1048ec9d915d06e95ae230240d12409283649ef958e9ce084fbeb5d4e7308",
+      "manifest_sha256": "9a7cdd0d6fab9a6bde7133c94904ffe4e78e0f5d883bd40b790ab3b376fb0bf2"
+    },
+    "tuple_sha256": "e63f545139d14155d74c0880e9faa793aa662bf05cea7fd8699d019f665f2a22",
+    "manifest": {
+      "schema_version": 1,
+      "library": "deepep-ascend",
+      "catalog_version": "pilot-v1",
+      "scope": "core",
+      "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+      "upstream": {
+        "repository": "https://github.com/deepseek-ai/DeepEP-Ascend",
+        "commit": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+        "requirements_source": "https://github.com/deepseek-ai/DeepEP-Ascend/blob/3b25377d04b24fc6154698ded78a2bcb2c59afff/README.md"
+      },
+      "requirements": {
+        "python_min": [
+          3,
+          10
+        ],
+        "dependencies": [
+          "torch",
+          "torch-npu",
+          "deep-jit"
+        ],
+        "soc_prefixes": [
+          "950"
+        ],
+        "versions_min": {
+          "cann": [
+            9,
+            2,
+            0
+          ]
+        }
+      },
+      "entry": "ep-dispatch-combine",
+      "cases": [
+        {
+          "case": {
+            "schema_version": 1,
+            "protocol_version": "latency-v1",
+            "extensions": {
+              "library": "deepep-ascend"
+            },
+            "operator": "ep-dispatch-combine",
+            "inputs": [
+              {
+                "shape": [
+                  128,
+                  7168
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  7168,
+                  1
+                ]
+              },
+              {
+                "shape": [
+                  128,
+                  6
+                ],
+                "dtype": "int64",
+                "layout": "ND",
+                "stride": [
+                  6,
+                  1
+                ]
+              },
+              {
+                "shape": [
+                  128,
+                  6
+                ],
+                "dtype": "float32",
+                "layout": "ND",
+                "stride": [
+                  6,
+                  1
+                ]
+              }
+            ],
+            "outputs": [
+              {
+                "shape": [
+                  128,
+                  7168
+                ],
+                "dtype": "bfloat16",
+                "layout": "ND",
+                "stride": [
+                  7168,
+                  1
+                ]
+              }
+            ],
+            "attributes": {
+              "num_experts": 256,
+              "num_topk": 6,
+              "world_size": 2,
+              "expanded": true,
+              "hidden": 7168,
+              "input_rule": {
+                "x": "ones",
+                "topk_idx": "arange % num_experts",
+                "topk_weights": "1 / num_topk"
+              }
+            },
+            "input_generation": {
+              "algorithm": "deterministic-dispatch-v1",
+              "version": "1",
+              "seed": 0,
+              "input_sha256": null
+            },
+            "semantic_version": "1"
+          },
+          "case_key": "case-v1:da0db9c71521ef6632eca94977776cb375c9f19a6f9e6bc7f76e3fba775d0b97",
+          "core": true,
+          "resources": {
+            "mode": "communication-group",
+            "min_ranks": 2,
+            "even_ranks": true,
+            "same_environment_group": true,
+            "transport": [
+              "HCCL",
+              "HCOMM",
+              "UBMEM",
+              "URMA"
+            ]
+          }
+        }
+      ]
+    },
+    "manifest_sha256": "9a7cdd0d6fab9a6bde7133c94904ffe4e78e0f5d883bd40b790ab3b376fb0bf2",
+    "resources": {
+      "mode": "communication-group",
+      "min_ranks": 2,
+      "even_ranks": true,
+      "same_environment_group": true,
+      "transport": [
+        "HCCL",
+        "HCOMM",
+        "UBMEM",
+        "URMA"
+      ]
+    },
+    "evidence": {
+      "environment_id": "e744f66c-9e77-44fe-bbed-0b5d19c2bd1e",
+      "source": "https://github.com/deepseek-ai/DeepEP-Ascend/blob/3b25377d04b24fc6154698ded78a2bcb2c59afff/README.md",
+      "expected_upstream_commit": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+      "actual_provenance": {
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "commit_source": [],
+        "commit_reason": "no Git provenance in installed package or configured source tree",
+        "commit_status": "UNKNOWN",
+        "confidence": "NONE"
+      },
+      "load_status": "DECLARED_ONLY"
+    }
+  }
+]

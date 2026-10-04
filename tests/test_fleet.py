@@ -52,6 +52,24 @@ class FleetTests(unittest.TestCase):
         request.update(submission_id=identity,libraries=['cann-opp'],servers=[self.servers[0]])
         return self.fleet.submit(request)
 
+    def test_catalog_full_scope_enumerates_filters_and_executes_unified_worker(self):
+        from kernelx.libraries import CatalogAdapter,FrozenPerformanceAdapter
+        adapter=CatalogAdapter('sgl-kernel-npu');request=copy.deepcopy(self.request)
+        request.update(submission_id='CPU-catalog-full',libraries=['sgl-kernel-npu'],scope='full',servers=[request['servers'][0]])
+        request['servers'][0]['capabilities']['sgl-kernel-npu']=dict(status='VERIFIED',manifest_sha256=digest(adapter.manifest('full')),tuple_sha256='CPU_FIXTURE',evidence=dict(bundle_sha256='CPU_FIXTURE'))
+        run=self.fleet.submit(request);dispatches=self.fleet.status(run)['dispatches'];self.assertEqual(len(dispatches),3)
+        self.assertEqual({json.loads(d['plan'])['tasks'][0]['case_index'] for d in dispatches},{0,1,2})
+        called=[]
+        def failure(root,**kwargs):
+            called.append((kwargs['adapter_library'],kwargs['case_index']))
+            return dict(valid=False,device_release='UNKNOWN',reason='CPU-only rejected launch fixture')
+        self.worker(0,runner=failure).tick()
+        self.assertEqual(set(called),{('sgl-kernel-npu',i) for i in range(3)})
+        self.assertEqual(self.fleet.status(run)['counts']['FAILED'],3)
+        request['submission_id']='unsupported-catalog';request['servers'][0]['capabilities']['sgl-kernel-npu']['status']='UNSUPPORTED'
+        blocked=self.fleet.submit(request);self.assertEqual(self.fleet.status(blocked)['counts']['UNSUPPORTED'],1)
+        self.worker(0,runner=failure).tick();self.assertEqual(len(called),3)
+
     def test_quarantine_blocks_new_run_and_retry_until_manual_clear(self):
         from unittest.mock import patch
         calls=[]
@@ -167,7 +185,7 @@ class FleetTests(unittest.TestCase):
         status=self.fleet.status(run)
         self.assertEqual(set(status['libraries']),set(LIBRARIES))
         self.assertEqual(status['counts']['PENDING'],2)
-        self.assertEqual(status['counts']['ADAPTER_UNCONFIGURED'],13)
+        self.assertEqual(status['counts']['ADAPTER_UNCONFIGURED'],5)
         self.assertEqual(status['state'],'PENDING')
 
     def test_shards_vs_intentional_paired_repeats(self):
@@ -180,7 +198,7 @@ class FleetTests(unittest.TestCase):
         self.servers[0]['capabilities']['cann-add'].pop('evidence_uri')
         self.servers[1]['capabilities']['cann-add'].update(status='UNSUPPORTED',reason='SoC/BIN mismatch')
         run=self.fleet.submit(self.request); status=self.fleet.status(run)
-        self.assertEqual(status['counts']['UNVERIFIED'],1)
+        self.assertEqual(status['counts']['UNVERIFIED'],9)
         self.assertEqual(status['counts']['UNSUPPORTED'],1)
         self.assertFalse(any(self.fleet.pull(s['server_id']) for s in self.servers))
         self.assertEqual(status['state'],'UNSUPPORTED')

@@ -46,3 +46,56 @@ export KERNELX_LIBRARY_ROOTS='{"ops-nn":"/path/to/ops-nn","ops-transformer":"/pa
 源码库版本保持未知，不能用 Toolkit 版本代填。Git 来源、未知原因、证据 ID
 及工作区状态保存在 `extensions.library_provenance`。这些信息声明源码来源，
 实际运行的库仍由 Runner 的加载路径和制品哈希验证；不修改历史采集快照。
+
+## 扩展库目录、联合 rank 与效率报告
+
+`library-inventory` 不导入 torch 或初始化 NPU。四个扩展库各冻结一个性能入口，
+`core` 为 128 tokens，`full` 为 128/1024/4096 tokens 的有限目录；不表示上游所有 API。
+目录同时锁定上游 commit、输入/输出、依赖与资源需求。ops-nn、ops-transformer 保持独立版本行；
+尚无执行目录的组件返回 `ADAPTER_UNCONFIGURED`。
+
+```sh
+python3 -m kernelx library-inventory --environment environment.json \
+  --device-uid DEVICE_UUID --scope core --matrix support-state --output inventory.json
+```
+
+将输出中的逐库 capability 放入 `fleet-submit` 的服务器 `capabilities`。扩展库的
+`VERIFIED` 必须匹配冻结 manifest、环境 tuple 和实际 profile/provider 证据；未知或不支持
+组合不会排队。独立入口通过同一 FleetWorker/Agent/Runner 进行 case 绑定、监督、释放确认、
+封包和中心导入。首次兼容性 pilot 使用 `collect-library`，参数与 `collect-cann-add` 相同，
+另加 `--library` 和 `--case-index`，只允许已安装、未判定 UNSUPPORTED 的组合。
+`SupportMatrix.attest_bundle` 校验完整 sealed bundle 和加载来源；`DECLARED_ONLY` 不能升级为已验证。
+多 case full 目录需要逐 case 证据，单个 bundle 不证明全部 case。
+
+DeepEP 使用 `group-submit / group-rank-tick / group-status`，与独立 shard/paired dispatch 分开。
+请求必须包含 `mode=communication-group`、`library=deepep-ascend`、有效期、pilot 上界、
+重复协议、冻结 case_index、全部 rank 的 server/device/logical_id/environment_tuple_sha256，
+以及显式 rendezvous master_addr/master_port。`group-submit --policies` 校验每个 rank 的人工预约。
+当前冻结 case 为两个 rank；全组在最早截止时间前退出。任一 rank 失败、预约撤销或就绪超时，
+其他 worker 取消自己的进程组；确认所有 rank 释放后才解除逻辑 lease。没有释放证据时保留
+CANCELLING/lease，不能用部分 profile 报成功。CPU fault injection 独立标记，不产生 NPU 成功结果。
+此 SQLite/filesystem 控制面是参考实现；跨服务器需接入 #3 的中心控制 API，不能把 SQLite WAL
+文件放到网络共享目录当作已验证的跨机部署。910B1 不支持冻结的 DeepEP 组合。
+
+CANN 可通过 `KERNELX_NATIVE_CACHE_ROOT` 使用私有不可变编译缓存。key 包含源码、编译器、
+CANN 头文件、运行库/工具指纹、CPU/SoC/BIN、flags 和 manifest；每次命中校验制品。
+扩展 adapter 的 `cache_key` 接口另绑定框架/JIT/通信依赖、上游 commit 和 compiler fingerprints。
+上游自身 JIT 缓存未建立加载来源证据时仍为 `DECLARED_ONLY`；不宣称已验证跨环境缓存复用。
+JIT 首次调用和 20 次预热均在 profile 边界外。
+
+```sh
+python3 -m kernelx efficiency-report --bundles RUN1 RUN2 RUN3 FAILED_RUN \
+  --inventory inventory.json --control-dir fleet-control --center-dir center \
+  --output efficiency
+python3 -m kernelx schedule-pilot --tasks candidate-tasks.json \
+  --budget-seconds 3600 --cleanup-seconds 10 --rotation-quota .5 --output proposal.json
+```
+
+报告输出 Markdown、HTML、逐 attempt/库/容量 CSV 和输入哈希。成功输入必须通过 sealed bundle 校验；
+失败成本可从全局分派中的持久化 Agent 账本恢复。时间并集用于全局 wall-clock，资源小时逐资源累计。
+严格 cohort 分组保留 case、BIN、库版本/制品、框架、preset 和重复规则。跨服务器配对需要同一
+`paired` global run 和相同 cohort；至少三个独立配对窗口后才给窗口级 bootstrap 比值区间。
+同日多轮不替代跨日稳定性。未知成本为 null；建议不会自动增加窗口或设备。
+
+910B1 实测摘要和限制见 [EFFICIENCY_REPORT.md](EFFICIENCY_REPORT.md)，可审查快照位于
+`tests/fixtures/libraries_910b1/`。

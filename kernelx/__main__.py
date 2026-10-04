@@ -14,6 +14,24 @@ def main():
     scan.add_argument("--output", type=Path, required=True)
     scan.add_argument("--timeout", type=float, default=15)
     scan.add_argument("--include-identities", action="store_true", help="disable default redaction for private local evidence")
+    inventory=commands.add_parser('library-inventory',help='CPU-only frozen catalogs and exact support tuple')
+    inventory.add_argument('--environment',type=Path,required=True)
+    inventory.add_argument('--device-uid',required=True)
+    inventory.add_argument('--scope',choices=['core','full'],default='core')
+    inventory.add_argument('--matrix',type=Path,required=True)
+    inventory.add_argument('--output',type=Path,required=True)
+    schedule=commands.add_parser('schedule-pilot',help='anchor/pair/rotation quota plan inside a fixed manual budget')
+    schedule.add_argument('--tasks',type=Path,required=True)
+    schedule.add_argument('--budget-seconds',type=float,required=True)
+    schedule.add_argument('--cleanup-seconds',type=float,default=10)
+    schedule.add_argument('--rotation-quota',type=float,default=.5)
+    schedule.add_argument('--output',type=Path,required=True)
+    report=commands.add_parser('efficiency-report')
+    report.add_argument('--bundles',type=Path,nargs='+',required=True)
+    report.add_argument('--inventory',type=Path,required=True)
+    report.add_argument('--output',type=Path,required=True)
+    report.add_argument('--control-dir',type=Path)
+    report.add_argument('--center-dir',type=Path)
     check = commands.add_parser("validate")
     check.add_argument("entity", choices=["case", "plan", "session", "attempt", "artifact", "profile", "observation", "environment"])
     check.add_argument("path", type=Path)
@@ -29,6 +47,18 @@ def main():
     run.add_argument("--warmup", type=int, default=20)
     run.add_argument("--repeats", type=int, default=10)
     run.add_argument("--timeout", type=float, default=90)
+    catalog_run = commands.add_parser("collect-library", help="manually budgeted compatible catalog pilot; no dependency installation")
+    catalog_run.add_argument("--output", type=Path, required=True)
+    catalog_run.add_argument("--server-id", required=True)
+    catalog_run.add_argument("--device", type=int, required=True)
+    catalog_run.add_argument("--window-start", required=True)
+    catalog_run.add_argument("--window-end", required=True)
+    catalog_run.add_argument("--authorization-id", required=True)
+    catalog_run.add_argument("--warmup", type=int, default=20)
+    catalog_run.add_argument("--repeats", type=int, default=10)
+    catalog_run.add_argument("--timeout", type=float, default=90)
+    catalog_run.add_argument("--library",choices=["sgl-kernel-npu","tile-kernels","deepgemm-ascend"],required=True)
+    catalog_run.add_argument("--case-index",type=int,default=0)
     parse = commands.add_parser("parse-cann-add", help="offline attribution of exported Add data")
     parse.add_argument("--exports", type=Path, required=True)
     parse.add_argument("--sidecar", type=Path, required=True)
@@ -59,6 +89,18 @@ def main():
     clear=commands.add_parser('agent-clear-device',help='manually clear quarantine after identity/idle checks')
     for name in ('state','policy','plan'): clear.add_argument('--'+name,type=Path,required=True)
     clear.add_argument('--device-uid',required=True)
+    group=commands.add_parser('group-submit',help='explicit jointly authorized DeepEP group, never a shard')
+    group.add_argument('--control-dir',type=Path,required=True)
+    group.add_argument('--request',type=Path,required=True)
+    group.add_argument('--policies',type=Path,nargs='+',required=True)
+    group.add_argument('--ready-timeout',type=float,default=30)
+    rank=commands.add_parser('group-rank-tick',help='one reserved rank with all-rank readiness and cancellation')
+    for name in ('control-dir','state','policy','matrix'):rank.add_argument('--'+name,type=Path,required=True)
+    rank.add_argument('--rank',type=int,required=True)
+    rank.add_argument('--group-id',required=True)
+    groupstatus=commands.add_parser('group-status')
+    groupstatus.add_argument('--control-dir',type=Path,required=True)
+    groupstatus.add_argument('--group-id',required=True)
     submit=commands.add_parser('fleet-submit',help='immutable all/selected-library submission with explicit server bindings')
     submit.add_argument('--control-dir',type=Path,required=True)
     submit.add_argument('--request',type=Path,required=True)
@@ -84,6 +126,25 @@ def main():
         boot.add_argument('--config',type=Path,required=True)
         if command=='bootstrap-clear-device': boot.add_argument('--device-uid',required=True)
     args = parser.parse_args()
+    if args.command=='schedule-pilot':
+        from .efficiency import schedule
+        data=schedule(json.loads(args.tasks.read_text()),args.budget_seconds,args.cleanup_seconds,args.rotation_quota)
+        args.output.write_text(json.dumps(data,indent=2)+'\n')
+        print(json.dumps(dict(output=str(args.output),tasks=len(data['tasks']),used_seconds=data['used_seconds'])))
+        return
+    if args.command=='library-inventory':
+        from .libraries import Registry,SupportMatrix
+        matrix=SupportMatrix(args.matrix)
+        try:data=Registry().inventory(json.loads(args.environment.read_text()),args.device_uid,args.scope,matrix)
+        finally:matrix.close()
+        args.output.parent.mkdir(parents=True,exist_ok=True)
+        args.output.write_text(json.dumps(data,indent=2)+'\n')
+        print(json.dumps(dict(output=str(args.output),statuses={r['library']:r['status'] for r in data})))
+        return
+    if args.command=='efficiency-report':
+        from .efficiency import generate
+        print(json.dumps(generate(args.bundles,json.loads(args.inventory.read_text()),args.output,args.control_dir,args.center_dir)))
+        return
     if args.command in ('release-build','release-self-test','bootstrap-tick','bootstrap-status','bootstrap-clear-device'):
         if args.command=='release-self-test':
             from .release import self_test
@@ -108,6 +169,18 @@ def main():
                     print(json.dumps(result))
                     if args.command=='bootstrap-tick' and result['exit_code']: raise SystemExit(result['exit_code'])
             finally: bootstrap.close()
+        return
+    if args.command.startswith('group-'):
+        from .resource_group import ResourceGroup,GroupRankWorker
+        if args.command=='group-rank-tick':
+            data=GroupRankWorker(args.control_dir,args.state,args.rank,args.policy,matrix=args.matrix).run(args.group_id)
+        else:
+            control=ResourceGroup(args.control_dir)
+            try:
+                if args.command=='group-submit':data=dict(group_id=control.submit(json.loads(args.request.read_text()),[json.loads(p.read_text()) for p in args.policies],args.ready_timeout))
+                else:data=control.poll(args.group_id);data['metrics']=control.metrics(args.group_id)
+            finally:control.close()
+        print(json.dumps(data))
         return
     if args.command=='fleet-clear-device':
         from .agent.fleet import FleetWorker
@@ -170,12 +243,13 @@ def main():
         args.output.write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(dict(valid=result['valid'], quality=result['quality'])))
         raise SystemExit(0 if result['valid'] else 1)
-    elif args.command == "collect-cann-add":
+    elif args.command in ("collect-cann-add","collect-library"):
         from .runner import collect
         result = collect(args.output, server_id=args.server_id, device=args.device,
                          window_start=args.window_start, window_end=args.window_end,
                          authorization_id=args.authorization_id, warmup=args.warmup,
-                         repeats=args.repeats, timeout=args.timeout)
+                         repeats=args.repeats, timeout=args.timeout,
+                         **(dict(adapter_library=args.library,case_index=args.case_index) if args.command=="collect-library" else {}))
         print(json.dumps(result))
         raise SystemExit(0 if result['valid'] else 1)
     elif args.command == "probe":

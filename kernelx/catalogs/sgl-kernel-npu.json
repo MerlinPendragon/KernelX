@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "library": "sgl-kernel-npu",
+  "catalog_version": "pilot-v1",
+  "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+  "upstream": {
+    "repository": "https://github.com/sgl-project/sgl-kernel-npu",
+    "commit": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "requirements_source": "https://github.com/sgl-project/sgl-kernel-npu/blob/653e519cf9556b0cc8d9e7966aa4551eb65143ae/README.md"
+  },
+  "package": "sgl_kernel_npu",
+  "entry": "fused-sigmoid-mul",
+  "requirements": {
+    "python_min": [
+      3,
+      9
+    ],
+    "dependencies": [
+      "torch",
+      "torch-npu",
+      "triton"
+    ],
+    "soc_prefixes": [
+      "910B",
+      "950",
+      "910_93"
+    ]
+  },
+  "cases": [
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "sgl-kernel-npu"
+        },
+        "operator": "fused-sigmoid-mul",
+        "inputs": [
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:cba65b5035c20c562e6da88b86116afcc9e502c4fac45d14975960b6eed83c45",
+      "core": true,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "sgl-kernel-npu"
+        },
+        "operator": "fused-sigmoid-mul",
+        "inputs": [
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:9db0a8c279bf6b34fb15fb615e6b19105fe6fbe2035592110fa2a8caa2387d32",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "sgl-kernel-npu"
+        },
+        "operator": "fused-sigmoid-mul",
+        "inputs": [
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "attributes": {},
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:dc25c9697bf2fed2449b72d1150ae46a187e18b25c64027c290e9a4038ed75a8",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    }
+  ]
+}
