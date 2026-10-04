@@ -1,0 +1,1164 @@
+[
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/build_and_release.yml",
+    "blob_sha": "33e14351c5c26558b0ad8cd8bb31f0844de6aecc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/daily-build-test.yml",
+    "blob_sha": "841eb64acd4d0dae1f06a913693944cb18eb477e"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/daily-test-kernels.yml",
+    "blob_sha": "ab332fc62824ba3efe24aff299ea3ddc69ecb3e0"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/internode.yml",
+    "blob_sha": "139f50b319f69faa4f9b588611008e124fae0552"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/lint.yml",
+    "blob_sha": "57d8bd917ee673528fb8c28132440a34635df033"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/pr-test-deepep-npu.yml",
+    "blob_sha": "c659812c4966a027a62a33ed263b2e16a3b3f4d5"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/pr-test-kernels.yml",
+    "blob_sha": "2216719b8f249546d1151225e3078c3732160889"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/push_build_cache.yml",
+    "blob_sha": "b5b1cce4150f373fba2e82f4cf3f22b49b4c0bc2"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": ".github/workflows/release_deep_ep_wheel.yml",
+    "blob_sha": "ad42d047ee7a4c1c42bef2b0dfcb1c18b197ecd4"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "LICENSE",
+    "blob_sha": "909b8ff34ce3ff391ec5ecd1d2388d0c5b1cd4b3"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "README.md",
+    "blob_sha": "e3da80cd26331518b7fe7996e99f062f6fbcfffb"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/run_ascend_ci.py",
+    "blob_sha": "19ef9423a94564f69977fd4e3871d310251e24fc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_combine.py",
+    "blob_sha": "8bb662527b273267b31a333545ee6198bf51d7df"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_common.py",
+    "blob_sha": "9e463aba160d171289f8dad36d419442820a501d"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_dispatch_ffn_combine.py",
+    "blob_sha": "29983b74e961c39e6687ce3755d1ba5190936f70"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_fused_deep_moe.py",
+    "blob_sha": "daf880fd24d7f013b3f592a518f43296dfdf7e43"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_fused_deep_moe_a5.py",
+    "blob_sha": "05a371de5a7337542caae07b3fd63f43f0021973"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_internode.py",
+    "blob_sha": "4e34717bb63a871847e089ded987b04a30443847"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_internode_a2.py",
+    "blob_sha": "7ee0650bde9fbe56d9862ba2a2bc5855d609d559"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_internode_a2_set_env.py",
+    "blob_sha": "bebe8d3fbe9e122f0c63d6136c5622e289d421f3"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_intranode.py",
+    "blob_sha": "877da208922ba77e497514fb1422d717c152ac0e"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_ll_alltoall.py",
+    "blob_sha": "8320b1905466a22931a5f62b5e00c2a91bcda680"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_low_latency.py",
+    "blob_sha": "a56ad7f5e5b7fb7869493e32fcfb5610d5e1c0a6"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_lowlatency_dc_vs_alltoall.py",
+    "blob_sha": "b3fdc7d75157b5db282133d0ec59cf1a79946fdc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_mixed_dc_vs_alltoall.py",
+    "blob_sha": "4e1b25a827d72714c03f31c01465e139afae28aa"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_normal_alltoall.py",
+    "blob_sha": "14654fe9daade8598565b542296556038f26919a"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_normal_and_fused_deep_moe.py",
+    "blob_sha": "32779c9e5c867d5dc1ac4d0f0b94b334d715eb9b"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_normal_and_low_latency.py",
+    "blob_sha": "7c29b4cd7d77933d4876155e2819479e4cd0aaf6"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_normal_dc_vs_alltoall.py",
+    "blob_sha": "e4b8e3f0802fc20a471c4f331dca2eccfaa45057"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/test_performance_compare.py",
+    "blob_sha": "5ab8c733499fe1c794413a0ce5a0104636ec7c03"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/deepep/utils.py",
+    "blob_sha": "a87b0e9c0e84817068c7c2bce16e6a5ae7b5f9bd"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_add_rmsnorm_bias.py",
+    "blob_sha": "8ac99a6fdff834ea23c634adce212f69bc549429"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_alloc_extend_slot.py",
+    "blob_sha": "aed25306c3b59a4928b822c33239048b6d8969dc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_apply_token_bitmask.py",
+    "blob_sha": "4344f2d639aa6dc9cb6a132ded94b7cf7c69d660"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_argmax_softmax_prob.py",
+    "blob_sha": "c6b7aa4f780feaf2e971b3acfb9dfb1cb795e03e"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_batch_matmul_transpose.py",
+    "blob_sha": "83fbfd27eedf9fd1e266b3dcd23b501fe864bb5f"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_build_tree.py",
+    "blob_sha": "47308ba12fbf660dbddec54dd0a5fad9c89b8c9e"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_cache_assign.py",
+    "blob_sha": "a6987da084523047042b34ee76f6a1ba59a5e9c9"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_cache_update.py",
+    "blob_sha": "831dac587e79462239b0ce645f966421d1e6a3e4"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_catlass_matmul_basic.py",
+    "blob_sha": "58ee445a6eab1d5c9fba2ac1bd06af0f09fd83d2"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_chain_speculative_sampling.py",
+    "blob_sha": "54f20070ee689ea9ede9ffc06c7a39151ce17eae"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_chunk_gdn_pto.py",
+    "blob_sha": "c7a819ce0468e33a2d5da457169573a308f51ff6"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_chunk_gdn_triton.py",
+    "blob_sha": "47c060b6cf36783ba4c269340854eab0875412a0"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_compressor.py",
+    "blob_sha": "26a53160b26096bacad163c1ee71b2f4b82a643b"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_conv1d_prefill.py",
+    "blob_sha": "f4abdd8bb47a35b496c6c96c25802da4a594fc60"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_conv1d_update.py",
+    "blob_sha": "496f84668ac35a8916d58e0b488b63cd9ebc5b59"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_decode_attention.py",
+    "blob_sha": "0aa255c52e5f6feb18e842d24642f6242011adaf"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_fused_gdn_gating_without_sigmoid.py",
+    "blob_sha": "5042852f7a49eb2573682e1300f00813c2f28008"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_fused_rope_qk_mqa.py",
+    "blob_sha": "70b4469b335f0e976224431355dcd98269c12e12"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_fused_sigmoid_gating_recurrent_decode.py",
+    "blob_sha": "ddb089dd9b07d96e01c89bd08b4f9672d83bf41f"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_fused_sigmoid_mul.py",
+    "blob_sha": "54e7d77ad53199865909d703d4ed1e91463b28dd"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_gated_delta_ascendc_tri_inv.py",
+    "blob_sha": "7264c68b9f04465830d727a527d1ff8a80d81717"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_gmm_wfp8a16.py",
+    "blob_sha": "1e5ea39a89660f468c5eb80631928c78423d35ba"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_hello_world.py",
+    "blob_sha": "e2ca6290ac7a3526ea8e95389d7ce5062a578d5b"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_inplace_assign_cache.py",
+    "blob_sha": "7ad2cd819e045419213b2e9685a8b8fe64f6fa1f"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_kda_prefill_pool_layout.py",
+    "blob_sha": "878e34e35d60a0bd8cac941c22d16e23b4b28fbd"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_kda_target_verify.py",
+    "blob_sha": "9a0a1f92a88048d585cbe09bf6a8e3998ac36f6d"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_kv_compress_epilog.py",
+    "blob_sha": "d389f42e570b3c75f31cdbd22fcb4faa77587bdf"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_l1_norm.py",
+    "blob_sha": "eed78cfa8f4ca9f1f9b8b06d7442e7b6615b6fc6"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_lightning_indexer.py",
+    "blob_sha": "00408f7d3854d9beea203f2b6280c5ffd4ad69e5"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_lora_kernels.py",
+    "blob_sha": "98e54094e4636e3bdaa4eae548e63614f077efcf"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_lora_overlap_regression.py",
+    "blob_sha": "fe1b2c42defc16a95bbdd9c04848cf96823b25e7"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_mamba_conv.py",
+    "blob_sha": "41c78d8a1dd5d794180ea49d6ea557fd5be15bba"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_mamba_state_update.py",
+    "blob_sha": "54a4d85e47e53d2575a30d15213fa61e90ecd7e0"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_mla_preprocess.py",
+    "blob_sha": "7736f0937585241eee60077700e7ab68c52a15bc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_mm_wfp8a16.py",
+    "blob_sha": "5e2efbc7c0e29dd16242c05172d77f644c2468b5"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_qkvzba_split_reshape_cat.py",
+    "blob_sha": "96fc929b0f14b18734a4252144e6a65d35aec61d"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_recurrent_gated_delta_rule.py",
+    "blob_sha": "d305e48472cf995e1eb9b215c38338d16029e885"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_recurrent_gated_delta_rule_vs_triton.py",
+    "blob_sha": "8e3d68ffea08596e156c8f4510cdd43863753ecf"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_recurrent_kda_transposed_pool.py",
+    "blob_sha": "79828d9b5a9532561e38742c277a72dbe59b715c"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_recurrent_kda_vs_triton.py",
+    "blob_sha": "c3811d186c0b52254be66338f82da4ee0edd9e25"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_rmsnorm_split.py",
+    "blob_sha": "1b6ca447e4cad9d558f01c36467d85507972b5ce"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_rmsnorm_without_weight.py",
+    "blob_sha": "c32accb98eaaba5d105dfa2f617bdf81f81f9795"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_scale_shift.py",
+    "blob_sha": "efc7fd6316421aa5f3e71e2e1d926c9e833f1490"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_shm_allocator.py",
+    "blob_sha": "ea5af2636a1b234b3b445315ca6198f08911f40d"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_situ_mxfp8_quant.py",
+    "blob_sha": "49866a4d0c5db98e355b0b19aef6196db7ee9ee1"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_slot_map_lookup.py",
+    "blob_sha": "2d1f38678948b2a24f3cacff2e71fa48c96209a9"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_solve_tril.py",
+    "blob_sha": "e1603f9c4f003e4e037b62ec0423659e16aac1bd"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_sparse_attn_sharedkv.py",
+    "blob_sha": "ebaf5811eb6d732f48b0250d9fc5e53dc98b43a9"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_sparse_attn_sharedkv_metadata_host.py",
+    "blob_sha": "944afeb70abbe59b45932f84d44ce77777bac328"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_sparse_flash_attention.py",
+    "blob_sha": "a35637286d5e53f90bde3ef5f0d4b9beeb529e76"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_speculative_probability.py",
+    "blob_sha": "5aaeb3fd2129dab34b81753119d1fdbd380d30a1"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_split_qkv_rmsnorm_mrope.py",
+    "blob_sha": "973ade3faf342c51b590dc3d794ccdfeddcd2920"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_split_qkv_rmsnorm_rope.py",
+    "blob_sha": "f03cc7caa993015583ab47e6ed9e5af58a7b1367"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_split_qkv_rmsnorm_rope_head192.py",
+    "blob_sha": "a8184ce4888e16d69ae84341728b384e58a1aea3"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_split_qkv_rmsnorm_rope_pos_cache_half_npu.py",
+    "blob_sha": "91bd7bbc2e0fb8688644a3cfd71a9fa6ab249ad3"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_split_qkv_tp_rmsnorm_rope.py",
+    "blob_sha": "b7d9343f63832b0db0aa2ac0074c735de4d086d4"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_swiglu_group_quant.py",
+    "blob_sha": "9ce119708278576b384d888d519541d101286d16"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_swiglu_mxfp8_quant.py",
+    "blob_sha": "52f2403b9ce23175850074ae6f8b0071344a4956"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_swiglu_quant.py",
+    "blob_sha": "65d92f5c7782480aae547651f611713d3337c99c"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_transfer_kv_dim_exchange.py",
+    "blob_sha": "4635615cbf4c869bf3d7c660f85a9f1d66fa3d79"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_transfer_mamba_state.py",
+    "blob_sha": "90d5612b56c9c83ccf6a2944703c616ac09d7cb3"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_transfer_state_direct.py",
+    "blob_sha": "3687434602cd041180557ed5a9a0fe21b68359bc"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_tree_speculative_sampling_target_only.py",
+    "blob_sha": "a02f8054428d64b2f065f5826c871f4826e8a911"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_triangular_inverse.py",
+    "blob_sha": "a88565fa138cbfc5cc9f8b4ffb49a9e934788db4"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_unidex_copy.py",
+    "blob_sha": "08c7b0dfab236184ae63dd0f8ebd5cd419c791a1"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/test_verify_tree.py",
+    "blob_sha": "48ce79c2f858d2a6ab2b089b2bec9893d866b524"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "path": "tests/python/sgl_kernel_npu/utils.py",
+    "blob_sha": "7f6c0f635b02e710ca8f11af7d1e20ec601aefa1"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "LICENSE",
+    "blob_sha": "c1f7a78e89e4e4dc7b86664c3b3c76eb5eee1785"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "README.md",
+    "blob_sha": "2b2fa1d66713d4c63effb88f89e461ebdfc6562e"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/conftest.py",
+    "blob_sha": "c45c4e285e6a0527e7fd0479c236a764eb5ed332"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_fused_weight.py",
+    "blob_sha": "25b039bb6586776d4f33d893d537941cfcc19d41"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_gate_bwd.py",
+    "blob_sha": "75ed2c1f437a86c5ed1024ee10edebb08f8f9f61"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_gate_fwd.py",
+    "blob_sha": "699f3365ac7f74dac79566441258b61b7fa20f5d"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_grad_w_reduce.py",
+    "blob_sha": "0bd0488dce3cd9c3c236f6b71410e07c8fd91b27"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_hash.py",
+    "blob_sha": "75f0e781c17d136956d462d44b70526b5885cdbc"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/engram/test_engram_sinkhorn.py",
+    "blob_sha": "5a4ea8d09dcce99903274b0f5d6e8b76e082824d"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_expand.py",
+    "blob_sha": "8f6edaba2d5befbb40aa82024a80e59b3b0a0acd"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_head_compute_mix.py",
+    "blob_sha": "b78226d91605eae00db7e07d43384e79c02dd220"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_multilayer_recompute.py",
+    "blob_sha": "71a14fc8b96e68e145b025c8a70ab446b8e26bcd"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_norm_fn.py",
+    "blob_sha": "a79b261e4d40ef58fac72bbdde55683d918d0bc9"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_post.py",
+    "blob_sha": "89e97975073ce30c0e5a7be4c52297fa8b20afd9"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_pre_apply_mix.py",
+    "blob_sha": "d75a6e00165a5626eb966a98c1e6dd7120f949ea"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_pre_big_fuse.py",
+    "blob_sha": "794822cb81235edb8885b33fc7ecb6f0a03b8d8f"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_pre_split_mixes.py",
+    "blob_sha": "f5f62911cad77120ff793bb4f678bbf4c477a947"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/mhc/test_sinkhorn.py",
+    "blob_sha": "35154c0894ad22f936914a1f79047880aa10db4d"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/moe/test_moe_topk_gate_backward.py",
+    "blob_sha": "fc298a296c7d990e86b68427475cd7d3c6c21021"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/moe/test_moe_topk_gate_forward.py",
+    "blob_sha": "a4d9944ee6a1b1caf8a75e2254f7cd57d0f0a8bc"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/moe/test_normalize_weight.py",
+    "blob_sha": "22f591299685495374a28d4c281247c4e9469cf9"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/moe/test_topk_gate.py",
+    "blob_sha": "ba53385ac2a67932f15f8d796e9d57f0b5bbe445"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_batched_transpose_weight_sf.py",
+    "blob_sha": "5512e6686f688e56d8f178e0d5f32216d22982f9"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_cast.py",
+    "blob_sha": "4d59c81ae6f4836c134d02c09c9d5c8002741827"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_cast_back.py",
+    "blob_sha": "46e13f9cd5e63f0229990c11c09bebaef7631d12"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_norm_backward.py",
+    "blob_sha": "719de6892351462a56c17811cbb813548a952f54"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_norm_forward.py",
+    "blob_sha": "07e680c009bf116138ed41b9e0b5d0c5d77170c7"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_per_block_cast.py",
+    "blob_sha": "5ea71b3b35a5c459de5e98b197cac19dc60e1bcf"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_per_block_cast_lossless.py",
+    "blob_sha": "5c5a1ac8ef109c390bf951d8200be10389728aec"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_per_channel_cast.py",
+    "blob_sha": "f8394bcbd40c88737ac924c76bb74c57cafdbbff"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_per_token_cast.py",
+    "blob_sha": "8f8404381278c15bea253ae0d963179c3a5fbc63"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_per_token_cast_and_cast_back.py",
+    "blob_sha": "0060c1e127f53ac617e75d27268012a125045934"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_swiglu_backward.py",
+    "blob_sha": "3c869428e832366906c85919955f5ae0b16e213d"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/quant/test_swiglu_forward.py",
+    "blob_sha": "984a32fa92813758a4a4d791befd0c34cb9f762e"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/rand/test_randn.py",
+    "blob_sha": "9d97b84cda95a26058f78a72e0d0288a90139b8e"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/transform/test_rope.py",
+    "blob_sha": "f9464d6444650e46fbaf8ea057c4999850168e46"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tile_kernels/testing/generator.py",
+    "blob_sha": "e85a271003bff3b5581b9c889f7eade6d3dd1dc1"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "LICENSE",
+    "blob_sha": "c1f7a78e89e4e4dc7b86664c3b3c76eb5eee1785"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "README.md",
+    "blob_sha": "168834134584b2b0b0aaf44cd9cc240d1805453e"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/common.py",
+    "blob_sha": "719893a2f7b647421afa9fc9245f61110fb2eba9"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/generators.py",
+    "blob_sha": "90112193f32f425968de9b303b7c4df40d382794"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_attention.py",
+    "blob_sha": "795d4afb4a6067fa5df99d8df3b58f9e2f643083"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_bf16_gemm.py",
+    "blob_sha": "04385d17f91ed0b9990f22e13f0b61e3417cede3"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_einsum.py",
+    "blob_sha": "df4a3ce775593d1ef661e2e512cef5dca85f1028"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_fp4_gemm.py",
+    "blob_sha": "100492a2144297195ede58056c30c78de273e4d2"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_fp8_dequant_gemm.py",
+    "blob_sha": "4d0cd693a0b97a8836354d0fdd80370bfe30e3db"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_fp8_gemm.py",
+    "blob_sha": "0293e9af77feff9a96b8f936077d52b3958f3e41"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_hyperconnection.py",
+    "blob_sha": "40a2c401c59c43b7c601debe352730fe6e001fdc"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_layout.py",
+    "blob_sha": "53f7edfe40badbcb197a3ee98a57c810d52944c2"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_lazy_init.py",
+    "blob_sha": "04c4b7c07ef7d33d774184f7666dd30a05675857"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/test_mega_moe.py",
+    "blob_sha": "ff24fca5e45863431587d0915df7ab4a13e08d8a"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "path": "tests/utils.py",
+    "blob_sha": "4191bfc99058062ba831fc7a29275fd19b7f243b"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "README.md",
+    "blob_sha": "ada9f4f8d25596bd9c1459b4d17a6f0868581cbe"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/bucket/test_all_gather.py",
+    "blob_sha": "46902b5af999d58184c70dd64a67ddec75456d5a"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/bucket/test_session.py",
+    "blob_sha": "c7b28bdf44fd4cb190d48063c19c9c8bbe51d002"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/buffer/test_allocation.py",
+    "blob_sha": "a5da8a9893460ade489a71d4643860b31c9930da"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/comm/test_barrier.py",
+    "blob_sha": "b8d9d5749de8613096abe8301f2424c3956fd88c"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/comm/test_stream.py",
+    "blob_sha": "57619863891d075d34336415e317ce6135ead497"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/engram/test_engram.py",
+    "blob_sha": "df03bb28c63b42d02398c4cc0389ca1f4dae2a5b"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/ep/test_ep.py",
+    "blob_sha": "abb8f45a14bb8f844fab35bf00701c6afcb3a686"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/pp/test_pp.py",
+    "blob_sha": "04e41ab8b7dc00d2b3ee457a4ffd6213832ddfca"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "path": "tests/utils/test_gate.py",
+    "blob_sha": "47a1f783eebdff71d2a1f8b3db3fb5a2745be921"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "path": "tests/__init__.py",
+    "blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "path": "python/sgl_kernel_npu/setup.py",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "blob_sha": "34193178154dc44e036df6a411ffd1329e273a4f"
+  },
+  {
+    "lib": "sgl-kernel-npu",
+    "repo": "sgl-project/sgl-kernel-npu",
+    "path": "scripts/run_kernel_tests.sh",
+    "ref": "653e519cf9556b0cc8d9e7966aa4551eb65143ae",
+    "blob_sha": "94c1f9fb0979bac0e5668f471366f1937b922c9e"
+  },
+  {
+    "lib": "tile-kernels",
+    "repo": "deepseek-ai/TileKernels",
+    "path": "pyproject.toml",
+    "ref": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "blob_sha": "b194c5b49c30e8fb7d637b499e2e4e0e8ca3a8b5"
+  },
+  {
+    "lib": "deepgemm-ascend",
+    "repo": "deepseek-ai/DeepGEMM-Ascend",
+    "path": "setup.py",
+    "ref": "8491bbb4b8c02a094a2318965f50c70438a3e73c",
+    "blob_sha": "e3210b5dd8b188ce8af8b7738123d229209efa1d"
+  },
+  {
+    "lib": "deepep-ascend",
+    "repo": "deepseek-ai/DeepEP-Ascend",
+    "path": "setup.py",
+    "ref": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "blob_sha": "cad2f99a3ae87a1656734fde51a2a19feaa7726f"
+  }
+]

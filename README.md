@@ -19,6 +19,7 @@ python3 -m kernelx validate environment environment.json
 示例 server ID 是本次 910B1 测试注册 UUID；其他服务器必须注册各自 UUID，不以 hostname、IP 或逻辑 device ID 代替。默认脱敏；`--include-identities` 仅用于私有本地证据。每个外部命令默认超时 15 秒，可用 `--timeout` 调整。
 
 - [签名离线发布、启动器与 systemd 安装](docs/RELEASE.md)
+- [单文件离线 8 小时采集、CI shape 与版本匹配](docs/OFFLINE_COLLECTION.md)
 - [全局计划、多 Agent 模拟与剩余范围](docs/FLEET.md)
 - [预约 Agent、持久恢复、回传协议与数据库查询](docs/AGENT.md)
 - [Agent 910B1 截止、撤销与真实入库验收](docs/ISSUE3_910B1_VALIDATION.md)
