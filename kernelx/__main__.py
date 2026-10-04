@@ -69,7 +69,15 @@ def main():
     retry.add_argument('--retry-id',required=True)
     worker=commands.add_parser('fleet-agent-tick',help='actively pull bound work through the filesystem reference API')
     for name in ('control-dir','state','policy','center-dir'): worker.add_argument('--'+name,type=Path,required=True)
+    fleetclear=commands.add_parser('fleet-clear-device',help='manually clear the shared server quarantine after identity/idle checks')
+    for name in ('state','policy'): fleetclear.add_argument('--'+name,type=Path,required=True)
+    fleetclear.add_argument('--device-uid',required=True)
     args = parser.parse_args()
+    if args.command=='fleet-clear-device':
+        from .agent.fleet import FleetWorker
+        FleetWorker(args.state,args.policy,None).clear_device(args.device_uid)
+        print(json.dumps(dict(device_uid=args.device_uid,state='READY')))
+        return
     if args.command.startswith('fleet-'):
         from .agent.fleet import Fleet, FleetWorker
         from .agent.storage import Center

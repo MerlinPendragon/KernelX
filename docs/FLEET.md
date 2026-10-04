@@ -45,6 +45,32 @@ shard 将每个已枚举用例绑定到一台适用服务器；paired 则有意�
 worker。控制端短事务有有界等待，中心导入也串行提交短事务；采集本身不持有
 控制端或中心导入锁，不会使不同服务器的采集串行化。运行代码无 SSH 调度。
 
+同一服务器必须持续使用同一个 FleetWorker `--state` 目录。它的
+`server-identity.json` 绑定注册 server UUID，禁止把现有目录改用于另一台服务器。
+`server-resources/resources.db` 是所有 dispatch/run/retry 共享的设备隔离账本。
+启动检查和崩溃恢复写入同一账本；未知释放后新 run 或显式 retry 保持 PENDING
+并记录隔离原因，不会进入 Runner。不同 dispatch 的空闲查询不会自动解除隔离。
+
+升级时先扫描全部既有分派，事务性迁移旧 devices 表的 QUARANTINED 记录，
+迁移来源只登记一次。人工确认后不会因再次读取旧表而重新套用已解除的隔离。
+解除隔离使用本机共享接口，不依赖控制端在线或采集计划有效：
+
+```sh
+python3 -m kernelx fleet-clear-device --state /var/lib/kernelx/fleet \
+  --policy /etc/kernelx/server-policy.json --device-uid '<registered-device-uid>'
+```
+
+该接口持有与 tick 相同的 worker 锁，先恢复既有任务，再校验实际芯片身份、
+逻辑映射、设备锁和真实空闲证据；成功才事务提交 READY 和审计事件。
+单机 `agent-clear-device` 用于独立 Agent，Fleet 应使用上述共享命令。
+
+spool 水位按同一 worker 下所有 `*/agent/spool` 的实际字节总量计算，包括
+完整待上传数据、失败/部分证据、context 和 uploads 中的上传归档，再加上下一
+任务的预计产物。跨分派共用 policy 的一个配额。worker 锁串行化预算检查与
+执行；水位不足保留 PENDING，所有旧分派先恢复/重传，确认持久入库并清理后
+重新计算容量，空间允许才继续。估计值不是硬文件大小限制，单个任务估计不足
+仍可能超过配额，但不会让后续分派各自重新使用一份完整配额。
+
 `fleet-status` 返回全局、逐库、逐服务器统计与分派明细/原因。状态包括 PENDING、
 RUNNING、PENDING_UPLOAD、INGESTED、FAILED、INTERRUPTED、UNSUPPORTED、
 UNVERIFIED、ADAPTER_UNCONFIGURED；有部分入库而有缺口时为 PARTIAL。

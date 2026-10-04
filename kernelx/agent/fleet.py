@@ -153,6 +153,31 @@ class FleetWorker:
         self.policy=Path(policy); self.fleet=fleet; self.transport=transport
         self.options=agent_options or {}
 
+    def _agent(self,directory,plan,context=None):
+        return Agent(directory/'agent',self.policy,plan,dispatch_context=context,
+                     resource_root=self.root/'server-resources',cache_root=self.root,**self.options)
+
+    def _policy(self):
+        policy=read_policy(json.loads(self.policy.read_text()))
+        identity=self.root/'server-identity.json'
+        if identity.exists():
+            if json.loads(identity.read_text())['server_id']!=policy['server_id']:
+                raise ValueError('worker state belongs to another registered server')
+        else: atomic_json(identity,dict(server_id=policy['server_id']))
+        return policy
+
+    def clear_device(self,uid):
+        # The same server lock protects preflight, recovery and manual clearance.
+        with DeviceLock('fleet-worker',self.root/'.locks'):
+            self._policy()
+            for plan_path in self.root.glob('*/plan.json'):
+                agent=self._agent(plan_path.parent,plan_path)
+                try: agent.recover()
+                finally: agent.close()
+            agent=self._agent(self.root/'maintenance','')
+            try: agent.clear_device(uid)
+            finally: agent.close()
+
     def _send(self,directory,server_id):
         journal=directory/'report.json'
         if not journal.exists(): return
@@ -173,10 +198,10 @@ class FleetWorker:
         with DeviceLock('fleet-worker',self.root/'.locks'):
             # Complete captures upload even when policy/plan publication is broken.
             for plan_path in self.root.glob('*/plan.json'):
-                agent=Agent(plan_path.parent/'agent',self.policy,plan_path,**self.options)
+                agent=self._agent(plan_path.parent,plan_path)
                 try: agent.recover(); agent.upload(self.transport)
                 finally: agent.close()
-            try: policy=read_policy(json.loads(self.policy.read_text()))
+            try: policy=self._policy()
             except (ValueError,OSError,KeyError,TypeError) as exc:
                 return [dict(state='CONFIG_INVALID',reason=str(exc))]
             server_id=policy['server_id']
@@ -189,11 +214,16 @@ class FleetWorker:
                 plan_path=directory/'plan.json'
                 if not plan_path.exists(): atomic_json(plan_path,plan)
                 context=dict(global_run_id=dispatch['run_id'],dispatch_id=dispatch['dispatch_id'],mode=self.fleet.status(dispatch['run_id'])['plan']['mode'],library=dispatch['library'])
-                agent=Agent(directory/'agent',self.policy,plan_path,dispatch_context=context,**self.options)
+                agent=self._agent(directory,plan_path,context)
                 try:
                     local=agent.status(); captured=any(a['state']=='SUCCEEDED' for a in local['attempts'])
                     failed=any(a['state'] in ('FAILED','INTERRUPTED','REJECTED') for a in local['attempts'])
                     if not captured and not failed:
+                        uid=plan['tasks'][0]['device_uid']
+                        if any(d['device_uid']==uid and d['state']=='QUARANTINED' for d in local['devices']):
+                            self._report(directory,server_id,dispatch,'PENDING','device quarantined; manual clearance required',agent)
+                            output.append(dict(dispatch_id=dispatch['dispatch_id'],state='PENDING',reason='device quarantined'))
+                            continue
                         self._report(directory,server_id,dispatch,'RUNNING',agent=agent)
                         result=agent.tick(self.transport)
                     else:

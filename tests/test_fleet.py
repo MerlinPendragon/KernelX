@@ -47,6 +47,118 @@ class FleetTests(unittest.TestCase):
     def worker(self,index,runner=None,transport=None):
         return FleetWorker(self.root/('worker%d'%index),self.root/('policy%d.json'%index),self.fleet,transport,dict(runner=runner or self.runner))
 
+    def submit_one_server(self,identity):
+        request=copy.deepcopy(self.request)
+        request.update(submission_id=identity,libraries=['cann-opp'],servers=[self.servers[0]])
+        return self.fleet.submit(request)
+
+    def test_quarantine_blocks_new_run_and_retry_until_manual_clear(self):
+        from unittest.mock import patch
+        calls=[]
+        def residual(root,**kwargs):
+            calls.append(1); Path(root).mkdir()
+            atomic_json(Path(root)/'execution.json',dict(process_release='RESIDUAL'))
+            return dict(valid=False,device_release='UNKNOWN',reason='simulated residual')
+        first=self.submit_one_server('residual'); self.worker(0,residual).tick()
+        failed=next(d for d in self.fleet.status(first)['dispatches'] if d['state']=='FAILED')
+        second=self.submit_one_server('new-run')
+        retry=self.fleet.retry(failed['dispatch_id'],'explicit-retry')
+        # Recreate the worker: both shared ledger and pending work survive restart.
+        pending=self.worker(0,residual).tick()
+        self.assertEqual(calls,[1]); self.assertTrue(all(d['state']=='PENDING' for d in pending))
+        self.assertIn(retry,{d['dispatch_id'] for d in pending})
+        def release(*args): return dict(status='RELEASED',evidence=dict(stdout='No process in device.'))
+        worker=self.worker(0); worker.options['release']=release
+        with patch('kernelx.agent.engine.probe',return_value=dict(devices=[])):
+            with self.assertRaises(ValueError): worker.clear_device(self.servers[0]['device_uid'])
+        worker.options['release']=lambda *args:dict(status='UNKNOWN',evidence=dict(stdout='query failed'))
+        with patch('kernelx.agent.engine.probe',return_value=dict(devices=[dict(device_uid=self.servers[0]['device_uid'],logical_id=5)])):
+            with self.assertRaises(ValueError): worker.clear_device(self.servers[0]['device_uid'])
+        self.worker(0,residual).tick(); self.assertEqual(calls,[1])
+        worker.options['release']=release
+        with patch('kernelx.agent.engine.probe',return_value=dict(devices=[dict(device_uid=self.servers[0]['device_uid'],logical_id=5)])):
+            worker.clear_device(self.servers[0]['device_uid'])
+        center=Center(self.root/'center'); self.addCleanup(center.close)
+        self.worker(0,transport=center.import_bundle).tick()
+        self.assertEqual(self.fleet.status(second)['counts']['INGESTED'],1)
+        self.assertEqual(next(d for d in self.fleet.status(first)['dispatches'] if d['dispatch_id']==retry)['state'],'INGESTED')
+        self.assertEqual(center.db.execute('SELECT count(*) FROM observations').fetchone()[0],60)
+
+    def test_restart_recovery_quarantines_device_before_new_dispatch(self):
+        from test_agent import Crash
+        from kernelx.agent.storage import database
+        calls=[]
+        def crashed(root,**kwargs):
+            calls.append(1); Path(root).mkdir()
+            atomic_json(Path(root)/'benchmark-ownership.json',dict(state='RESIDUAL'))
+            raise Crash('worker interrupted after launch')
+        self.submit_one_server('interrupted')
+        worker=self.worker(0,crashed)
+        worker.options['release']=lambda *args:dict(status='RELEASED',evidence=dict(stdout='No process in device.'))
+        with self.assertRaises(Crash): worker.tick()
+        run=self.submit_one_server('after-restart')
+        worker.tick()
+        self.assertEqual(calls,[1]); self.assertEqual(self.fleet.status(run)['counts']['PENDING'],1)
+        db=database(self.root/'worker0/server-resources/resources.db')
+        try: self.assertEqual(db.execute('SELECT state FROM devices').fetchone()[0],'QUARANTINED')
+        finally: db.close()
+
+    def test_shared_spool_blocks_second_run_after_retained_failure(self):
+        policy_path=self.root/'policy0.json'; policy=json.loads(policy_path.read_text())
+        policy.update(spool_max_bytes=1000,spool_high_watermark=.8); atomic_json(policy_path,policy)
+        self.request['estimated_output_bytes']=600
+        calls=[]
+        def failed(root,**kwargs):
+            calls.append(1); Path(root).mkdir(); (Path(root)/'failure.bin').write_bytes(b'x'*650)
+            return dict(valid=False,device_release='RELEASED',reason='retained CPU evidence')
+        self.submit_one_server('first'); self.submit_one_server('second')
+        result=self.worker(0,failed).tick()
+        self.assertEqual(calls,[1]); self.assertEqual([d['state'] for d in result],['FAILED','PENDING'])
+        self.worker(0,failed).tick(); self.assertEqual(calls,[1])
+
+    def test_shared_cache_resumes_after_ack_and_upload_archive_cleanup(self):
+        calls=[]
+        def runner(root,**kwargs): calls.append(1); return self.runner(root,**kwargs)
+        self.submit_one_server('captured'); self.worker(0,runner).tick()
+        state=self.root/'worker0'
+        from kernelx.agent.storage import database
+        db=database(next(state.glob('*/agent/state.db')))
+        bundle=db.execute('SELECT * FROM outbox').fetchone(); db.close()
+        spool=Path(bundle['path']).parent.parent
+        archive=spool/'uploads'/(bundle['bundle_id']+'.tar')
+        archive.parent.mkdir(); archive.write_bytes(b'x'*65536)
+        # Enough capacity for the retained case plus the next estimate, but the
+        # upload archive takes the aggregate over the server watermark.
+        used=sum(p.stat().st_size for p in spool.rglob('*') if p.is_file())
+        policy_path=self.root/'policy0.json'; policy=json.loads(policy_path.read_text())
+        policy['spool_max_bytes']=(used-65536+1024+100)/.8; atomic_json(policy_path,policy)
+        run=self.submit_one_server('waiting')
+        self.assertEqual(self.worker(0,runner).tick()[-1]['state'],'PENDING'); self.assertEqual(calls,[1])
+        center=Center(self.root/'center'); self.addCleanup(center.close)
+        result=self.worker(0,runner,center.import_bundle).tick()
+        self.assertFalse(archive.exists()); self.assertFalse(Path(bundle['path']).exists())
+        self.assertEqual(calls,[1,1]); self.assertEqual(self.fleet.status(run)['counts']['INGESTED'],1)
+
+    def test_existing_dispatch_quarantine_migrates_once_and_clear_is_durable(self):
+        from kernelx.agent import Agent
+        from unittest.mock import patch
+        run=self.submit_one_server('legacy'); dispatch=self.fleet.pull(self.servers[0]['server_id'])[0]
+        directory=self.root/'worker0'/dispatch['dispatch_id']; directory.mkdir(parents=True)
+        atomic_json(directory/'plan.json',json.loads(dispatch['plan']))
+        # Simulate a pre-fix persisted, dispatch-local quarantine.
+        agent=Agent(directory/'agent',self.root/'policy0.json',directory/'plan.json')
+        agent.quarantine(self.servers[0]['device_uid'],'legacy unknown release'); agent.close()
+        calls=[]
+        def runner(root,**kwargs): calls.append(1); return self.runner(root,**kwargs)
+        self.worker(0,runner).tick(); self.assertEqual(calls,[])
+        def release(*args): return dict(status='RELEASED',evidence=dict(stdout='No process in device.'))
+        worker=self.worker(0,runner); worker.options['release']=release
+        with patch('kernelx.agent.engine.probe',return_value=dict(devices=[dict(device_uid=self.servers[0]['device_uid'],logical_id=5)])):
+            worker.clear_device(self.servers[0]['device_uid'])
+        center=Center(self.root/'center'); self.addCleanup(center.close)
+        self.worker(0,runner,center.import_bundle).tick()
+        self.assertEqual(calls,[1]); self.assertEqual(self.fleet.status(run)['counts']['INGESTED'],1)
+
     def test_submit_is_immutable_and_gaps_are_never_success(self):
         run=self.fleet.submit(self.request)
         self.assertEqual(run,self.fleet.submit(self.request))

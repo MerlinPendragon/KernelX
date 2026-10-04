@@ -110,3 +110,25 @@ python3 -m kernelx center-entry \
 
 新版私有原始归档 SHA256：
 `e6ca6e44c25e05e51e716f1194cd0a5a5b3177d4434ab41723f94d2492bed33b`。
+
+
+## PR #9 服务器共享资源复审修复
+
+针对 59da5c7 的两条复审意见，所有 Fleet 分派改用同一 worker 的持久隔离账本
+与累计 spool 水位。最终 93 项测试在 910B1 全部通过，本机 89 通过、4 项 Linux
+专用跳过；compileall 和 diff --check 通过。完整日志为
+`tests/fixtures/agent_910b1/shared-resource-review-tests.log`。
+
+新增五项 CPU 故障回归（均为 CPU runner double，不占 NPU）：
+
+- RESIDUAL/UNKNOWN 后，新全局 run 和显式 retry 都不启动；身份不匹配或空闲
+  查询 UNKNOWN 时不能解除，人工校验成功后两分派恢复并分别入库 30 条观测。
+- worker 中断后的恢复写入共享隔离，后续新分派保持 PENDING，不进入 Runner。
+- 1000-byte server 配额、0.8 水位、600-byte 预计产物，首分派保留 650-byte
+  失败文件后，第二分派及重启 tick 都不再调用 Runner（context 也计入占用）。
+- 已完成数据和上传归档跨分派累计；后续任务暂停，持久 ACK 清理完整数据及
+  对应上传归档后，同一窗口恢复，累计仍为两次采集，无重测。
+- 旧分派隔离状态升级迁移后仍阻断；人工解除后重启不会重新导入旧隔离。
+
+本轮验证服务器共享状态与缓存调度，没有新增 NPU benchmark。此前真实
+910B1 采集/截止/撤销与数据库证据保留，不把 CPU 回归宣称为新增实机采集。

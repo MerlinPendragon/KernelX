@@ -22,7 +22,7 @@ def utc(clock): return datetime.fromtimestamp(clock,timezone.utc).isoformat().re
 
 
 class Agent:
-    def __init__(self,state,policy,plan,clock=time.time,runner=collect,release=release_check,fault_hook=None,dispatch_context=None):
+    def __init__(self,state,policy,plan,clock=time.time,runner=collect,release=release_check,fault_hook=None,dispatch_context=None,resource_root=None,cache_root=None):
         self.root=Path(state).resolve(); self.root.mkdir(parents=True,exist_ok=True)
         os.chmod(self.root,0o700)
         self.spool=self.root/'spool'; self.spool.mkdir(exist_ok=True)
@@ -39,7 +39,30 @@ class Agent:
         CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, at REAL, scope TEXT, identity TEXT, state TEXT, detail TEXT);
         ''')
 
-    def close(self): self.db.close()
+        self.resource_db=self.db
+        self.cache_root=Path(cache_root).resolve() if cache_root else None
+        if resource_root:
+            shared=Path(resource_root).resolve(); shared.mkdir(parents=True,exist_ok=True)
+            os.chmod(shared,0o700)
+            self.resource_db=database(shared/'resources.db')
+            self.resource_db.executescript('''
+            CREATE TABLE IF NOT EXISTS devices(device_uid TEXT PRIMARY KEY, state TEXT, reason TEXT, checked REAL);
+            CREATE TABLE IF NOT EXISTS migrations(source TEXT PRIMARY KEY);
+            CREATE TABLE IF NOT EXISTS events(id INTEGER PRIMARY KEY, at REAL, scope TEXT, identity TEXT, state TEXT, detail TEXT);
+            ''')
+            # Upgrade existing per-dispatch ledgers once. Old quarantine must not
+            # disappear on upgrade or reappear after a subsequent manual clear.
+            with self.resource_db:
+                self.resource_db.execute('BEGIN IMMEDIATE')
+                source=str(self.root)
+                if not self.resource_db.execute('SELECT 1 FROM migrations WHERE source=?',(source,)).fetchone():
+                    for row in self.db.execute('SELECT * FROM devices WHERE state=?',('QUARANTINED',)):
+                        self.resource_db.execute('INSERT OR REPLACE INTO devices VALUES(?,?,?,?)',tuple(row))
+                    self.resource_db.execute('INSERT INTO migrations VALUES(?)',(source,))
+
+    def close(self):
+        if self.resource_db is not self.db: self.resource_db.close()
+        self.db.close()
     def hook(self,stage):
         if self.fault_hook: self.fault_hook(stage)
 
@@ -69,7 +92,10 @@ class Agent:
         return max(task['pilot_upper_seconds'], values[math.ceil(.95*len(values))-1]*1.2 if len(values)>=5 else 0)
 
     def cache_available(self,policy,task):
-        used=sum(p.stat().st_size for p in self.spool.rglob('*') if p.is_file())
+        roots=list(self.cache_root.glob('*/agent/spool')) if self.cache_root else [self.spool]
+        # Includes failed/partial evidence and streaming upload archives belonging
+        # to every dispatch. The FleetWorker lock serializes checks and execution.
+        used=sum(p.stat().st_size for root in roots for p in root.rglob('*') if p.is_file())
         estimated=task['estimated_output_bytes']
         return used+estimated<=policy['spool_max_bytes']*policy['spool_high_watermark'] and shutil.disk_usage(self.spool).free>estimated
 
@@ -92,9 +118,9 @@ class Agent:
         self.hook('AFTER_REGISTER')
 
     def quarantine(self,uid,reason):
-        with self.db:
-            self.db.execute('INSERT OR REPLACE INTO devices VALUES(?,?,?,?)',(uid,'QUARANTINED',reason,self.clock()))
-            self.event('device',uid,'QUARANTINED',reason)
+        with self.resource_db:
+            self.resource_db.execute('INSERT OR REPLACE INTO devices VALUES(?,?,?,?)',(uid,'QUARANTINED',reason,self.clock()))
+            self.resource_db.execute('INSERT INTO events(at,scope,identity,state,detail) VALUES(?,?,?,?,?)',(self.clock(),'device',uid,'QUARANTINED',reason))
 
     def recover(self):
         for outer in sorted(self.spool.iterdir()):
@@ -211,7 +237,7 @@ class Agent:
                 if remaining<=self.budget(task,plan_hash)+policy['cleanup_reserve_seconds']: stopped='insufficient budget before soft cutoff'; break
                 if not self.cache_available(policy,task): stopped='spool high watermark or disk capacity'; break
                 device=next(d for d in policy['allowed_devices'] if d['device_uid']==task['device_uid'])
-                status=self.db.execute('SELECT state FROM devices WHERE device_uid=?',(device['device_uid'],)).fetchone()
+                status=self.resource_db.execute('SELECT state FROM devices WHERE device_uid=?',(device['device_uid'],)).fetchone()
                 if status and status['state']=='QUARANTINED':
                     with self.db:
                         self.db.execute('UPDATE tasks SET state=?,reason=? WHERE window_id=? AND task_id=?',('REJECTED','device quarantined',wid,task['task_id']))
@@ -285,16 +311,19 @@ class Agent:
             return dict(window_id=wid,state='CLOSED',terminal=terminal,reason=stopped,tasks=states)
 
     def status(self):
-        return {name:[dict(row) for row in self.db.execute('SELECT * FROM '+name)] for name in ('windows','tasks','attempts','outbox','devices','events')}
+        result={name:[dict(row) for row in self.db.execute('SELECT * FROM '+name)] for name in ('windows','tasks','attempts','outbox','events')}
+        result['devices']=[dict(row) for row in self.resource_db.execute('SELECT * FROM devices')]
+        if self.resource_db is not self.db: result['resource_events']=[dict(row) for row in self.resource_db.execute('SELECT * FROM events')]
+        return result
 
     def clear_device(self,uid):
         with DeviceLock('agent-state',self.root/'.locks'):
-            policy,_=self.configuration(); env=probe(policy['server_id'])
+            policy=read_policy(json.loads(self.policy_path.read_text())); env=probe(policy['server_id'])
             device=next((d for d in policy['allowed_devices'] if d['device_uid']==uid),None)
             if not device or not any(d['device_uid']==uid and d['logical_id']==device['logical_id'] for d in env['devices']): raise ValueError('device identity mismatch')
             with DeviceLock(uid):
                 evidence=self.release(device['logical_id'],[],Collector(policy['server_id']))
                 if evidence['status']!='RELEASED' or 'no process' not in evidence['evidence']['stdout'].lower(): raise ValueError('device is not confirmed idle')
-                with self.db:
-                    self.db.execute('INSERT OR REPLACE INTO devices VALUES(?,?,?,?)',(uid,'READY','manual clear with idle evidence',self.clock()))
-                    self.event('device',uid,'READY',json.dumps(evidence))
+                with self.resource_db:
+                    self.resource_db.execute('INSERT OR REPLACE INTO devices VALUES(?,?,?,?)',(uid,'READY','manual clear with idle evidence',self.clock()))
+                    self.resource_db.execute('INSERT INTO events(at,scope,identity,state,detail) VALUES(?,?,?,?,?)',(self.clock(),'device',uid,'READY',json.dumps(evidence)))

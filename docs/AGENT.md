@@ -142,3 +142,6 @@ Agent 校验 ACK 的 ID、manifest hash、durable 和观测数量后才登记 AC
 验收记录另见 `ISSUE3_910B1_VALIDATION.md`。
 
 更新版 issue #3 的全局计划、多 Agent 参考控制端与未完成范围见 [FLEET.md](FLEET.md)。
+
+Fleet 分派的设备隔离与 spool 水位使用服务器共享资源层；解除隔离命令为
+`fleet-clear-device`，详见 [FLEET.md](FLEET.md)。独立 Agent 保持本地账本。
