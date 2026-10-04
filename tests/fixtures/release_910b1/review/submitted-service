@@ -1,0 +1,18 @@
+[Unit]
+Description=KernelX signed release pull and reservation Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kernelx
+Group=kernelx
+ExecStart=/opt/kernelx/bootstrap/deploy/kernelx-bootstrap
+TimeoutStartSec=infinity
+KillMode=control-group
+UMask=0077
+NoNewPrivileges=true
+# NPU access is delegated by the host administrator; no PrivateDevices sandbox.
+
+[Install]
+WantedBy=multi-user.target

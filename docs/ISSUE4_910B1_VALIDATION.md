@@ -1,5 +1,8 @@
 # Issue #4：910B1 签名发布与启动验收
 
+本页保留最初交付的实机证据。PR #10 审查后的最终 118 项回归与断外网
+正式 launcher/service 验收见 [ISSUE4_REVIEW_VALIDATION.md](ISSUE4_REVIEW_VALIDATION.md)。
+
 2026-10-04，用户授权当前设备测试；本轮只使用 device 5，20 次预热、10 次测量。
 300 秒有限预约、90 秒 task timeout、3 秒 cleanup reserve。源码隔离目录为
 `/home/lxb/kernelx-issue4`，没有修改共享 CANN/驱动/固件、启用长期 timer 或重启

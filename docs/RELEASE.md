@@ -106,7 +106,9 @@ python3 -B -m kernelx bootstrap-status --config /etc/kernelx/bootstrap.json
 
 每个 session 复制 plan 和 policy 快照、保存预检 environment，并绑定 release
 绝对路径、git commit 和 manifest。子进程 cwd/PYTHONPATH 固定为该 release，
-不会跟随运行中 current 变化。活跃 session 继承启动器锁，更新等待其结束。
+不会跟随运行中 current 变化。稳定 bootstrap 从已签名且逐文件校验的候选
+case manifest 校验 plan；case 升级不依赖 bootstrap 自身旧 Adapter 的 manifest。
+活跃 session 继承启动器锁，更新等待其结束。
 实际 policy 文件仍用于撤销检查，不能因复制 policy 而屏蔽人工撤销；plan 更新
 只影响下一 session。Runner 保存自身实际环境，release/git commit 写入环境
 extensions.release，center-entry 展开 release 关联。
@@ -116,7 +118,10 @@ smoke 复用真实 Agent 的 budget、预热 20 次、重复策略、软/硬截�
 smoke 与日常 main 使用不同任务状态，但共享一个资源隔离账本和累计 spool
 水位；更新不能绕过上个版本的 UNKNOWN/RESIDUAL。启动恢复分别检查 Python
 launcher 与 native benchmark 的 PID/boot/start-time 所有权，不结束外部进程，
-不能证明 NPU 释放则隔离；不会重置共享 NPU。
+不能证明 NPU 释放则隔离；不会重置共享 NPU。外层预算包含整个有效窗口和
+全部任务的准备/导出/入库余量，不以单任务 timeout 限制整个 session。外层失败
+同步恢复 Runner 的独立进程组并核查设备，完成恢复或持久隔离后才回退/返回，
+无需等下一 tick；外层 SIGTERM grace 为 10 秒，长于原生进程的 2 秒。
 
 人工处置后使用相同共享资源接口解除设备隔离：
 
@@ -132,8 +137,12 @@ python3 -B -m kernelx bootstrap-clear-device --config /etc/kernelx/bootstrap.jso
 
 bootstrap-status 分别返回 heartbeat、last_success、last_failure、upload 积压、
 release 状态、session 结果和事件。空闲 tick 只更新心跳；不能把它计为成功采集。
-smoke/采集失败保留自己的状态，不被“服务进程仍活着”掩盖。启动恢复先导入所有
+smoke/采集失败保留自己的状态，不被“服务进程仍活着”掩盖。CLI 输出
+runnable/exit_code：首次无可用版、必需 smoke 失败、应用失败退出 1；授权窗口
+等待、正常空闲和更新拒绝但旧健康版仍可运行退出 0。启动恢复先导入所有
 旧 main/smoke outbox，再验证新的采集配置；损坏或失效的 policy/plan 不阻止
 已完成结果回传。upload 按服务器所有角色的持久队列统计 ACKED 与 PENDING。
 
 故障测试与 910B1 实测见 [ISSUE4_910B1_VALIDATION.md](ISSUE4_910B1_VALIDATION.md)。
+
+PR #10 审查修复及断外网正式服务验收见 [ISSUE4_REVIEW_VALIDATION.md](ISSUE4_REVIEW_VALIDATION.md)。
