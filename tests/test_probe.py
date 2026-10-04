@@ -111,6 +111,54 @@ class ProbeTests(unittest.TestCase):
             self.assertEqual(entry['stdout'], 'partial')
             self.assertIsNone(entry['exit_code'])
 
+    def test_950dt_chip_selector_retry_preserves_evidence(self):
+        for query in ('board', 'usages', 'proc-mem'):
+            with self.subTest(query=query):
+                c = Collector(SERVER)
+                argv = ['npu-smi', 'info', '-t', query, '-i', '0', '-c', '0']
+                results = [Mock(stdout='This device does not support input parameter of -c.\n', stderr='', returncode=215),
+                           Mock(stdout='No running process\n', stderr='', returncode=0)]
+                with patch('kernelx.probe.subprocess.run', side_effect=results) as run:
+                    result = c.run(argv)
+                self.assertEqual(run.call_args_list[1].args[0], argv[:6])
+                self.assertLessEqual(run.call_args_list[1].kwargs['timeout'], c.timeout)
+                self.assertEqual(result['execution_status'], 'KNOWN')
+                self.assertEqual([e['argv'] for e in c.evidence], [argv, argv[:6]])
+                self.assertEqual(c.evidence[0]['execution_status'], 'UNSUPPORTED')
+
+    def test_chip_selector_retry_is_narrow_and_keeps_failure(self):
+        base = ['npu-smi', 'info', '-t', 'proc-mem', '-i', '0', '-c', '0']
+        rejected = 'This device does not support input parameter of -c.'
+        for argv, message in [(base[:-1]+['1'], rejected),
+                              (base, 'Permission denied'),
+                              (base, 'Error parameter of -t'),
+                              (['npu-smi', 'set']+base[2:], rejected)]:
+            with self.subTest(argv=argv, message=message):
+                c = Collector(SERVER)
+                with patch('kernelx.probe.subprocess.run', return_value=Mock(stdout=message, stderr='', returncode=215)) as run:
+                    c.run(argv)
+                self.assertEqual(run.call_count, 1)
+        c = Collector(SERVER)
+        with patch('kernelx.probe.subprocess.run', side_effect=[
+                Mock(stdout=rejected, stderr='', returncode=215),
+                Mock(stdout='Error parameter of -t', stderr='', returncode=215)]):
+            self.assertEqual(c.run(base)['execution_status'], 'UNSUPPORTED')
+        self.assertEqual(len(c.evidence), 2)
+
+    def test_950dt_release_check_uses_retry_output(self):
+        from kernelx.runner import release_check
+        for output, expected in [('No process in device.', 'RELEASED'),
+                                 ('Process ID: 123', 'RESIDUAL'),
+                                 ('unknown process table', 'UNKNOWN')]:
+            with self.subTest(output=output):
+                c = Collector(SERVER)
+                with patch('kernelx.probe.subprocess.run', side_effect=[
+                    Mock(stdout='This device does not support input parameter of -c.', stderr='', returncode=215),
+                    Mock(stdout=output, stderr='', returncode=0)]):
+                    result = release_check(0, [123], c)
+                self.assertEqual(result['status'], expected)
+                self.assertEqual(result['evidence']['argv'], ['npu-smi', 'info', '-t', 'proc-mem', '-i', '0'])
+
     def test_redaction_preserves_replayable_format(self):
         c = Collector(SERVER)
         entry = c.record(['test'], 'VDie ID : CC21EE64 12345678\nNDie ID : 00000000 00000000\nSerial Number : ABC123\n/home/someone/data 10.0.0.1')

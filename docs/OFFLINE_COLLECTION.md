@@ -101,6 +101,9 @@ v0.1.1 修复 950DT 的五列表头（含 Slot ID、Chip Phy-ID）被旧解析�
 此表头仅支持无可见设备重映射、Chip ID 为 0 且 NPU ID 与 Chip Phy-ID 相等的直连布局；
 不将任意物理 ID 表视为逻辑 ID 映射。此次修复使用服务器提供的输出回放验证，
 不代表已完成 950DT 的 profiler、编译和设备释放格式验证。
+v0.1.2 对 board/usages/proc-mem 的只读查询增加兼容重试：仅当 chip 0 查询明确
+返回 `This device does not support input parameter of -c.` 时，去掉 `-c 0` 后重试一次，
+保留两次原始查询证据。查询失败或未知进程输出仍不算设备已释放。
 
 ## 从源码重建单文件
 

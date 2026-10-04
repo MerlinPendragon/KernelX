@@ -167,9 +167,23 @@ class Collector:
         return entry
 
     def run(self, argv):
+        began = time.monotonic()
+        record = self._run_once(argv, self.timeout)
+        # 950DT rejects the chip selector for device-scoped read-only queries.
+        # Retry only this explicit rejection and chip 0, preserving both records.
+        eligible = (len(argv) == 8 and argv[:3] == ['npu-smi', 'info', '-t'] and
+                    argv[3] in ('board', 'usages', 'proc-mem') and argv[4] == '-i' and
+                    str(argv[5]).isdigit() and argv[6:] == ['-c', '0'])
+        rejected = 'This device does not support input parameter of -c.'
+        remaining = self.timeout - (time.monotonic() - began)
+        if eligible and record['execution_status'] == 'UNSUPPORTED' and rejected in (record['stdout'] + record['stderr']) and remaining > 0:
+            return self._run_once(argv[:6], remaining)
+        return record
+
+    def _run_once(self, argv, timeout):
         started, monotonic = now(), time.monotonic()
         try:
-            result = subprocess.run(argv, capture_output=True, text=True, errors="replace", timeout=self.timeout, check=False)
+            result = subprocess.run(argv, capture_output=True, text=True, errors="replace", timeout=timeout, check=False)
             return self.record(argv, result.stdout, result.stderr, result.returncode,
                                duration=time.monotonic() - monotonic, started=started)
         except FileNotFoundError as exc:
