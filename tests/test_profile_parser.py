@@ -39,6 +39,28 @@ class ParserTests(unittest.TestCase):
         self.mutate_rows(lambda rows: rows.reverse())
         self.assertEqual(first['invocations'],self.parse()['invocations'])
         self.assertIn('Context ID',first['raw_rows'][0])
+    def test_multiple_correlated_tasks_use_span_not_sum_or_average(self):
+        from kernelx.profile_parser import parse_ranges
+        # Add an overlapping second task to each invocation. CPU transformation
+        # tests attribution math only; this is not another library's NPU result.
+        def add_rows(rows):
+            extra=[]
+            for row in rows:
+                clone=dict(row);clone['Task ID']=str(int(row['Task ID'])+10000);clone['OP Type']='Other';clone['Op Name']='second';extra.append(clone)
+            rows.extend(extra)
+        self.mutate_rows(add_rows)
+        def add_trace(data):
+            import copy
+            for event in list(data):
+                if event.get('args',{}).get('Task Id') is not None:
+                    clone=copy.deepcopy(event);clone['args']['Task Id']=int(event['args']['Task Id'])+10000;clone['name']='second';data.append(clone)
+        self.mutate_trace(self.trace,add_trace)
+        result=parse_ranges(self.csv,self.trace,self.tx,self.sidecar,5,10,3)
+        self.assertTrue(result['valid'],result['reasons']);self.assertEqual(result['actual_task_count'],20)
+        first=result['invocations'][0];self.assertEqual(first['task_duration_us'],[4.24,4.24]);self.assertEqual(first['device_span_us'],4.24)
+        self.assertFalse(self.parse()['valid'])
+        self.assertFalse(parse_ranges(self.csv,self.trace,self.tx,self.sidecar,5,10,3,rank=1)['valid'])
+
     def test_missing_trace_preserves_csv_but_invalidates(self):
         self.trace.unlink();result=self.parse()
         self.assertFalse(result['valid']);self.assertEqual(result['quality'],['TRACE_MISSING'])

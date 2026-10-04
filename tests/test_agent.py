@@ -102,6 +102,28 @@ class AgentTests(unittest.TestCase):
             runner=runner or self.runner,release=release or self.release,fault_hook=hook)
         self.addCleanup(agent.close); return agent
 
+    def test_empty_task_plan_fails_closed_without_launch(self):
+        self.plan['tasks']=[];self.save_config();agent=self.agent()
+        self.assertEqual(agent.tick()['state'],'CONFIG_INVALID');self.assertEqual(self.calls,[])
+
+    def test_complete_capture_must_match_frozen_task_manifest(self):
+        def wrong_case(root,**kwargs):
+            result=self.runner(root,**kwargs)
+            manifest=json.loads((Path(root)/'manifest.json').read_text());manifest['implementation']='unexpected provider declaration'
+            atomic_json(Path(root)/'manifest.json',manifest)
+            for name in ('plan','session'):
+                path=Path(root)/(name+'.json');data=json.loads(path.read_text());data['plan_sha256']=digest(manifest)
+                if name=='plan':data['case_manifest_sha256']=digest(manifest)
+                atomic_json(path,data)
+            artifacts=json.loads((Path(root)/'artifacts.json').read_text())
+            for artifact in artifacts:
+                path=Path(root)/artifact['uri'].split('/',3)[-1]
+                artifact.update(sha256=hashlib.sha256(path.read_bytes()).hexdigest(),bytes=path.stat().st_size)
+            atomic_json(Path(root)/'artifacts.json',artifacts)
+            return result
+        agent=self.agent(runner=wrong_case);result=agent.tick()
+        self.assertFalse(agent.status()['outbox']);self.assertNotEqual(result.get('terminal'),'COMPLETED')
+
     def test_draft_policy_and_plan_can_change_before_window(self):
         self.now=timestamp('2026-10-04T01:00:00+08:00')
         self.policy['enabled']=False; self.save_config(); agent=self.agent()

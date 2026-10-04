@@ -1,0 +1,261 @@
+{
+  "schema_version": 1,
+  "library": "tile-kernels",
+  "catalog_version": "pilot-v1",
+  "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+  "upstream": {
+    "repository": "https://github.com/deepseek-ai/TileKernels",
+    "commit": "66258df6175d2f630ffecb04c5ab66bff8a2ae6a",
+    "requirements_source": "https://github.com/deepseek-ai/TileKernels/blob/66258df6175d2f630ffecb04c5ab66bff8a2ae6a/README.md"
+  },
+  "package": "tile-kernels",
+  "entry": "per-token-cast",
+  "requirements": {
+    "python_min": [
+      3,
+      12
+    ],
+    "dependencies": [
+      "torch",
+      "torch-npu",
+      "tilelang"
+    ],
+    "soc_prefixes": [
+      "950"
+    ],
+    "versions_min": {
+      "torch": [
+        2,
+        13,
+        0
+      ],
+      "torch-npu": [
+        2,
+        13,
+        0
+      ],
+      "tilelang": [
+        0,
+        1,
+        15
+      ],
+      "cann": [
+        9,
+        2,
+        0
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "tile-kernels"
+        },
+        "operator": "per-token-cast",
+        "inputs": [
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              128,
+              512
+            ],
+            "dtype": "float8_e4m3fn",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              128,
+              4
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              4,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "fmt": "e4m3",
+          "num_per_channels": 128
+        },
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:520cdc7bd0c422d695e20a9fbbecdde87dd3c506eb1fffa3085c2d001708ce70",
+      "core": true,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "tile-kernels"
+        },
+        "operator": "per-token-cast",
+        "inputs": [
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              1024,
+              512
+            ],
+            "dtype": "float8_e4m3fn",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              1024,
+              4
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              4,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "fmt": "e4m3",
+          "num_per_channels": 128
+        },
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:b7061b9a1931d5b3989248a776bfe7688f09c85fd86d90ecd12ba3dca96e90e7",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "tile-kernels"
+        },
+        "operator": "per-token-cast",
+        "inputs": [
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              4096,
+              512
+            ],
+            "dtype": "float8_e4m3fn",
+            "layout": "ND",
+            "stride": [
+              512,
+              1
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              4
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              4,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "fmt": "e4m3",
+          "num_per_channels": 128
+        },
+        "input_generation": {
+          "algorithm": "seeded-ones-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:07f45a17413262e84a05434a749968bbccb60ed6b751b55fa4a651bd5d96072b",
+      "core": false,
+      "resources": {
+        "mode": "independent",
+        "min_ranks": 1,
+        "even_ranks": false,
+        "same_environment_group": true,
+        "transport": []
+      }
+    }
+  ]
+}

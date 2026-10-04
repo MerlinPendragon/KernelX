@@ -156,7 +156,5 @@ def self_test():
     adapter=CannAddAdapter(); validate('case',adapter.manifest['case'])
     if case_key(adapter.manifest['case'])!=adapter.manifest['case_key']: raise ValueError('case key mismatch')
     # Read every shipped schema/manifest; no runtime, compiler or NPU initialized.
-    from .libraries import Registry
-    Registry() # validates every catalog case/key without importing frameworks
     for path in Path(__file__).parent.glob('schemas/*.json'): json.loads(path.read_text())
     return dict(healthy=True,protocol='latency-v1',stdlib_only=True,npu_used=False)

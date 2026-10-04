@@ -84,8 +84,12 @@ def read_plan(value,policy,manifest):
     if timestamp(value['valid_until'])<=timestamp(value['valid_from']): raise ValueError('empty plan validity')
     allowed={d['device_uid'] for d in policy['allowed_devices']}; ids=set()
     for task in value['tasks']:
-        if set(task)!={'task_id','adapter','device_uid','warmup','repeats','pilot_upper_seconds','estimated_output_bytes'}: raise ValueError('invalid task fields')
-        if not task['task_id'] or task['task_id'] in ids or task['adapter']!='cann-add' or task['device_uid'] not in allowed: raise ValueError('invalid/unauthorized task')
+        if set(task)!=({'task_id','adapter','device_uid','warmup','repeats','pilot_upper_seconds','estimated_output_bytes'} | (set() if task['adapter']=='cann-add' else {'case_index'})): raise ValueError('invalid task fields')
+        if not task['task_id'] or task['task_id'] in ids or task['adapter'] not in ('cann-add','sgl-kernel-npu','tile-kernels','deepgemm-ascend') or task['device_uid'] not in allowed: raise ValueError('invalid/unauthorized task')
+        if task['adapter']!='cann-add':
+            from ..libraries import FrozenPerformanceAdapter
+            if type(task['case_index']) is not int or task['case_index']<0 or digest(FrozenPerformanceAdapter(task['adapter'],task['case_index']).manifest)!=value['manifest_sha256']:raise ValueError('case binding mismatch')
+        if task['adapter']!=value['tasks'][0]['adapter']:raise ValueError('one frozen adapter/case binding per plan')
         ids.add(task['task_id'])
         for name in ('warmup','repeats'):
             if type(task[name]) is not int or not 1<=task[name]<=1000: raise ValueError('invalid repeat policy')

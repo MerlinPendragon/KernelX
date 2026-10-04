@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "library": "deepep-ascend",
+  "catalog_version": "pilot-v1",
+  "scope_definition": "full is all frozen pilot-v1 sizes of this performance entry; not exhaustive upstream API coverage",
+  "upstream": {
+    "repository": "https://github.com/deepseek-ai/DeepEP-Ascend",
+    "commit": "3b25377d04b24fc6154698ded78a2bcb2c59afff",
+    "requirements_source": "https://github.com/deepseek-ai/DeepEP-Ascend/blob/3b25377d04b24fc6154698ded78a2bcb2c59afff/README.md"
+  },
+  "package": "deep_ep",
+  "entry": "ep-dispatch-combine",
+  "requirements": {
+    "python_min": [
+      3,
+      10
+    ],
+    "dependencies": [
+      "torch",
+      "torch-npu",
+      "deep-jit"
+    ],
+    "soc_prefixes": [
+      "950"
+    ],
+    "versions_min": {
+      "cann": [
+        9,
+        2,
+        0
+      ]
+    }
+  },
+  "cases": [
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepep-ascend"
+        },
+        "operator": "ep-dispatch-combine",
+        "inputs": [
+          {
+            "shape": [
+              128,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          },
+          {
+            "shape": [
+              128,
+              6
+            ],
+            "dtype": "int64",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          },
+          {
+            "shape": [
+              128,
+              6
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              128,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "num_experts": 256,
+          "num_topk": 6,
+          "world_size": 2,
+          "expanded": true,
+          "hidden": 7168,
+          "input_rule": {
+            "x": "ones",
+            "topk_idx": "arange % num_experts",
+            "topk_weights": "1 / num_topk"
+          }
+        },
+        "input_generation": {
+          "algorithm": "deterministic-dispatch-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:da0db9c71521ef6632eca94977776cb375c9f19a6f9e6bc7f76e3fba775d0b97",
+      "core": true,
+      "resources": {
+        "mode": "communication-group",
+        "min_ranks": 2,
+        "even_ranks": true,
+        "same_environment_group": true,
+        "transport": [
+          "HCCL",
+          "HCOMM",
+          "UBMEM",
+          "URMA"
+        ]
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepep-ascend"
+        },
+        "operator": "ep-dispatch-combine",
+        "inputs": [
+          {
+            "shape": [
+              1024,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          },
+          {
+            "shape": [
+              1024,
+              6
+            ],
+            "dtype": "int64",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          },
+          {
+            "shape": [
+              1024,
+              6
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              1024,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "num_experts": 256,
+          "num_topk": 6,
+          "world_size": 2,
+          "expanded": true,
+          "hidden": 7168,
+          "input_rule": {
+            "x": "ones",
+            "topk_idx": "arange % num_experts",
+            "topk_weights": "1 / num_topk"
+          }
+        },
+        "input_generation": {
+          "algorithm": "deterministic-dispatch-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:bada843d577f81229b6daf82928639d7b64f5ee2f4edfa3e929ab2d25649c697",
+      "core": false,
+      "resources": {
+        "mode": "communication-group",
+        "min_ranks": 2,
+        "even_ranks": true,
+        "same_environment_group": true,
+        "transport": [
+          "HCCL",
+          "HCOMM",
+          "UBMEM",
+          "URMA"
+        ]
+      }
+    },
+    {
+      "case": {
+        "schema_version": 1,
+        "protocol_version": "latency-v1",
+        "extensions": {
+          "library": "deepep-ascend"
+        },
+        "operator": "ep-dispatch-combine",
+        "inputs": [
+          {
+            "shape": [
+              4096,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              6
+            ],
+            "dtype": "int64",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          },
+          {
+            "shape": [
+              4096,
+              6
+            ],
+            "dtype": "float32",
+            "layout": "ND",
+            "stride": [
+              6,
+              1
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "shape": [
+              4096,
+              7168
+            ],
+            "dtype": "bfloat16",
+            "layout": "ND",
+            "stride": [
+              7168,
+              1
+            ]
+          }
+        ],
+        "attributes": {
+          "num_experts": 256,
+          "num_topk": 6,
+          "world_size": 2,
+          "expanded": true,
+          "hidden": 7168,
+          "input_rule": {
+            "x": "ones",
+            "topk_idx": "arange % num_experts",
+            "topk_weights": "1 / num_topk"
+          }
+        },
+        "input_generation": {
+          "algorithm": "deterministic-dispatch-v1",
+          "version": "1",
+          "seed": 0,
+          "input_sha256": null
+        },
+        "semantic_version": "1"
+      },
+      "case_key": "case-v1:2410d615be614ee70d40cf24188928400adbfdcd979bf23f0ee26a6d60ffa967",
+      "core": false,
+      "resources": {
+        "mode": "communication-group",
+        "min_ranks": 2,
+        "even_ranks": true,
+        "same_environment_group": true,
+        "transport": [
+          "HCCL",
+          "HCOMM",
+          "UBMEM",
+          "URMA"
+        ]
+      }
+    }
+  ]
+}

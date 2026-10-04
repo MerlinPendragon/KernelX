@@ -68,7 +68,12 @@ class Agent:
 
     def configuration(self):
         policy=read_policy(json.loads(self.policy_path.read_text()))
-        plan=read_plan(json.loads(self.plan_path.read_text()),policy,CannAddAdapter().manifest)
+        raw=json.loads(self.plan_path.read_text())
+        if not isinstance(raw,dict) or not isinstance(raw.get('tasks'),list) or not raw['tasks'] or not isinstance(raw['tasks'][0],dict):raise ValueError('nonempty bound task list required')
+        from ..libraries import FrozenPerformanceAdapter
+        adapter=raw['tasks'][0]['adapter']
+        manifest=CannAddAdapter().manifest if adapter=='cann-add' else FrozenPerformanceAdapter(adapter,raw['tasks'][0]['case_index']).manifest
+        plan=read_plan(raw,policy,manifest)
         return policy,plan
 
     def event(self,scope,identity,state,detail):
@@ -103,6 +108,8 @@ class Agent:
         entities,observations,artifacts=complete_case(run)
         preparation=json.loads((run/'preparation.json').read_text())
         authorization=json.loads((run/'authorization.json').read_text())
+        captured=json.loads((run/'manifest.json').read_text())
+        if digest(captured)!=context['plan']['manifest_sha256']:raise ValueError('captured case differs from frozen task manifest')
         expected_authorization=context['policy']['reservation_id']+':'+context['window_id']
         if authorization['authorization_id']!=expected_authorization or entities['session']['window_id']!=expected_authorization or authorization['device_uid']!=context['task']['device_uid'] or authorization['device_id']!=context['logical_id'] or timestamp(entities['session']['started_at'])<context['started']:
             raise ValueError('run does not match frozen reservation identity')
@@ -257,7 +264,8 @@ class Agent:
                     result=self.runner(run,server_id=policy['server_id'],device=device['logical_id'],expected_device_uid=device['device_uid'],
                         window_start=utc(active['start']),window_end=utc(active['end']),authorization_id=policy['reservation_id']+':'+wid,
                         warmup=task['warmup'],repeats=task['repeats'],timeout=policy['task_timeout_seconds'],cleanup=policy['cleanup_reserve_seconds'],
-                        cancel=lambda:self.revoked(ph,plan_hash,active))
+                        cancel=lambda:self.revoked(ph,plan_hash,active),
+                        **({} if task['adapter']=='cann-add' else dict(adapter_library=task['adapter'],case_index=task['case_index'])))
                 except (OSError,ValueError,RuntimeError) as exc:
                     # The runner may have launched before its final writes failed.
                     result=dict(valid=False,device_release='UNKNOWN',attempt_state='INTERRUPTED',reason=str(exc))

@@ -160,7 +160,9 @@ class Center:
         context=json.loads(context_path.read_text()) if context_path.exists() else {}
         fleet=context.get('fleet')
         if fleet and (context['policy']['server_id']!=entities['session']['server_id'] or context['task']['device_uid'] not in entities['session']['device_uids']): raise ValueError('fleet context differs from captured identity')
-        receipt=dict(bundle_id=identity,manifest_sha256=digest(manifest),durable=True,observations=len(observations))
+        old_receipt=self.db.execute('SELECT receipt FROM imports WHERE bundle_id=?',(identity,)).fetchone()
+        from ..probe import now
+        receipt=json.loads(old_receipt['receipt']) if old_receipt else dict(bundle_id=identity,manifest_sha256=digest(manifest),durable=True,observations=len(observations),imported_at=now())
         with self.db:
             self.db.execute('BEGIN IMMEDIATE')
             for kind,value in list(entities.items())+[('artifact',a) for a in artifacts]:

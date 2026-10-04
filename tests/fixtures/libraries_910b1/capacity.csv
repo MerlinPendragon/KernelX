@@ -1,0 +1,22 @@
+library,minutes,conservative_effective_repeat_capacity,new_unique_case_capacity,rotation_days,target_hours,uncertainty,automatic_reservation_change
+cann-opp,60,98,1,1,0.010088552978148148,pilot maximum / observed effective rate; not a statistical bound,False
+cann-opp,90,148,1,1,0.010088552978148148,pilot maximum / observed effective rate; not a statistical bound,False
+cann-opp,120,197,1,1,0.010088552978148148,pilot maximum / observed effective rate; not a statistical bound,False
+ops-nn,60,,,,,unavailable: missing library cost layers,False
+ops-nn,90,,,,,unavailable: missing library cost layers,False
+ops-nn,120,,,,,unavailable: missing library cost layers,False
+ops-transformer,60,,,,,unavailable: missing library cost layers,False
+ops-transformer,90,,,,,unavailable: missing library cost layers,False
+ops-transformer,120,,,,,unavailable: missing library cost layers,False
+sgl-kernel-npu,60,,,,,unavailable: missing library cost layers,False
+sgl-kernel-npu,90,,,,,unavailable: missing library cost layers,False
+sgl-kernel-npu,120,,,,,unavailable: missing library cost layers,False
+tile-kernels,60,,,,,unavailable: missing library cost layers,False
+tile-kernels,90,,,,,unavailable: missing library cost layers,False
+tile-kernels,120,,,,,unavailable: missing library cost layers,False
+deepgemm-ascend,60,,,,,unavailable: missing library cost layers,False
+deepgemm-ascend,90,,,,,unavailable: missing library cost layers,False
+deepgemm-ascend,120,,,,,unavailable: missing library cost layers,False
+deepep-ascend,60,,,,,unavailable: missing library cost layers,False
+deepep-ascend,90,,,,,unavailable: missing library cost layers,False
+deepep-ascend,120,,,,,unavailable: missing library cost layers,False
