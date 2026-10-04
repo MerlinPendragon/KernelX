@@ -16,6 +16,7 @@ from .probe import Collector, fact, now, probe
 from .profile_parser import PARSER_VERSION, parse_add
 from .protocol import digest, validate
 from .supervisor import run_owned
+from .device_lock import DeviceLock
 
 
 def utc(value):
@@ -56,6 +57,9 @@ def release_check(device, owned_pids, collector):
 
 
 def _collect(output,server_id,device,window_start,window_end,authorization_id,repeats=10,warmup=20,timeout=90,cleanup=3):
+    benchmark_env = dict(os.environ)
+    if 'ASCEND_RT_VISIBLE_DEVICES' in benchmark_env:
+        raise ValueError('ASCEND_RT_VISIBLE_DEVICES is unsupported; unset it before collecting with direct device IDs')
     if not authorization_id: raise ValueError('manual authorization ID required')
     if device < 0 or timeout <= 0: raise ValueError('invalid device or timeout')
     start,end=utc(window_start),utc(window_end)
@@ -88,24 +92,26 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     save(root/'preparation.json',adapter.prepare(device,warmup,repeats,raw,sidecar))
     remaining=window_budget(start,end,cleanup) # compile/probe can consume the window
     argv=adapter.benchmark_command(binary,device,warmup,repeats,raw,sidecar)
-    before=release_check(device,[],collector)
-    save(root/'device-before.json',before)
-    # An existing process is a conflict even in a manually authorized window.
-    if before['status']!='RELEASED' or not re.search(r'no process|no running process',before['evidence']['stdout'],re.I):
-        raise RuntimeError('device preflight has external occupancy or unknown status')
-    remaining=window_budget(start,end,cleanup)
-    wall_deadline=time.monotonic()+end-time.time()
-    began_ns=time.monotonic_ns()
-    execution=run_owned(argv,root/'benchmark.log',min(timeout,remaining),grace=min(2,cleanup))
-    save(root/'execution.json',execution)
-    # Query actual NPU process ownership independently of process-group exit.
-    release=release_check(device,execution['owned_pids'],collector)
-    for _ in range(3):
-        if release['status']=='RELEASED' or time.monotonic()>=wall_deadline: break
-        time.sleep(.1); release=release_check(device,execution['owned_pids'],collector)
-    release['by_hard_cutoff']=release['status']=='RELEASED' and utc(release['checked_at'])<=end
-    released_ns=time.monotonic_ns()
-    save(root/'device-release.json',release)
+    with DeviceLock(target[0]['device_uid']) as device_lock:
+        save(root/'device-lock.json',dict(device_uid=target[0]['device_uid'],path=str(device_lock.path),status='ACQUIRED'))
+        before=release_check(device,[],collector)
+        save(root/'device-before.json',before)
+        # An existing process is a conflict even in a manually authorized window.
+        if before['status']!='RELEASED' or not re.search(r'no process|no running process',before['evidence']['stdout'],re.I):
+            raise RuntimeError('device preflight has external occupancy or unknown status')
+        remaining=window_budget(start,end,cleanup)
+        wall_deadline=time.monotonic()+end-time.time()
+        began_ns=time.monotonic_ns()
+        execution=run_owned(argv,root/'benchmark.log',min(timeout,remaining),grace=min(2,cleanup),env=benchmark_env,pass_fds=(device_lock.fd,))
+        save(root/'execution.json',execution)
+        # Query actual NPU process ownership independently of process-group exit.
+        release=release_check(device,execution['owned_pids'],collector)
+        for _ in range(3):
+            if release['status']=='RELEASED' or time.monotonic()>=wall_deadline: break
+            time.sleep(.1); release=release_check(device,execution['owned_pids'],collector)
+        release['by_hard_cutoff']=release['status']=='RELEASED' and utc(release['checked_at'])<=end
+        released_ns=time.monotonic_ns()
+        save(root/'device-release.json',release)
     reason=execution['reason']
     succeeded=execution['exit_code']==0 and not reason and execution['process_release']=='RELEASED' and release['by_hard_cutoff']
     state='SUCCEEDED' if succeeded else ('INTERRUPTED' if reason=='INTERRUPTED' else 'FAILED')
@@ -113,6 +119,7 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
                      state=state,exit_code=execution['exit_code'],process_group=execution['process_group'],release_status=release['status'],
                      released_at=release['checked_at'] if release['status']=='RELEASED' else None,evidence_ids=[release['evidence']['evidence_id']],reason=reason)
     save(root/'attempt.json',attempt,'attempt')
+    versions=None
     providers=Path(str(sidecar)+'.providers.json')
     if succeeded and providers.is_file():
         versions=adapter.resolve_versions(providers); save(root/'runtime-versions.json',versions)
@@ -123,7 +130,7 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         env['software']['operator_libraries'].append(dict(name='cann-aclnn-api',role='api_provider',
              version=fact(status='UNKNOWN',reason='loaded API fingerprint observed; semantic version not established',source=[evidence['evidence_id']]),
              resolved_path=versions['api_path'],package_id=None,repository_url=None,git_commit=None,dirty_tree_sha256=None,
-             artifact_sha256=versions['api_sha256'],load_status='VERIFIED',used_by_case=[key]))
+             artifact_sha256=versions['api_sha256'],load_status='VERIFIED' if versions['status']=='VERIFIED_HOST_PROVIDER' else 'DECLARED_ONLY',used_by_case=[key]))
         env['extensions']['runtime_host_providers']=versions
     env['extensions']['manual_authorization_id']=authorization_id
     save(root/'environment.json',env,'environment')
@@ -141,7 +148,7 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         parsed.update(valid=False,quality=['INSUFFICIENT_DATA'],reasons=['benchmark/release/export incomplete'],invocations=[])
     save(root/'parsed.json',parsed)
     valid=parsed['valid']
-    if valid:
+    if valid and versions and versions['status']=='VERIFIED_HOST_PROVIDER':
         for entry in env['support_matrix']:
             if entry['library']=='cann-opp' and entry['hardware_bin']==target[0]['hardware_bin']['value']:
                 # A separate result, not a mutation of the frozen environment snapshot.

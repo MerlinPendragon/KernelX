@@ -18,7 +18,7 @@ python3 -m kernelx collect-cann-add \
 
 默认 **20 次预热、10 次测量**，`--warmup` / `--repeats` 可显式更改，每项限 1..1000。当前按用户要求固定 20 次；预热侧车保存每次单调 host 开始/结束与 host_elapsed_us，后续根据稳定性数据选择次数。本版不自动判断已达热稳定；这些 host 预热样本包含 workspace 准备/提交/同步，不等于 device kernel 延迟，不能直接与 profiler 下的 device duration 混合。
 
-输出目录必须不存在，每次运行独立 case/profile/attempt；不覆盖、复用或合并旧结果。当前适配器只接受一 NPU/芯片 0 与逻辑 ID 直接映射，其他映射明确拒绝。多芯片卡和多 rank 是后续适配范围。
+输出目录必须不存在，每次运行独立 case/profile/attempt；不覆盖、复用或合并旧结果。当前适配器只接受一 NPU/芯片 0 与逻辑 ID 直接映射，其他映射明确拒绝。设置 `ASCEND_RT_VISIBLE_DEVICES` 时（含空值、重排及可见设备子集），启动前直接拒绝；调用者需先确认直接设备 ID 后取消该变量。benchmark 使用已检查的环境快照，授权、profiling 和释放查询使用同一设备。多芯片卡和多 rank 是后续适配范围。
 
 ## 计时与归因
 
@@ -47,7 +47,9 @@ python3 -m kernelx parse-cann-add \
 
 ## 窗口、进程与设备释放
 
-窗口前、软截止后均不启动任务；编译/环境探测后重新检查时间，保留至少 3 秒清理预算。启动 benchmark 前要求 npu-smi proc-mem 明确无进程；权限不足、不识别输出或外部占用均拒绝。预约策略的持久化/撤销、重启恢复、outbox 属于 #3。
+窗口前、软截止后均不启动任务；编译/环境探测后重新检查时间，保留至少 3 秒清理预算。preflight 前按稳定 `device_uid` 获取 `/tmp/kernelx-device-locks/` 下的非阻塞跨进程 flock，持有至实际释放检查和结果保存完成。同设备第二个 Runner 拒绝启动；锁文件不得删除或更换 inode。native 子进程继承锁描述符，父进程意外退出也不会在 native 存活时释放锁。不同账户无法访问同一锁目录时直接失败，不能通过另建锁目录绕开。
+
+启动 benchmark 前要求 npu-smi proc-mem 明确无进程；权限不足、不识别输出或外部占用均拒绝。预约策略的持久化/撤销、重启恢复、outbox 属于 #3。
 
 `run_owned` 使用 `start_new_session=True` 单独创建进程组，以单调时钟限制执行；超时或 SIGTERM/SIGINT 转成中断，先向本组发 SIGTERM，宽限后必要时 SIGKILL。Linux `/proc` 追踪同组非 zombie 进程：父进程退出但子进程仍活着也会清理。不会按进程名杀进程，不向外部组发信号，不调用 npu-smi reset。native `aclrtResetDevice` 仅释放本进程 ACL 设备上下文，不复位共享物理卡。
 
@@ -57,7 +59,7 @@ python3 -m kernelx parse-cann-add \
 
 保存 manifest/preset/preparation/authorization、plan/session/attempt/profile/observation、immutable environment、原始 PROF、export CSV/trace、sidecar、benchmark/export/build 日志和 artifact SHA256/bytes 索引。artifact:// URI 以 profile ID 和原 run 根目录内路径解析；terminal session/profile/observations 本身不放入 profile 引用的 artifact 列表，避免循环引用。构建源与二进制 hash 参与 release ID。
 
-`dlsym + dladdr` 确认 aclnnAdd 的实际 host API 提供者，`/proc/self/maps` 记录加载的 Ascend 库路径与文件 SHA256；采集后添加带来源 evidence 的运行提供者条目，随后冻结环境快照。库指纹只证明观测到的 host 文件/提供者；设备 kernel 名称来自 profile，其二进制加载路径仍标为 DECLARED_ONLY，不冒称已验证 device kernel 制品。
+`dlsym + dladdr` 确认 aclnnAdd 的实际 host API 提供者，`/proc/self/maps` 记录全部实际加载的共享库路径与文件 SHA256（含自定义安装根及安装根之外的依赖）；采集后添加带来源 evidence 的运行提供者条目，随后冻结环境快照。指纹包含去重、排序后的全部映射库；缺失必要的 libopapi/libnnopbase/libmsprofiler/libascendcl、API 提供者未映射或库不可读取时为 UNVERIFIED_HOST_PROVIDER，不生成 verified-support。库指纹只证明观测到的 host 文件/提供者；设备 kernel 名称来自 profile，其二进制加载路径仍标为 DECLARED_ONLY，不冒称已验证 device kernel 制品。
 
 CANN 的遗留 9.1.0 与 OPP 9.2.0-beta.1 声明冲突不被覆盖。用例成功只输出该固定 case 的 verified-support 结果，以实际 API/加载库指纹作为 revision/CANN key，不把遗留 Toolkit 声明当成实测运行版本。不外推到其余库、其他 SoC 或未知环境的严格比较。
 

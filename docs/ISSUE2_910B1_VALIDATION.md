@@ -56,3 +56,27 @@ python3 -m kernelx parse-cann-add \
 42 项测试全部通过（5.727 秒）。本地 41 项通过，1 项 Linux 专用检查跳过；
 compileall 和 diff whitespace 检查通过。本次为离线增量验证，未重跑 NPU
 性能采集；正式 20 次预热 fixture 保持原样。
+
+
+### PR #8 审查修复验收
+
+修复设备可见性重映射、同设备并发与自定义 CANN 安装路径指纹三项意见。
+47 项测试在 910B1 全部通过（6.028 秒）；本地 46 项通过、1 项 Linux /proc
+测试跳过。新增回归使用两个独立 CLI 进程，确认只有一个进入同设备 preflight
+和 benchmark；验证可见性重排/子集/空值启动前拒绝、子进程继承锁、自定义路径
+下改变运行库会改变指纹，及缺必要运行库不产生已验证提供者状态。
+
+真实运行目录 `/home/lxb/kernelx-issue2/run-review-20261004T024633Z`，
+沿用用户全部设备可用的授权，仅使用 device 5，固定五分钟窗口、90 秒任务
+超时、20 次预热和 10 次测量。生成 30 条有效 observation；锁 ACQUIRED；
+NPU 于 `2026-10-04T02:46:55.562143Z`（北京时间 10:46:55）确认释放，
+在硬截止前。指纹覆盖 73 个实际加载共享库，必要库及不可读取库清单均为空。
+
+增量证据在 `tests/fixtures/cann_add_review_fixes/`：验收结果、加载库指纹、
+侧车及 observation；完整原始采集目录保留在目标机。本地原始 PROF 归档为
+`artifacts/issue2/raw-prof-review-fixes.tar.gz`（Git 忽略），SHA256：
+
+`a1d55415400d8bda6d8b297c05961b7562eee201f27eadb869cfaa19197871cf`
+
+这是固定 Add case 的实机验收；并发/自定义根的故障回归使用 CPU 模拟，
+不制造真实 NPU 并发干扰，不外推到其他硬件或库。旧正式 fixture 保持不变。

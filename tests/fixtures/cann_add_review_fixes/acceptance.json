@@ -1,0 +1,32 @@
+{
+  "result": {
+    "valid": true,
+    "output": "/home/lxb/kernelx-issue2/run-review-20261004T024633Z",
+    "attempt_state": "SUCCEEDED",
+    "quality": [
+      "VALID"
+    ],
+    "device_release": "RELEASED",
+    "released_by_hard_cutoff": true,
+    "observations": 30,
+    "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+    "authorization_id": "user-all-devices-pr8-review-fixes"
+  },
+  "device-lock": {
+    "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+    "status": "ACQUIRED"
+  },
+  "device-release": {
+    "status": "RELEASED",
+    "checked_at": "2026-10-04T02:46:55.562143Z",
+    "by_hard_cutoff": true
+  },
+  "runtime-versions": {
+    "status": "VERIFIED_HOST_PROVIDER",
+    "loaded_library_count": 73,
+    "loaded_libraries_sha256": "9730e01202c67c4640dd8edf88c846607127c16179a56f0443362882348fad48",
+    "missing_libraries": [],
+    "unavailable_libraries": []
+  },
+  "raw_prof_sha256": "a1d55415400d8bda6d8b297c05961b7562eee201f27eadb869cfaa19197871cf"
+}

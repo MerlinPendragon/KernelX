@@ -21,13 +21,13 @@ def group_members(pgid):
     return result
 
 
-def run_owned(argv, log, timeout, grace=2.0, env=None):
+def run_owned(argv, log, timeout, grace=2.0, env=None, pass_fds=()):
     if timeout <= 0 or grace < 0:
         raise ValueError('positive timeout and nonnegative grace required')
     started, start = now(), time.monotonic()
     reason, signals, seen = None, [], set()
     with Path(log).open('w') as output:
-        proc = subprocess.Popen(argv, stdout=output, stderr=subprocess.STDOUT, env=env, start_new_session=True)
+        proc = subprocess.Popen(argv, stdout=output, stderr=subprocess.STDOUT, env=env, pass_fds=pass_fds, start_new_session=True)
         pgid = proc.pid
         seen.add(proc.pid)
         try:

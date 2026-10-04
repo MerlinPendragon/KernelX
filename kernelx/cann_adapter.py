@@ -63,12 +63,24 @@ class CannAddAdapter:
 
     def resolve_versions(self, providers):
         data=json.loads(Path(providers).read_text())
-        libraries=[]
-        for path in data['loaded_libraries']:
-            if '/Ascend/' not in path: continue
-            p=Path(path).resolve()
-            libraries.append(dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
+        # Preserve every mapped shared library, including dependencies outside the
+        # installation root. Directory spelling is not evidence of ownership.
+        libraries, unavailable = [], []
+        paths = sorted({str(Path(path).resolve()) for path in data['loaded_libraries']})
+        for path in paths:
+            try:
+                libraries.append(dict(path=path,sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest()))
+            except OSError as exc:
+                unavailable.append(dict(path=path,reason=str(exc)))
         api=Path(data['api_path']).resolve()
-        return dict(api_symbol=data['api_symbol'],api_path=str(api),api_sha256=hashlib.sha256(api.read_bytes()).hexdigest(),
-                    loaded_libraries=libraries,loaded_libraries_sha256=digest(libraries),status='VERIFIED_HOST_PROVIDER',
+        api_sha256=next((item['sha256'] for item in libraries if item['path']==str(api)),None)
+        required={'libopapi','libnnopbase','libmsprofiler','libascendcl'}
+        names={Path(item['path']).name.split('.so')[0] for item in libraries}
+        missing=sorted(required-names)
+        if api_sha256 is None: missing.append('mapped API provider')
+        verified=not missing and not unavailable
+        return dict(api_symbol=data['api_symbol'],api_path=str(api),api_sha256=api_sha256,
+                    loaded_libraries=libraries,loaded_libraries_sha256=digest(libraries),
+                    missing_libraries=missing,unavailable_libraries=unavailable,
+                    status='VERIFIED_HOST_PROVIDER' if verified else 'UNVERIFIED_HOST_PROVIDER',
                     device_kernel_status='DECLARED_ONLY: profiler kernel identity observed; device binary load path not proven')

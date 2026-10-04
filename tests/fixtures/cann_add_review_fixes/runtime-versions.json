@@ -1,0 +1,304 @@
+{
+  "api_symbol": "aclnnAdd",
+  "api_path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libopapi.so",
+  "api_sha256": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+  "loaded_libraries": [
+    {
+      "path": "/usr/lib/ld-linux-aarch64.so.1",
+      "sha256": "20d5530628ea197786ccf067602a46cb4421b62ef9859a27f2232a3a1d517bcd"
+    },
+    {
+      "path": "/usr/lib64/libc.so.6",
+      "sha256": "f1fed61288165b0bf19b7eb29909ca9369fe891bd0fda6e7cdb807b93226fd82"
+    },
+    {
+      "path": "/usr/lib64/libdl.so.2",
+      "sha256": "51b0362938b86dba88c6634100922fef9504f13e62b39c5340bf67d400779839"
+    },
+    {
+      "path": "/usr/lib64/libgcc_s-10.3.1.so.1",
+      "sha256": "ab6d191e8d5418e11ced7ef1f50ed26ae95873e8656d9036297536fb31b2f669"
+    },
+    {
+      "path": "/usr/lib64/libm.so.6",
+      "sha256": "a79ecb3609c2bb4188ece642df4bae4d57631a9aa094191adea5ab20e66efbd5"
+    },
+    {
+      "path": "/usr/lib64/libnss_sss.so.2",
+      "sha256": "349f641a1035d603dfcbfef2749331ea6b6aa9833980d64d999edde68c5c4bf0"
+    },
+    {
+      "path": "/usr/lib64/libpthread.so.0",
+      "sha256": "9aa2f4105aa148b3cbe6dde708ebaa85597ba061c29301cd2ed64811cd9945b6"
+    },
+    {
+      "path": "/usr/lib64/librt.so.1",
+      "sha256": "48fe2d4c1e669befc83b0462429a441459e47a6bd1e8d1111be76353a720cec8"
+    },
+    {
+      "path": "/usr/lib64/libstdc++.so.6.0.28",
+      "sha256": "4c7553ebab5f78493bd5ce9c8b72df0037b828a4744ffab8243c76978f739065"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libacl_rt.so",
+      "sha256": "5a6518505ef66688f02b4bde97517ba217212f29304d59b3a6ef0db14ded6c83"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libacl_rt_impl.so",
+      "sha256": "4595d4cf50f064cc9d6a97688eecf5e95ef92a4291911e26dd301091997c37ee"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_autofusion.so",
+      "sha256": "a80484bd00ad285df7970953dde14bdbbf14ba281986cdb261b9d8922e966339"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_codegen.so",
+      "sha256": "41f955278d8b087165a86fc715766e532c37363ad8933da58c1b5e5a1712c1c0"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_ir.so",
+      "sha256": "8c2155e3639c2cfce44a7b890434664d9d8664dc053801daa18cc41efc1c6e92"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_ir_register.so",
+      "sha256": "662829547cdc25726c569d006607ffea59df0a2e827c8bafa807ed186bafd550"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_symbolizer.so",
+      "sha256": "9d3c9b29c8306b324ae8d3730780db283349d9817250826ee523e6201dabf32b"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libaihac_symbolizer_af.so",
+      "sha256": "fe66542cc6c6bb31e3a5dcb5e83bec358cd81fedff2d14f15adb4a9c1bf1c323"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascend_dump.so",
+      "sha256": "f1e5a58449299e93c36abc08bb0955483b08ed4f5cabd08d7dd8023f2312a1af"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascend_protobuf.so.3.13.0.0",
+      "sha256": "27b1bfa8ae1bf2a154cfce9b5b3904fb8e1b0a73e89d6e371ab78595012c4fe6"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascend_trace.so",
+      "sha256": "336c4bce4fbc080b03afed4a3941b7d1c0cce8969ed29f04583ebe75f4e5c8cc"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascend_watchdog.so",
+      "sha256": "4a3e1061867bf39916bc0181f9999314b46fd6517655b9782b339d2e1aba4a6e"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascendalog.so",
+      "sha256": "7a0c86927cb68d9c5b89050c2d830b1d73e72f5cf6a4fec8f6c96c6292a3618f"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libascendcl.so",
+      "sha256": "123d67c313f743e5d6f2e856f40c24d5edac376975cf0a7a1019e079b4171480"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libc_sec.so",
+      "sha256": "964df648e2dc8e04516b3919e259ca5a933d48dc3c4b88d4d558e7de212342e6"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libdummy_tls.so",
+      "sha256": "9b7ca13bfa379069601d3541c2adf04bacfbf1b75d63e427c86dc8bf4bf76380"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libeager_style_graph_builder_base.so",
+      "sha256": "95a5f1c01c3194b092e50cd0580deb4a609d72f854287ed1ba1f1b515e8d94db"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/liberror_manager.so",
+      "sha256": "d741945076d8297ea71b961102c7eb3aaeaf267bcffe0e7c9f032db3d9f3a773"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libes_math.so",
+      "sha256": "311f4421ba642771775a93e0483ad6280a179bf7469c18a13001422fb722dcb2"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libes_nn.so",
+      "sha256": "7d3d0ab8cbeba3054624837a0d56b7d6abc4632aabd34e86412f6ed6c16457e3"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libes_transformer.so",
+      "sha256": "fad4d1f5b399b1f8dd1080e850df18241630e62a2b900f5ec39e481f0a36d87f"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libexe_graph.so",
+      "sha256": "92245f33c93523ecf99614c735afa89b95b443aaac876ca09c4a088fb512249e"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libflow_graph.so",
+      "sha256": "b141fd6bc1cc2c21b73edf934ef4686b8ce53667002e47e620469e7f369f5139"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libge_common.so",
+      "sha256": "35944dad1339308a7b1f7f452b83021af0d95df6fdd49dee2d1d1e89fd98afc7"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libge_common_base.so",
+      "sha256": "bcc38d1b7a882f9aa546f62e710dbc259a1f7fc52927d49fec5c7acab62084ff"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libge_compiler.so",
+      "sha256": "a76e9feda580166fa31041320df2eee3d8cd9eb63b56a91be13c0ad517397b6d"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libgraph.so",
+      "sha256": "a81a25d0576b8b08fc3709de3c1979406e3940854f25ee75626fc07b937a939a"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libgraph_af.so",
+      "sha256": "c2b8adf5a9e52353bc4e9cb124086e5d2063cb8c13b824e2225c2d4d29a53184"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libgraph_base.so",
+      "sha256": "632ccb4e1778b549611b4580f0c5d415b7ed46f0ee6c79036cbad10ac40521dd"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libgraph_base_af.so",
+      "sha256": "8218690becc1196356dd144b42be1bdba90055d1de487bff97470260113fd85f"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/liblowering.so",
+      "sha256": "c23de2b0cc89e8bae13b3142c5ea07817759fcd87059dbc2a8130442fc9a2596"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libmetadef.so",
+      "sha256": "bfae844ce0cb90dc5ed7f320769112ccd63ae5f2ff0a0313dc23a4595b71a997"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libmmpa.so",
+      "sha256": "7cd9af70451076933bb4a4b29d024b8a7855939e7aceb60442ba65bb0f160878"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libmsprofiler.so",
+      "sha256": "bc6e19c8f9799d4c2bac0fd0d654abcbe6c3b041d8363d535eea5455bed8dbce"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libnnopbase.so",
+      "sha256": "42815ed76ace14f02990bc40b5427bb7f2b716228c8ea170e1f4cdb60497df1a"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libopapi.so",
+      "sha256": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libopp_registry.so",
+      "sha256": "39d3bada7097847b146e76a1c3b05c1517da4e4d9a35953c859c6e80e821c9d9"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libops_base.so",
+      "sha256": "60984f6a0d9954defe1a7c24e7e78721f4e77ecfcd95008e5c016385fd8cb520"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libplatform.so",
+      "sha256": "c80c6a5b72bf076240e261ab7a8cd178ba7013c8054cd1996964229d3d0c52e4"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libprofapi.so",
+      "sha256": "fcb6a88c039a6226233e5c1c10f8129141114135bd26cc0dc40a8e8965487106"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libprofimpl.so",
+      "sha256": "7c156b588d65e3f1813b52a2f328fb1cadda6352f48f2083d63cd8e02f36d92a"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libregister.so",
+      "sha256": "84d4cb58dbe0ef3e59e6466f2ada7c2fcee9de9ead1d3845672948b561c569fa"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libruntime.so",
+      "sha256": "7bc2b610dff552df2f114c95701156b4aba43ffcba24e06e3c249e1cf57bbc21"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libruntime_common.so",
+      "sha256": "b02fb580c4d3ccebfa0d481f21e5ccea7f135042e8239d57446737decb4f6958"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libruntime_v100.so",
+      "sha256": "ab4b573989e6b76e129204cf329bdd916739bdd16092a0efcfa88d8ba011d689"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libtsdclient.so",
+      "sha256": "28308ae94e6aa5bea8f00d626991f9e1e738a993e295a8b0a49a7bc0d6a24b99"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libunified_dlog.so",
+      "sha256": "b5f9f04eea31fc121ba4dfa356620e900502b02207042d59c65824f29fa0733f"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libxpu_tprt.so",
+      "sha256": "6d7f7ca2cd3ec085b2ae801594c71efd27466b0eb9a1ab5b5e11c589d7396724"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_cv.so",
+      "sha256": "53106f4dbe19d875d2ba35e6b5c80d32aa7c5a4cb9c67b3f016420afb67d2352"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_hccl.so",
+      "sha256": "d0cb594aff218b59ecff8643de32591939fa41ba8cbb9bdb70e5a51ff4697160"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_legacy.so",
+      "sha256": "664518e63e32e4a8d6bed0d4db58b649dc85f3a5fac44f83df02e0c735c8e573"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_math.so",
+      "sha256": "7405b0c2129c0ce95b79849b68a9cfc5b8558bc02703c0de7aef3b9b3686ac99"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_nn.so",
+      "sha256": "db8aeb9f79a8dc0b0e6eea3c4f2f7b5b5d6468ae221bea22d65fde33ed2ab0b1"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_ras.so",
+      "sha256": "1030d444c073fe7252c5ecbcc0fc5a27ee8da04e6cc1650af8f6c3805cfa9f9c"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_graph/lib/linux/aarch64/libopgraph_transformer.so",
+      "sha256": "129b124c8b0fe3a0e19381fe9b7302623dd99ba035a3509431fe352c1b924630"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_comm_legacy.so",
+      "sha256": "8cd4d9b43b8f004643faf297e7fcfe7995b8cfe34a77014b14a7caecb7165087"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_cv.so",
+      "sha256": "636c4669c7191ef2ed59b275b16bbdde1db7eb0927edcf712eeda507e4589cdf"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_legacy.so",
+      "sha256": "f1e54806382decf4ca3bd1ef05efa6d3e98313bdba664efaec8524b9e7bea1ce"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_math.so",
+      "sha256": "c13c5b43f51ef59f3df48868814cd5bfe1b3d784c3138c7ad323cd753100a9aa"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_nn.so",
+      "sha256": "0257cbb6b2cc631110ceb7876e9e8f36c9ada2cb1f8150218b32f5e6d2a9722f"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_oam.so",
+      "sha256": "f6b46d786a3a50eb0e319345450e57c345a5671036748d4f38c82b4071980a91"
+    },
+    {
+      "path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_host/lib/linux/aarch64/libophost_transformer.so",
+      "sha256": "3f5758ed76ce537f3d005bb03b55e3030b210e206f5cb9809ab4346b98bae33b"
+    },
+    {
+      "path": "/usr/local/Ascend/driver/lib64/driver/libascend_hal.so",
+      "sha256": "12de70257ec2fcfcd0407c02bae769aa50c1e384b3e79f2dc7ad0a27c84a064a"
+    },
+    {
+      "path": "/usr/local/Ascend/driver/lib64/driver/libdrvdsmi_host.so",
+      "sha256": "3f865b035302b7209722fcb9ebe30d9a0ee82f0bf5b9657f82752839c4b75504"
+    }
+  ],
+  "loaded_libraries_sha256": "9730e01202c67c4640dd8edf88c846607127c16179a56f0443362882348fad48",
+  "missing_libraries": [],
+  "unavailable_libraries": [],
+  "status": "VERIFIED_HOST_PROVIDER",
+  "device_kernel_status": "DECLARED_ONLY: profiler kernel identity observed; device binary load path not proven"
+}
