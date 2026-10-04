@@ -103,7 +103,10 @@ def main():
             try:
                 if args.command=='bootstrap-clear-device':
                     bootstrap.clear_device(args.device_uid); print(json.dumps(dict(device_uid=args.device_uid,state='READY')))
-                else: print(json.dumps(bootstrap.tick() if args.command=='bootstrap-tick' else bootstrap.status()))
+                else:
+                    result=bootstrap.tick() if args.command=='bootstrap-tick' else bootstrap.status()
+                    print(json.dumps(result))
+                    if args.command=='bootstrap-tick' and result['exit_code']: raise SystemExit(result['exit_code'])
             finally: bootstrap.close()
         return
     if args.command=='fleet-clear-device':

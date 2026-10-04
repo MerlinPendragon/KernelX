@@ -4,6 +4,7 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,7 +13,7 @@ from unittest.mock import patch
 from kernelx.bootstrap import Bootstrap, https
 from kernelx.release import build_release, compatibility, verify_manifest, check_installed, sha
 from kernelx.agent.storage import atomic_json
-from kernelx.supervisor import run_owned
+from kernelx.supervisor import run_owned, group_members, terminate_recorded
 from test_agent import ENV, DEVICE, Crash
 
 
@@ -46,6 +47,111 @@ class BootstrapTests(unittest.TestCase):
 
     def bootstrap(self,**kwargs):
         boot=Bootstrap(self.config,host_probe=lambda _:self.environment,**kwargs); self.addCleanup(boot.close); return boot
+
+
+    def test_candidate_case_manifest_upgrade_with_stable_bootstrap(self):
+        self.release(); boot=self.bootstrap(); boot.tick()
+        source=self.root/'new-case'
+        shutil.copytree(self.source/'kernelx',source/'kernelx',ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+        from kernelx.protocol import case_key,digest
+        case_path=source/'kernelx/manifests/cann_add.json'
+        manifest=json.loads(case_path.read_text()); manifest['case']['semantic_version']='2'
+        manifest['case_key']=case_key(manifest['case']); atomic_json(case_path,manifest)
+        plan=json.loads(Path(self.config['plan']).read_text()); plan['manifest_sha256']=digest(manifest)
+        atomic_json(Path(self.config['plan']),plan)
+        # A disabled policy exercises the real new Agent's plan validation, but
+        # cannot initialize NPU even if the scheduling implementation regresses.
+        policy=json.loads(Path(self.config['policy']).read_text()); policy['enabled']=False
+        atomic_json(Path(self.config['policy']),policy)
+        candidate=build_release(source,self.repo,'b'*40,self.group,self.key,2)
+        atomic_json(self.repo/'latest.json',dict(release_id=candidate.name))
+        boot.config['run_agent']=True
+        result=boot.tick()
+        self.assertEqual(result['state'],'HEALTHY'); self.assertEqual(result['exit_code'],0)
+        self.assertNotEqual(result['application']['state'],'CONFIG_INVALID')
+        self.assertEqual(boot.current(),candidate.name)
+
+    def test_cli_exit_codes_for_first_failure_wait_idle_fallback_and_app_failure(self):
+        source=self.root/'cpu-cli'
+        shutil.copytree(self.source/'kernelx',source/'kernelx',ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+        with (source/'kernelx/probe.py').open('a') as f:
+            f.write('\ndef probe(*args, **kwargs):\n    return '+repr(self.environment)+'\n')
+        config=self.root/'config.json'
+        def cli():
+            atomic_json(config,self.config)
+            completed=subprocess.run([sys.executable,'-B','-m','kernelx','bootstrap-tick','--config',str(config)],cwd=source,env=dict(os.environ,PYTHONPATH=str(source)),stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,timeout=30)
+            return completed.returncode,json.loads(completed.stdout)
+        code,result=cli(); self.assertEqual(code,1); self.assertFalse(result['runnable'])
+        release=build_release(source,self.repo,'a'*40,self.group,self.key)
+        atomic_json(self.repo/'latest.json',dict(release_id=release.name))
+        self.config['smoke']=True
+        policy=json.loads(Path(self.config['policy']).read_text()); policy['enabled']=False
+        atomic_json(Path(self.config['policy']),policy)
+        code,result=cli(); self.assertEqual(code,0); self.assertEqual(result['state'],'WAITING_SMOKE_WINDOW')
+        self.config.update(smoke=False,run_agent=True)
+        code,result=cli(); self.assertEqual(code,0); self.assertTrue(result['runnable'])
+        code,result=cli(); self.assertEqual(code,0); self.assertEqual(result['state'],'CURRENT')
+        candidate=build_release(source,self.repo,'b'*40,self.group,self.key,2)
+        (candidate/'manifest.sig').write_bytes(b'invalid')
+        atomic_json(self.repo/'latest.json',dict(release_id=candidate.name))
+        code,result=cli(); self.assertEqual(code,0); self.assertEqual(result['state'],'UPDATE_REJECTED')
+        Path(self.config['policy']).write_text('{broken')
+        code,result=cli(); self.assertEqual(code,1); self.assertIn('application_error',result)
+
+    @unittest.skipUnless(Path('/proc').is_dir(),'Linux nested process ownership requires /proc')
+    def test_outer_timeout_recovers_independent_sigterm_ignoring_native_group(self):
+        from functools import partial
+        from kernelx.agent import Agent
+        self.release(); boot=self.bootstrap(); boot.tick(); boot.config['run_agent']=True
+        state=boot.root/'runtime/main/agent'
+        agent=Agent(state,self.config['policy'],self.config['plan'],resource_root=boot.root/'runtime/server-resources',cache_root=boot.root/'runtime')
+        policy=json.loads(Path(self.config['policy']).read_text()); plan=json.loads(Path(self.config['plan']).read_text())
+        aid='nested'; outer=agent.spool/aid; outer.mkdir(); run=outer/'run'; run.mkdir()
+        agent.close()
+        ownership=run/'benchmark-ownership.json'
+        child_code="import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)"
+        launcher="from kernelx.supervisor import run_owned; import sys; run_owned([sys.executable,'-c',sys.argv[3]],sys.argv[2],60,ownership_path=sys.argv[1])"
+        pgid=[]
+        def executor(argv,log,timeout,**kwargs):
+            self.assertGreater(timeout,policy['task_timeout_seconds']+120)
+            agent=Agent(state,self.config['policy'],self.config['plan'],resource_root=boot.root/'runtime/server-resources',cache_root=boot.root/'runtime')
+            with agent.db:
+                agent.db.execute('INSERT INTO windows VALUES(?,?,?,?,?,?,?,?,?)',('w',0,1,'RUNNING',None,None,'p',json.dumps(policy),'p'))
+                agent.db.execute('INSERT INTO tasks VALUES(?,?,?,NULL)',('w',plan['tasks'][0]['task_id'],'RUNNING'))
+                agent.db.execute('INSERT INTO attempts VALUES(?,?,?,?,?,?,?,?,?,?)',(aid,'w',plan['tasks'][0]['task_id'],'RUNNING',str(run),0,None,None,'NOT_CHECKED',None))
+            atomic_json(outer/'context.json',dict(attempt_id=aid,window_id='w',task=plan['tasks'][0],logical_id=5,started=0,policy=policy,plan=plan)); agent.close()
+            result=run_owned([sys.executable,'-c',launcher,str(ownership),str(run/'native.log'),child_code],log,.6,grace=.1,ownership_path=kwargs['ownership_path'])
+            record=json.loads(ownership.read_text()); pgid.append(record['process_group'])
+            self.assertTrue(group_members(pgid[0]),'reproduce a separate live native group')
+            return result
+        boot.executor=executor
+        clear=lambda *args:dict(status='RELEASED',evidence=dict(stdout='No process in device.'))
+        try:
+            with patch('kernelx.bootstrap.Agent',partial(Agent,release=clear)):
+                result=boot.tick()
+            self.assertEqual(result['exit_code'],1)
+            self.assertEqual(group_members(pgid[0]),[])
+            agent=Agent(state,self.config['policy'],self.config['plan'],resource_root=boot.root/'runtime/server-resources',cache_root=boot.root/'runtime')
+            try:
+                self.assertEqual(agent.status()['attempts'][0]['release_status'],'RELEASED')
+                self.assertEqual(agent.status()['attempts'][0]['state'],'INTERRUPTED')
+            finally: agent.close()
+        finally:
+            if ownership.exists(): terminate_recorded(ownership,grace=.1)
+
+    def test_session_budget_covers_multi_task_plan(self):
+        self.release(); boot=self.bootstrap(); boot.tick(); boot.config['run_agent']=True
+        plan=json.loads(Path(self.config['plan']).read_text())
+        plan['tasks'].append(dict(plan['tasks'][0],task_id='second'))
+        atomic_json(Path(self.config['plan']),plan)
+        from kernelx.agent.policy import timestamp
+        boot.clock=lambda:timestamp('2026-10-04T02:10:00+08:00')
+        def executor(argv,log,timeout,**kwargs):
+            self.assertGreater(timeout,2*90+2*360+120)
+            self.assertGreater(kwargs['grace'],2)
+            Path(log).write_text(json.dumps(dict(state='WAITING_WINDOW')))
+            return dict(exit_code=0,reason=None)
+        boot.executor=executor; self.assertEqual(boot.tick()['exit_code'],0)
 
     def test_signed_install_upgrade_and_retained_old_release(self):
         first=self.release(); boot=self.bootstrap()
@@ -91,7 +197,7 @@ class BootstrapTests(unittest.TestCase):
         policy['schedules'][0].update(start='00:00',end='23:59'); atomic_json(Path(self.config['policy']),policy)
         plan=json.loads(Path(self.config['plan']).read_text()); plan.update(valid_from=policy['valid_from'],valid_until=policy['valid_until']); atomic_json(Path(self.config['plan']),plan)
         self.config['smoke']=True; trial=self.bootstrap()
-        self.assertEqual(trial.tick()['state'],'ROLLED_BACK'); self.assertEqual(trial.current(),previous)
+        result=trial.tick(); self.assertEqual(result['state'],'ROLLED_BACK'); self.assertEqual(result['exit_code'],1); self.assertEqual(trial.current(),previous)
         agent=Agent(trial.root/('runtime/smoke-'+candidate.name+'/agent'),self.config['policy'],self.config['plan'],resource_root=trial.root/'runtime/server-resources',cache_root=trial.root/'runtime')
         try:
             self.assertEqual(agent.status()['attempts'],[])
@@ -218,7 +324,7 @@ class BootstrapTests(unittest.TestCase):
             if 'agent-tick' in argv: Path(log).write_text(json.dumps(dict(state='CLOSED',terminal='FAILED'))); return dict(exit_code=0,reason=None)
             return run_owned(argv,log,*args,**kwargs)
         trial=self.bootstrap(clock=lambda:timestamp('2026-10-04T02:10:00+08:00'),executor=executor)
-        self.assertEqual(trial.tick()['state'],'ROLLED_BACK'); self.assertEqual(trial.current(),previous)
+        result=trial.tick(); self.assertEqual(result['state'],'ROLLED_BACK'); self.assertEqual(result['exit_code'],1); self.assertEqual(trial.current(),previous)
         self.assertIn('last_failure',trial.status()['health'])
         self.assertEqual(trial.status()['sessions'][-1]['state'],'FAILED')
         self.assertEqual(trial.tick()['state'],'QUARANTINED')

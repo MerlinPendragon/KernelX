@@ -13,10 +13,9 @@ from urllib.parse import urlparse
 from .agent import Agent, Center
 from .agent.policy import read_policy, read_plan, windows, timestamp
 from .agent.storage import atomic_json, fsync_dir, database
-from .cann_adapter import CannAddAdapter
 from .device_lock import DeviceLock
 from .probe import probe
-from .protocol import digest
+from .protocol import digest, validate, case_key
 from .release import verify_manifest, compatible, compatibility, extract_payload, check_installed
 from .supervisor import run_owned, terminate_recorded
 
@@ -96,20 +95,7 @@ class Bootstrap:
             if ownership.exists() and terminate_recorded(ownership)!='RELEASED': raise ValueError('previous application ownership unconfirmed; update blocked')
             with self.db: self.db.execute('UPDATE sessions SET state=?,ended=? WHERE session_id=?',('INTERRUPTED',self.clock(),row['session_id']))
             self.health('last_failure',dict(session_id=row['session_id'],reason='launcher restart during session'))
-        # Recover NPU ownership/quarantine using frozen contexts before any smoke.
-        center=Center(self.config['center_dir']); pending=acked=0
-        try:
-            for directory in (self.root/'runtime').glob('*/agent'):
-                agent=Agent(directory,self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
-                try:
-                    agent.recover(); agent.upload(center.import_bundle)
-                    outbox=agent.status()['outbox']
-                    pending+=sum(row['state']!='ACKED' for row in outbox)
-                    acked+=sum(row['state']=='ACKED' for row in outbox)
-                finally: agent.close()
-        finally: center.close()
-        self.health('upload',dict(pending=pending,acked=acked))
-
+        self.recover_runtime()
         journal=self.root/'transition.json'
         if journal.exists():
             transition=json.loads(journal.read_text())
@@ -117,6 +103,23 @@ class Bootstrap:
                 self.switch(transition['previous'])
                 self.bad(transition['manifest'],'interrupted update before health commit')
             journal.unlink(); fsync_dir(self.root)
+
+    def recover_runtime(self):
+        # Also called synchronously after a launcher failure, before rollback or
+        # returning to the caller. Native groups do not belong to its PGID.
+        center=Center(self.config['center_dir']); pending=acked=0; devices=[]
+        try:
+            for directory in (self.root/'runtime').glob('*/agent'):
+                agent=Agent(directory,self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
+                try:
+                    agent.recover(); agent.upload(center.import_bundle)
+                    status=agent.status(); devices.extend(status['devices']); outbox=status['outbox']
+                    pending+=sum(row['state']!='ACKED' for row in outbox)
+                    acked+=sum(row['state']=='ACKED' for row in outbox)
+                finally: agent.close()
+        finally: center.close()
+        self.health('upload',dict(pending=pending,acked=acked))
+        return dict(state='QUARANTINED' if any(d['state']=='QUARANTINED' for d in devices) else 'RECOVERED',devices=devices,upload=dict(pending=pending,acked=acked))
 
     def clear_device(self,uid):
         with DeviceLock('bootstrap',self.root/'.locks'):
@@ -181,10 +184,20 @@ class Bootstrap:
     def env(self,manifest):
         return dict(os.environ,PYTHONPATH=str(self.root/'releases'/manifest['release_id']),PYTHONDONTWRITEBYTECODE='1',KERNELX_RELEASE_ID=manifest['release_id'],KERNELX_GIT_COMMIT=manifest['git_commit'])
 
+    def plan(self,manifest,policy):
+        installed=self.root/'releases'/manifest['release_id']
+        check_installed(installed,manifest)
+        path='kernelx/manifests/cann_add.json'
+        if path not in manifest['case_manifests']: raise ValueError('candidate case manifest missing')
+        case_manifest=json.loads((installed/path).read_text())
+        validate('case',case_manifest['case'])
+        if case_key(case_manifest['case'])!=case_manifest['case_key']: raise ValueError('candidate case key mismatch')
+        return read_plan(json.loads(Path(self.config['plan']).read_text()),policy,case_manifest)
+
     def session(self,manifest,smoke=False):
         policy=read_policy(json.loads(Path(self.config['policy']).read_text()))
         if policy['server_id']!=self.config['server_id'] or not any(d['device_uid']==self.config['device_uid'] for d in policy['allowed_devices']): raise ValueError('bootstrap policy binding mismatch')
-        plan=read_plan(json.loads(Path(self.config['plan']).read_text()),policy,CannAddAdapter().manifest)
+        plan=self.plan(manifest,policy)
         sid=str(uuid.uuid4()); directory=self.root/'sessions'/sid; directory.mkdir()
         atomic_json(directory/'environment.json',self.environment)
         atomic_json(directory/'plan.json',plan); atomic_json(directory/'policy-snapshot.json',policy)
@@ -193,18 +206,22 @@ class Bootstrap:
         argv=[sys.executable,'-B','-m','kernelx','agent-tick','--state',str(state),'--policy',self.config['policy'],'--plan',str(directory/'plan.json'),'--center-dir',self.config['center_dir'],
               '--resource-root',str(self.root/'runtime/server-resources'),'--cache-root',str(self.root/'runtime')]
         with self.db: self.db.execute('INSERT INTO sessions VALUES(?,?,?,?,?,?)',(sid,manifest['release_id'],'RUNNING',self.clock(),None,None))
-        timeout=policy['task_timeout_seconds']+120
-        # Outer timeout supervises the Python launcher only. The Runner owns NPU
-        # deadlines, and startup recovery checks its separate ownership journal.
+        # Runner's NPU deadline is the authorized window. Allow that whole
+        # window plus per-task CPU preparation/export and final import overhead;
+        # a multi-task session must not inherit a single benchmark timeout.
+        remaining=max([0]+[min(w['end'],timestamp(plan['valid_until']))-self.clock()
+                          for w in windows(policy,self.clock()) if w['start']<=self.clock()<w['end']])
+        timeout=remaining+sum(max(t['pilot_upper_seconds'],policy['task_timeout_seconds'])+360 for t in plan['tasks'])+120
         try:
-            execution=self.executor(argv,directory/'application.log',timeout,env=self.env(manifest),pass_fds=(self.lock.fd,),ownership_path=directory/'ownership.json',cwd=self.root/'releases'/manifest['release_id'])
+            execution=self.executor(argv,directory/'application.log',timeout,env=self.env(manifest),grace=10,pass_fds=(self.lock.fd,),ownership_path=directory/'ownership.json',cwd=self.root/'releases'/manifest['release_id'])
             if execution['exit_code']!=0 or execution.get('reason'): raise ValueError('application session failed; see '+str(directory/'application.log'))
             result=json.loads((directory/'application.log').read_text().strip().splitlines()[-1])
             agent=Agent(state,self.config['policy'],directory/'plan.json',resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
             try: local=agent.status()
             finally: agent.close()
             success=result.get('terminal')=='COMPLETED'
-            with self.db: self.db.execute('UPDATE sessions SET state=?,ended=?,result=? WHERE session_id=?',('SUCCEEDED' if success else ('FAILED' if result.get('terminal')=='FAILED' else 'IDLE'),self.clock(),json.dumps(result),sid))
+            failed=result.get('state')=='CONFIG_INVALID' or result.get('terminal') in ('FAILED','PARTIAL')
+            with self.db: self.db.execute('UPDATE sessions SET state=?,ended=?,result=? WHERE session_id=?',('SUCCEEDED' if success else ('FAILED' if failed else 'IDLE'),self.clock(),json.dumps(result),sid))
             self.health('heartbeat',dict(at=self.clock(),release_id=manifest['release_id']))
             # Preserve the server-wide count; include this just-finished role.
             pending=acked=0
@@ -216,13 +233,32 @@ class Bootstrap:
                 finally: ledger.close()
             self.health('upload',dict(pending=pending,acked=acked))
             if success: self.health('last_success',dict(session_id=sid,release_id=manifest['release_id'],at=self.clock(),smoke=smoke))
-            elif result.get('terminal') in ('FAILED','PARTIAL') or any(a['state'] in ('FAILED','INTERRUPTED','REJECTED') for a in local['attempts']): self.health('last_failure',dict(session_id=sid,result=result))
+            elif failed or any(a['state'] in ('FAILED','INTERRUPTED','REJECTED') for a in local['attempts']): self.health('last_failure',dict(session_id=sid,result=result))
             if smoke and not success: raise ValueError('NPU smoke incomplete: '+str(result))
             return result
-        except (OSError,ValueError,KeyError,IndexError) as exc:
+        except (OSError,ValueError,KeyError,IndexError,RuntimeError) as exc:
+            # Stop the launcher before recovering its independently sessioned
+            # native Runner. UNKNOWN remains quarantined across releases.
+            ownership=self.root/'sessions'/sid/'ownership.json'
+            try:
+                if ownership.exists() and terminate_recorded(ownership,grace=10)!='RELEASED':
+                    agent=Agent(state,self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
+                    try:
+                        for task in plan['tasks']: agent.quarantine(task['device_uid'],'launcher ownership/release unconfirmed')
+                    finally: agent.close()
+                    raise ValueError('launcher ownership/release unconfirmed')
+                recovery=self.recover_runtime()
+                atomic_json(self.root/'sessions'/sid/'recovery.json',recovery)
+            except (OSError,ValueError,KeyError,TypeError,RuntimeError) as recovery_error:
+                agent=Agent(state,self.config['policy'],self.config['plan'],resource_root=self.root/'runtime/server-resources',cache_root=self.root/'runtime')
+                try:
+                    for task in plan['tasks']: agent.quarantine(task['device_uid'],'session cleanup failed: '+str(recovery_error))
+                finally: agent.close()
+                atomic_json(self.root/'sessions'/sid/'recovery.json',dict(state='QUARANTINED',reason=str(recovery_error)))
+                exc=ValueError(str(exc)+'; recovery failed: '+str(recovery_error))
             with self.db: self.db.execute('UPDATE sessions SET state=?,ended=?,result=? WHERE session_id=?',('FAILED',self.clock(),json.dumps(dict(reason=str(exc))),sid))
             self.health('last_failure',dict(session_id=sid,release_id=manifest['release_id'],at=self.clock(),reason=str(exc),smoke=smoke))
-            raise
+            raise ValueError(str(exc)) from exc
 
     def update(self):
         _,manifest,state=self.acquire(); identity=manifest['release_id']
@@ -236,7 +272,7 @@ class Bootstrap:
         if execution['exit_code']!=0 or execution.get('reason') or healthy.get('healthy') is not True or healthy.get('protocol')!=manifest['protocol_version'] or healthy.get('npu_used') is not False:
             self.bad(manifest,'CPU dependency/schema self-test failed'); return dict(state='QUARANTINED',release_id=identity)
         if self.config['smoke']:
-            policy=read_policy(json.loads(Path(self.config['policy']).read_text())); plan=read_plan(json.loads(Path(self.config['plan']).read_text()),policy,CannAddAdapter().manifest)
+            policy=read_policy(json.loads(Path(self.config['policy']).read_text())); plan=self.plan(manifest,policy)
             available=any(w['start']<=self.clock()<w['end'] and w['end']-self.clock()>sum(t['pilot_upper_seconds'] for t in plan['tasks'])+policy['cleanup_reserve_seconds'] for w in windows(policy,self.clock()))
             if not policy['enabled'] or not available or not timestamp(plan['valid_from'])<=self.clock()<timestamp(plan['valid_until']): return dict(state='WAITING_SMOKE_WINDOW',release_id=identity)
         previous=self.current(); transition=dict(state='SWITCHED',previous=previous,manifest=manifest)
@@ -261,13 +297,24 @@ class Bootstrap:
             try: result=self.update()
             except (OSError,ValueError,KeyError,TypeError) as exc:
                 result=dict(state='UPDATE_REJECTED',reason=str(exc)); self.event('UPDATE_REJECTED',str(exc))
-            current=self.current()
-            if current and self.config['run_agent']:
+            current=self.current(); runnable=False; application_failed=False
+            if current:
                 try:
                     manifest=verify_manifest(self.root/'releases'/current,self.config['trusted_key']); check_installed(self.root/'releases'/current,manifest)
                     self.environment=self.host_probe(self.config['server_id'])
                     host=compatibility(self.environment,self.config['device_uid']); compatible(manifest,host)
-                    result['application']=self.session(manifest)
-                except (OSError,ValueError) as exc: self.health('last_failure',dict(at=self.clock(),reason=str(exc)))
+                    row=self.db.execute('SELECT state FROM releases WHERE release_id=?',(current,)).fetchone()
+                    if not row or row['state']!='HEALTHY': raise ValueError('current release is not healthy')
+                    runnable=True
+                    if self.config['run_agent']:
+                        result['application']=self.session(manifest)
+                        application_failed=(result['application'].get('state')=='CONFIG_INVALID' or result['application'].get('terminal') in ('FAILED','PARTIAL'))
+                except (OSError,ValueError,RuntimeError) as exc:
+                    application_failed=True; result['application_error']=str(exc)
+                    self.health('last_failure',dict(at=self.clock(),reason=str(exc)))
+            # Waiting for manual authorization is a successful deferred tick.
+            # Failed required smoke is fatal even if rollback retained an old app.
+            result['runnable']=runnable
+            result['exit_code']=1 if application_failed or result['state']=='ROLLED_BACK' or (not runnable and result['state']!='WAITING_SMOKE_WINDOW') else 0
             self.health('heartbeat',dict(at=self.clock(),release_id=self.current(),update_state=result['state']))
             return result
