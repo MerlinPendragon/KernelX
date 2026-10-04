@@ -56,10 +56,11 @@ def release_check(device, owned_pids, collector):
     return dict(status=status,checked_at=now(),evidence=record)
 
 
-def _collect(output,server_id,device,window_start,window_end,authorization_id,repeats=10,warmup=20,timeout=90,cleanup=3):
+def _collect(output,server_id,device,window_start,window_end,authorization_id,repeats=10,warmup=20,timeout=90,cleanup=3,cancel=None,expected_device_uid=None):
     benchmark_env = dict(os.environ)
     if 'ASCEND_RT_VISIBLE_DEVICES' in benchmark_env:
         raise ValueError('ASCEND_RT_VISIBLE_DEVICES is unsupported; unset it before collecting with direct device IDs')
+    if cancel is not None and cancel(): raise ValueError('reservation revoked before preparation')
     if not authorization_id: raise ValueError('manual authorization ID required')
     if device < 0 or timeout <= 0: raise ValueError('invalid device or timeout')
     start,end=utc(window_start),utc(window_end)
@@ -74,6 +75,8 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     env=probe(server_id)
     target=[d for d in env['devices'] if d['logical_id']==device]
     if len(target)!=1: raise ValueError('logical device mapping missing or ambiguous')
+    if expected_device_uid is not None and target[0]['device_uid']!=expected_device_uid:
+        raise ValueError('registered device identity does not match logical ID')
     if target[0]['chip_id'] != 0 or target[0]['npu_id'] != device:
         raise ValueError('first adapter requires direct device/NPU ID and chip 0 mapping')
     capabilities=adapter.capabilities(); save(root/'capabilities.json',capabilities)
@@ -92,6 +95,7 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
     save(root/'preparation.json',adapter.prepare(device,warmup,repeats,raw,sidecar))
     remaining=window_budget(start,end,cleanup) # compile/probe can consume the window
     argv=adapter.benchmark_command(binary,device,warmup,repeats,raw,sidecar)
+    if cancel is not None and cancel(): raise ValueError('reservation revoked before device preflight')
     with DeviceLock(target[0]['device_uid']) as device_lock:
         save(root/'device-lock.json',dict(device_uid=target[0]['device_uid'],path=str(device_lock.path),status='ACQUIRED'))
         before=release_check(device,[],collector)
@@ -99,10 +103,11 @@ def _collect(output,server_id,device,window_start,window_end,authorization_id,re
         # An existing process is a conflict even in a manually authorized window.
         if before['status']!='RELEASED' or not re.search(r'no process|no running process',before['evidence']['stdout'],re.I):
             raise RuntimeError('device preflight has external occupancy or unknown status')
+        if cancel is not None and cancel(): raise ValueError('reservation revoked before benchmark')
         remaining=window_budget(start,end,cleanup)
         wall_deadline=time.monotonic()+end-time.time()
         began_ns=time.monotonic_ns()
-        execution=run_owned(argv,root/'benchmark.log',min(timeout,remaining),grace=min(2,cleanup),env=benchmark_env,pass_fds=(device_lock.fd,))
+        execution=run_owned(argv,root/'benchmark.log',min(timeout,remaining),grace=min(2,cleanup),env=benchmark_env,pass_fds=(device_lock.fd,),cancel=cancel,ownership_path=root/'benchmark-ownership.json')
         save(root/'execution.json',execution)
         # Query actual NPU process ownership independently of process-group exit.
         release=release_check(device,execution['owned_pids'],collector)

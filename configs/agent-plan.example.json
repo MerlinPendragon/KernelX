@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "plan_id": "cann-add-pilot-v1",
+  "valid_from": "2026-10-04T00:00:00Z",
+  "valid_until": "2026-10-05T00:00:00Z",
+  "manifest_sha256": "f43b7047b71f3ae21993f0d1917d22265f6639a2025cb3f96f282562b5f80656",
+  "preset": "latency-v1",
+  "tasks": [
+    {
+      "task_id": "cann-add-f32-4096",
+      "adapter": "cann-add",
+      "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+      "warmup": 20,
+      "repeats": 10,
+      "pilot_upper_seconds": 180,
+      "estimated_output_bytes": 16777216
+    }
+  ]
+}

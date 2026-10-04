@@ -1,0 +1,574 @@
+{
+  "schema_version": 1,
+  "protocol_version": "latency-v1",
+  "extensions": {},
+  "observation_id": "dfdb0127-4e3d-42f1-b057-ff8c10c5f019",
+  "profile_id": "8474462b-2588-47d2-b1ac-f3add474f313",
+  "attempt_id": "0cd86151-8458-4584-a384-72d54dfa514d",
+  "session_id": "1fecbc8b-44da-48bf-beab-9ab23af81fc0",
+  "environment_id": "b3aecb0f-eacd-4a6d-9c24-235e06f48f3f",
+  "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+  "task_id": "002b78ad-9a7e-41e6-977c-fe071baea2d0",
+  "case_key": "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba",
+  "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9",
+  "seed": 0,
+  "round": 0,
+  "iteration": 0,
+  "rank": 0,
+  "phase": "MEASURE",
+  "task_ids": [
+    "47:20"
+  ],
+  "metric": {
+    "name": "task_duration_us",
+    "unit": "us",
+    "boundary": "single trace-matched Add task",
+    "definition_version": "1"
+  },
+  "raw_samples": [
+    1.58
+  ],
+  "completeness": "COMPLETE",
+  "quality": [
+    "VALID"
+  ],
+  "case": {
+    "schema_version": 1,
+    "protocol_version": "latency-v1",
+    "extensions": {},
+    "operator": "Add",
+    "inputs": [
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      },
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      }
+    ],
+    "outputs": [
+      {
+        "shape": [
+          4096
+        ],
+        "dtype": "float32",
+        "layout": "ND",
+        "stride": [
+          1
+        ]
+      }
+    ],
+    "attributes": {
+      "alpha": 1
+    },
+    "input_generation": {
+      "algorithm": "constant-f32-le-ones",
+      "version": "1",
+      "seed": 0,
+      "input_sha256": "46ac448298521650c9dfcc1d8dad9f941244e7bb071dc84c6841750d864015a9"
+    },
+    "semantic_version": "1"
+  },
+  "hardware": {
+    "device": {
+      "npu_id": 5,
+      "chip_id": 0,
+      "logical_id": 5,
+      "chip_name_raw": "Ascend 910B1",
+      "device_uid": "1ee8d14b-2e71-5beb-aa56-e58fd4c7b6ae",
+      "card_uid": "84c93100-a9fe-5c72-9d2f-91dcf00c708a",
+      "identity_confidence": "STABLE_CHIP",
+      "card_identity_confidence": "LOCATION_ONLY",
+      "soc_family": {
+        "value": "Ascend 910B",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hardware_bin": {
+        "value": "Ascend 910B1",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0004",
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "bin_mapping_version": "ascend-910b-products-v2",
+      "board_id": {
+        "value": "0x30",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "pcie": {
+        "value": "0000:41:00.0",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0015"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "hbm_mb": {
+        "value": "65536",
+        "status": "KNOWN",
+        "reason": null,
+        "source": [
+          "e0016"
+        ],
+        "confidence": "VERIFIED"
+      },
+      "firmware": {
+        "value": null,
+        "status": "UNKNOWN",
+        "reason": "field absent or unavailable: Firmware Version",
+        "source": [
+          "e0015"
+        ],
+        "confidence": "NONE"
+      }
+    },
+    "driver": {
+      "value": "25.5.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0021"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "firmware": {
+      "value": null,
+      "status": "PERMISSION_DENIED",
+      "reason": "permission_denied",
+      "source": [
+        "e0022"
+      ],
+      "confidence": "NONE"
+    }
+  },
+  "software": {
+    "npu_smi": {
+      "value": "25.5.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0002"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "driver": {
+      "value": "25.5.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0021"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "firmware": {
+      "value": null,
+      "status": "PERMISSION_DENIED",
+      "reason": "permission_denied",
+      "source": [
+        "e0022"
+      ],
+      "confidence": "NONE"
+    },
+    "toolkit": {
+      "value": "9.1.0",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0023"
+      ],
+      "confidence": "DECLARED_ONLY"
+    },
+    "msprof": {
+      "value": null,
+      "status": "UNSUPPORTED",
+      "reason": "unsupported",
+      "source": [
+        "e0025"
+      ],
+      "confidence": "NONE"
+    },
+    "python": {
+      "value": "3.9.9",
+      "status": "KNOWN",
+      "reason": null,
+      "source": [
+        "e0037"
+      ],
+      "confidence": "VERIFIED"
+    },
+    "search_paths": {
+      "ASCEND_HOME_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1",
+      "ASCEND_TOOLKIT_HOME": "/usr/local/Ascend/cann-9.2.0-beta.1",
+      "ASCEND_OPP_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1/opp",
+      "ASCEND_CUSTOM_OPP_PATH": "",
+      "LD_LIBRARY_PATH": "/usr/local/Ascend/cann-9.2.0-beta.1/lib64:/usr/local/Ascend/cann-9.2.0-beta.1/lib64/plugin/opskernel:/usr/local/Ascend/cann-9.2.0-beta.1/lib64/plugin/nnengine:/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe/op_tiling/lib/linux/aarch64:/usr/local/Ascend/driver/lib64:/usr/local/Ascend/driver/lib64/common:/usr/local/Ascend/driver/lib64/driver",
+      "PYTHONPATH": "/usr/local/Ascend/cann-9.2.0-beta.1/python/site-packages:/usr/local/Ascend/cann-9.2.0-beta.1/opp/built-in/op_impl/ai_core/tbe:"
+    },
+    "packages": [
+      {
+        "name": "torch",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0029"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "torch-npu",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0030"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "ops-nn",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0031"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "sgl-kernel-npu",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0032"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "tile-kernels",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0033"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "deepgemm-ascend",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0034"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "deepep-ascend",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0035"
+          ],
+          "confidence": "NONE"
+        }
+      },
+      {
+        "name": "ops-transformer",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0036"
+          ],
+          "confidence": "NONE"
+        }
+      }
+    ],
+    "operator_libraries": [
+      {
+        "name": "cann-opp",
+        "role": "kernel_provider",
+        "version": {
+          "value": "9.2.0-beta.1",
+          "status": "KNOWN",
+          "reason": null,
+          "source": [
+            "e0024"
+          ],
+          "confidence": "DECLARED_ONLY"
+        },
+        "resolved_path": "/usr/local/Ascend/cann-9.2.0-beta.1/opp",
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "DECLARED_ONLY",
+        "used_by_case": []
+      },
+      {
+        "name": "ops-nn",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0031"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "ops-transformer",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0036"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "sgl-kernel-npu",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0032"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "tile-kernels",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0033"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "deepgemm-ascend",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0034"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "deepep-ascend",
+        "role": "kernel_provider",
+        "version": {
+          "value": null,
+          "status": "NOT_FOUND",
+          "reason": "not installed in probe interpreter",
+          "source": [
+            "e0035"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": null,
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": null,
+        "load_status": "NOT_FOUND",
+        "used_by_case": []
+      },
+      {
+        "name": "cann-aclnn-api",
+        "role": "api_provider",
+        "version": {
+          "value": null,
+          "status": "UNKNOWN",
+          "reason": "loaded API fingerprint observed; semantic version not established",
+          "source": [
+            "runtime-e0002"
+          ],
+          "confidence": "NONE"
+        },
+        "resolved_path": "/usr/local/Ascend/cann-9.2.0-beta.1/aarch64-linux/lib64/libopapi.so",
+        "package_id": null,
+        "repository_url": null,
+        "git_commit": null,
+        "dirty_tree_sha256": null,
+        "artifact_sha256": "3e10def2f7158482f3967b9db6ad2707cca8691198ddae8cc52bbbaf61bb2675",
+        "load_status": "VERIFIED",
+        "used_by_case": [
+          "case-v1:69bdfbdbdf7966a98edf30f6f48a02e1343c99006d89456a08ca338012da04ba"
+        ]
+      }
+    ]
+  },
+  "artifact_bundle_ids": [
+    "7cfcc5fa2e4e86ca1dec4d6167d97e13c4d3c2ab9eab4dec99fd6ae73f436ca2"
+  ],
+  "library_provenance": {
+    "cann-opp": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "ops-nn": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "ops-transformer": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "sgl-kernel-npu": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "tile-kernels": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "deepgemm-ascend": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    },
+    "deepep-ascend": {
+      "package_id": null,
+      "repository_url": null,
+      "git_commit": null,
+      "commit_source": [],
+      "commit_reason": "no Git provenance in installed package or configured source tree",
+      "commit_status": "UNKNOWN",
+      "confidence": "NONE"
+    }
+  }
+}

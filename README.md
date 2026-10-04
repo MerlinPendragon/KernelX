@@ -1,6 +1,6 @@
 # KernelX
 
-Ascend 性能采集工程。已交付协议 v1、环境探测，并实现 issue #2 的原生 CANN Add 单机 msprof 采集/导出/归因 Runner；默认 20 次预热。窗口 Agent 与发布器将在后续 issue 实现。
+Ascend 性能采集工程。已交付协议 v1、环境探测，并实现 issue #2 的原生 CANN Add 单机 msprof 采集/导出/归因 Runner；默认 20 次预热。已实现 issue #3 的预约窗口 Agent、SQLite WAL 恢复和幂等中心导入；离线发布器属于后续 issue #4。
 
 Python ≥3.9，运行与测试不需安装依赖。probe / validate / case-key 是独立 CLI，运行不依赖 Codex、AI agent 或在线服务，可直接从仓库执行：
 
@@ -18,6 +18,8 @@ python3 -m kernelx validate environment environment.json
 
 示例 server ID 是本次 910B1 测试注册 UUID；其他服务器必须注册各自 UUID，不以 hostname、IP 或逻辑 device ID 代替。默认脱敏；`--include-identities` 仅用于私有本地证据。每个外部命令默认超时 15 秒，可用 `--timeout` 调整。
 
+- [预约 Agent、持久恢复、回传协议与数据库查询](docs/AGENT.md)
+- [Agent 910B1 截止、撤销与真实入库验收](docs/ISSUE3_910B1_VALIDATION.md)
 - [CANN Runner、默认 20 次预热及独立 CLI](docs/CANN_RUNNER.md)
 - [CANN 闭环与超时/中断实机验收](docs/ISSUE2_910B1_VALIDATION.md)
 - [协议、字段语义与升级规则](docs/PROTOCOL.md)
