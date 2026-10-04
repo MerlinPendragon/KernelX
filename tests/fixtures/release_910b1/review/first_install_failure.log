@@ -1,0 +1,13 @@
+Job for kernelx-bootstrap.service failed because the control process exited with error code.
+See "systemctl status kernelx-bootstrap.service" and "journalctl -xeu kernelx-bootstrap.service" for details.
+Result=exit-code
+ExecMainStatus=1
+ExecStart={ path=/opt/kernelx/bootstrap/deploy/kernelx-bootstrap ; argv[]=/opt/kernelx/bootstrap/deploy/kernelx-bootstrap ; ignore_errors=no ; start_time=[Sun 2026-10-04 18:51:14 CST] ; stop_time=[Sun 2026-10-04 18:51:14 CST] ; pid=1141935 ; code=exited ; status=1 }
+User=kernelx
+Group=kernelx
+PrivateNetwork=yes
+2026-10-04T18:51:14+0800 <redacted-host> systemd[1]: Starting KernelX signed release pull and reservation Agent...
+2026-10-04T18:51:14+0800 <redacted-host> kernelx-bootstrap[1141935]: {"state": "UPDATE_REJECTED", "reason": "[Errno 2] No such file or directory: '/var/lib/kernelx-bootstrap/missing-repository/latest.json'", "runnable": false, "exit_code": 1}
+2026-10-04T18:51:14+0800 <redacted-host> systemd[1]: kernelx-bootstrap.service: Main process exited, code=exited, status=1/FAILURE
+2026-10-04T18:51:14+0800 <redacted-host> systemd[1]: kernelx-bootstrap.service: Failed with result 'exit-code'.
+2026-10-04T18:51:14+0800 <redacted-host> systemd[1]: Failed to start KernelX signed release pull and reservation Agent.

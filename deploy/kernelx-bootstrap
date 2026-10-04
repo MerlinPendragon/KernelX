@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+# This file only changes the environment of the KernelX child process.
+if [ -f /etc/kernelx/ascend-env.sh ]; then . /etc/kernelx/ascend-env.sh; fi
+# Vendor environment scripts may append to unset variables in a clean service.
+# Enable nounset only after loading them.
+set -u
+cd /opt/kernelx/bootstrap
+exec /usr/bin/python3 -B -m kernelx bootstrap-tick --config /etc/kernelx/bootstrap.json

@@ -44,6 +44,8 @@ def main():
     destination.add_argument('--center-dir',type=Path)
     destination.add_argument('--upload-url')
     tick.add_argument('--token-env')
+    tick.add_argument('--resource-root',type=Path)
+    tick.add_argument('--cache-root',type=Path)
     status=commands.add_parser('agent-status',help='persistent windows, attempts, uploads and audit ledger')
     status.add_argument('--state',type=Path,required=True)
     status.add_argument('--output',type=Path)
@@ -72,7 +74,41 @@ def main():
     fleetclear=commands.add_parser('fleet-clear-device',help='manually clear the shared server quarantine after identity/idle checks')
     for name in ('state','policy'): fleetclear.add_argument('--'+name,type=Path,required=True)
     fleetclear.add_argument('--device-uid',required=True)
+    release=commands.add_parser('release-build',help='sign a clean tracked source tree for one exact host compatibility group')
+    for name in ('source','repository','environment','key'): release.add_argument('--'+name,type=Path,required=True)
+    release.add_argument('--device-uid',required=True)
+    release.add_argument('--sequence',type=int,required=True)
+    commands.add_parser('release-self-test',help='CPU-only dependency/schema import test; no NPU initialization')
+    for command in ('bootstrap-tick','bootstrap-status','bootstrap-clear-device'):
+        boot=commands.add_parser(command)
+        boot.add_argument('--config',type=Path,required=True)
+        if command=='bootstrap-clear-device': boot.add_argument('--device-uid',required=True)
     args = parser.parse_args()
+    if args.command in ('release-build','release-self-test','bootstrap-tick','bootstrap-status','bootstrap-clear-device'):
+        if args.command=='release-self-test':
+            from .release import self_test
+            print(json.dumps(self_test()))
+        elif args.command=='release-build':
+            import subprocess
+            from .release import build_release, compatibility
+            commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=args.source,text=True).strip()
+            changed=subprocess.check_output(['git','status','--porcelain','--','kernelx'],cwd=args.source,text=True)
+            if changed: raise ValueError('release requires clean tracked kernelx source at git HEAD')
+            group=compatibility(json.loads(args.environment.read_text()),args.device_uid)
+            path=build_release(args.source,args.repository,commit,group,args.key,args.sequence)
+            print(json.dumps(dict(release_id=path.name,path=str(path))))
+        else:
+            from .bootstrap import Bootstrap
+            bootstrap=Bootstrap(json.loads(args.config.read_text()))
+            try:
+                if args.command=='bootstrap-clear-device':
+                    bootstrap.clear_device(args.device_uid); print(json.dumps(dict(device_uid=args.device_uid,state='READY')))
+                else:
+                    result=bootstrap.tick() if args.command=='bootstrap-tick' else bootstrap.status()
+                    print(json.dumps(result))
+                    if args.command=='bootstrap-tick' and result['exit_code']: raise SystemExit(result['exit_code'])
+            finally: bootstrap.close()
+        return
     if args.command=='fleet-clear-device':
         from .agent.fleet import FleetWorker
         FleetWorker(args.state,args.policy,None).clear_device(args.device_uid)
@@ -105,7 +141,7 @@ def main():
                 else: print(json.dumps(data))
             finally: center.close()
             return
-        agent=Agent(args.state,getattr(args,'policy',''),getattr(args,'plan',''))
+        agent=Agent(args.state,getattr(args,'policy',''),getattr(args,'plan',''),resource_root=getattr(args,'resource_root',None),cache_root=getattr(args,'cache_root',None))
         center=None
         try:
             if args.command=='agent-status':

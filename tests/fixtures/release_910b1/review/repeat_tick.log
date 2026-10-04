@@ -1,0 +1,235 @@
+Result=success
+ExecMainStatus=0
+ExecStart={ path=/opt/kernelx/bootstrap/deploy/kernelx-bootstrap ; argv[]=/opt/kernelx/bootstrap/deploy/kernelx-bootstrap ; ignore_errors=no ; start_time=[n/a] ; stop_time=[n/a] ; pid=0 ; code=(null) ; status=0/0 }
+User=kernelx
+Group=kernelx
+PrivateNetwork=yes
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_host_log.c:177: Thread(alogFlush) quit, pid=1144781.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144781]: (1144781)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_host_log.c:177: Thread(alogFlush) quit, pid=1144788.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:08+0800 <redacted-host> msprof[1144788]: (1144788)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:08+0800 <redacted-host> kernelx-bootstrap[1141982]: {"state": "HEALTHY", "release_id": "1352814729bbbb16f38aee86d92558752dc6e6ab1b652aa8ec08d4e4e065a5ac", "runnable": true, "exit_code": 0}
+2026-10-04T18:52:08+0800 <redacted-host> systemd[1]: kernelx-bootstrap.service: Deactivated successfully.
+2026-10-04T18:52:08+0800 <redacted-host> systemd[1]: Finished KernelX signed release pull and reservation Agent.
+2026-10-04T18:52:08+0800 <redacted-host> systemd[1]: Starting KernelX signed release pull and reservation Agent...
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945729][dsmi_common.c:249][ascend][curpid:1144925,1144925][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945787][dsmi_common.c:676][ascend][curpid:1144925,1144925][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945800][dsmi_dmp_command.c:491][ascend][curpid:1144925,1144925][drv][dmp][dsmi_cmd_get_component_list]dev(0) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945809][dsmi_common_interface.c:2412][ascend][curpid:1144925,1144925][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x0 ret = 46
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945828][dsmi_upgrade_proc.c:493][ascend][curpid:1144925,1144925][drv][upgrade][check_component_type]get device 0 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:11+0800 <redacted-host> npu-smi[1144925]: [ERROR][2026-10-04-18:52:11:945837][dsmi_common_interface.c:2510][ascend][curpid:1144925,1144925][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=0; type=0x12; ret=46)
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126551][dsmi_common.c:249][ascend][curpid:1144978,1144978][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126600][dsmi_common.c:676][ascend][curpid:1144978,1144978][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126612][dsmi_dmp_command.c:491][ascend][curpid:1144978,1144978][drv][dmp][dsmi_cmd_get_component_list]dev(1) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126628][dsmi_common_interface.c:2412][ascend][curpid:1144978,1144978][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x1 ret = 46
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126638][dsmi_upgrade_proc.c:493][ascend][curpid:1144978,1144978][drv][upgrade][check_component_type]get device 1 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:13+0800 <redacted-host> npu-smi[1144978]: [ERROR][2026-10-04-18:52:13:126647][dsmi_common_interface.c:2510][ascend][curpid:1144978,1144978][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=1; type=0x12; ret=46)
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314452][dsmi_common.c:249][ascend][curpid:1145024,1145024][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314517][dsmi_common.c:676][ascend][curpid:1145024,1145024][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314532][dsmi_dmp_command.c:491][ascend][curpid:1145024,1145024][drv][dmp][dsmi_cmd_get_component_list]dev(2) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314542][dsmi_common_interface.c:2412][ascend][curpid:1145024,1145024][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x2 ret = 46
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314552][dsmi_upgrade_proc.c:493][ascend][curpid:1145024,1145024][drv][upgrade][check_component_type]get device 2 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:14+0800 <redacted-host> npu-smi[1145024]: [ERROR][2026-10-04-18:52:14:314563][dsmi_common_interface.c:2510][ascend][curpid:1145024,1145024][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=2; type=0x12; ret=46)
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537702][dsmi_common.c:249][ascend][curpid:1145073,1145073][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537759][dsmi_common.c:676][ascend][curpid:1145073,1145073][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537773][dsmi_dmp_command.c:491][ascend][curpid:1145073,1145073][drv][dmp][dsmi_cmd_get_component_list]dev(3) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537784][dsmi_common_interface.c:2412][ascend][curpid:1145073,1145073][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x3 ret = 46
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537794][dsmi_upgrade_proc.c:493][ascend][curpid:1145073,1145073][drv][upgrade][check_component_type]get device 3 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:15+0800 <redacted-host> npu-smi[1145073]: [ERROR][2026-10-04-18:52:15:537805][dsmi_common_interface.c:2510][ascend][curpid:1145073,1145073][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=3; type=0x12; ret=46)
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738442][dsmi_common.c:249][ascend][curpid:1145127,1145127][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738488][dsmi_common.c:676][ascend][curpid:1145127,1145127][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738503][dsmi_dmp_command.c:491][ascend][curpid:1145127,1145127][drv][dmp][dsmi_cmd_get_component_list]dev(4) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738513][dsmi_common_interface.c:2412][ascend][curpid:1145127,1145127][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x4 ret = 46
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738533][dsmi_upgrade_proc.c:493][ascend][curpid:1145127,1145127][drv][upgrade][check_component_type]get device 4 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:16+0800 <redacted-host> npu-smi[1145127]: [ERROR][2026-10-04-18:52:16:738544][dsmi_common_interface.c:2510][ascend][curpid:1145127,1145127][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=4; type=0x12; ret=46)
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930146][dsmi_common.c:249][ascend][curpid:1145180,1145180][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930194][dsmi_common.c:676][ascend][curpid:1145180,1145180][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930209][dsmi_dmp_command.c:491][ascend][curpid:1145180,1145180][drv][dmp][dsmi_cmd_get_component_list]dev(5) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930220][dsmi_common_interface.c:2412][ascend][curpid:1145180,1145180][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x5 ret = 46
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930240][dsmi_upgrade_proc.c:493][ascend][curpid:1145180,1145180][drv][upgrade][check_component_type]get device 5 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:17+0800 <redacted-host> npu-smi[1145180]: [ERROR][2026-10-04-18:52:17:930249][dsmi_common_interface.c:2510][ascend][curpid:1145180,1145180][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=5; type=0x12; ret=46)
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131606][dsmi_common.c:249][ascend][curpid:1145226,1145226][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131663][dsmi_common.c:676][ascend][curpid:1145226,1145226][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131678][dsmi_dmp_command.c:491][ascend][curpid:1145226,1145226][drv][dmp][dsmi_cmd_get_component_list]dev(6) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131689][dsmi_common_interface.c:2412][ascend][curpid:1145226,1145226][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x6 ret = 46
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131698][dsmi_upgrade_proc.c:493][ascend][curpid:1145226,1145226][drv][upgrade][check_component_type]get device 6 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:19+0800 <redacted-host> npu-smi[1145226]: [ERROR][2026-10-04-18:52:19:131708][dsmi_common_interface.c:2510][ascend][curpid:1145226,1145226][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=6; type=0x12; ret=46)
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332427][dsmi_common.c:249][ascend][curpid:1145276,1145276][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332485][dsmi_common.c:676][ascend][curpid:1145276,1145276][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332500][dsmi_dmp_command.c:491][ascend][curpid:1145276,1145276][drv][dmp][dsmi_cmd_get_component_list]dev(7) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332511][dsmi_common_interface.c:2412][ascend][curpid:1145276,1145276][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x7 ret = 46
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332521][dsmi_upgrade_proc.c:493][ascend][curpid:1145276,1145276][drv][upgrade][check_component_type]get device 7 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:20+0800 <redacted-host> npu-smi[1145276]: [ERROR][2026-10-04-18:52:20:332531][dsmi_common_interface.c:2510][ascend][curpid:1145276,1145276][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=7; type=0x12; ret=46)
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_host_log.c:177: Thread(alogFlush) quit, pid=1145335.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145335]: (1145335)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_host_log.c:177: Thread(alogFlush) quit, pid=1145340.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:21+0800 <redacted-host> msprof[1145340]: (1145340)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366822][dsmi_common.c:249][ascend][curpid:1145424,1145424][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366876][dsmi_common.c:676][ascend][curpid:1145424,1145424][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366891][dsmi_dmp_command.c:491][ascend][curpid:1145424,1145424][drv][dmp][dsmi_cmd_get_component_list]dev(0) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366901][dsmi_common_interface.c:2412][ascend][curpid:1145424,1145424][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x0 ret = 46
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366924][dsmi_upgrade_proc.c:493][ascend][curpid:1145424,1145424][drv][upgrade][check_component_type]get device 0 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:24+0800 <redacted-host> npu-smi[1145424]: [ERROR][2026-10-04-18:52:24:366934][dsmi_common_interface.c:2510][ascend][curpid:1145424,1145424][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=0; type=0x12; ret=46)
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550453][dsmi_common.c:249][ascend][curpid:1145476,1145476][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550511][dsmi_common.c:676][ascend][curpid:1145476,1145476][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550525][dsmi_dmp_command.c:491][ascend][curpid:1145476,1145476][drv][dmp][dsmi_cmd_get_component_list]dev(1) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550536][dsmi_common_interface.c:2412][ascend][curpid:1145476,1145476][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x1 ret = 46
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550546][dsmi_upgrade_proc.c:493][ascend][curpid:1145476,1145476][drv][upgrade][check_component_type]get device 1 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:25+0800 <redacted-host> npu-smi[1145476]: [ERROR][2026-10-04-18:52:25:550555][dsmi_common_interface.c:2510][ascend][curpid:1145476,1145476][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=1; type=0x12; ret=46)
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732083][dsmi_common.c:249][ascend][curpid:1145531,1145531][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732138][dsmi_common.c:676][ascend][curpid:1145531,1145531][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732153][dsmi_dmp_command.c:491][ascend][curpid:1145531,1145531][drv][dmp][dsmi_cmd_get_component_list]dev(2) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732165][dsmi_common_interface.c:2412][ascend][curpid:1145531,1145531][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x2 ret = 46
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732174][dsmi_upgrade_proc.c:493][ascend][curpid:1145531,1145531][drv][upgrade][check_component_type]get device 2 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:26+0800 <redacted-host> npu-smi[1145531]: [ERROR][2026-10-04-18:52:26:732183][dsmi_common_interface.c:2510][ascend][curpid:1145531,1145531][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=2; type=0x12; ret=46)
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924626][dsmi_common.c:249][ascend][curpid:1145584,1145584][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924685][dsmi_common.c:676][ascend][curpid:1145584,1145584][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924699][dsmi_dmp_command.c:491][ascend][curpid:1145584,1145584][drv][dmp][dsmi_cmd_get_component_list]dev(3) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924710][dsmi_common_interface.c:2412][ascend][curpid:1145584,1145584][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x3 ret = 46
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924719][dsmi_upgrade_proc.c:493][ascend][curpid:1145584,1145584][drv][upgrade][check_component_type]get device 3 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:27+0800 <redacted-host> npu-smi[1145584]: [ERROR][2026-10-04-18:52:27:924729][dsmi_common_interface.c:2510][ascend][curpid:1145584,1145584][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=3; type=0x12; ret=46)
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118765][dsmi_common.c:249][ascend][curpid:1145631,1145631][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118828][dsmi_common.c:676][ascend][curpid:1145631,1145631][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118843][dsmi_dmp_command.c:491][ascend][curpid:1145631,1145631][drv][dmp][dsmi_cmd_get_component_list]dev(4) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118853][dsmi_common_interface.c:2412][ascend][curpid:1145631,1145631][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x4 ret = 46
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118862][dsmi_upgrade_proc.c:493][ascend][curpid:1145631,1145631][drv][upgrade][check_component_type]get device 4 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:29+0800 <redacted-host> npu-smi[1145631]: [ERROR][2026-10-04-18:52:29:118870][dsmi_common_interface.c:2510][ascend][curpid:1145631,1145631][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=4; type=0x12; ret=46)
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326846][dsmi_common.c:249][ascend][curpid:1145679,1145679][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326904][dsmi_common.c:676][ascend][curpid:1145679,1145679][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326918][dsmi_dmp_command.c:491][ascend][curpid:1145679,1145679][drv][dmp][dsmi_cmd_get_component_list]dev(5) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326930][dsmi_common_interface.c:2412][ascend][curpid:1145679,1145679][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x5 ret = 46
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326939][dsmi_upgrade_proc.c:493][ascend][curpid:1145679,1145679][drv][upgrade][check_component_type]get device 5 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:30+0800 <redacted-host> npu-smi[1145679]: [ERROR][2026-10-04-18:52:30:326948][dsmi_common_interface.c:2510][ascend][curpid:1145679,1145679][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=5; type=0x12; ret=46)
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525033][dsmi_common.c:249][ascend][curpid:1145734,1145734][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525088][dsmi_common.c:676][ascend][curpid:1145734,1145734][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525103][dsmi_dmp_command.c:491][ascend][curpid:1145734,1145734][drv][dmp][dsmi_cmd_get_component_list]dev(6) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525114][dsmi_common_interface.c:2412][ascend][curpid:1145734,1145734][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x6 ret = 46
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525124][dsmi_upgrade_proc.c:493][ascend][curpid:1145734,1145734][drv][upgrade][check_component_type]get device 6 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:31+0800 <redacted-host> npu-smi[1145734]: [ERROR][2026-10-04-18:52:31:525135][dsmi_common_interface.c:2510][ascend][curpid:1145734,1145734][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=6; type=0x12; ret=46)
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:729918][dsmi_common.c:249][ascend][curpid:1145787,1145787][drv][dmp][dsmi_check_out_valid]recv msg data error code 46, recv msg data opcode 0x603, opcode 0x603.
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:729974][dsmi_common.c:676][ascend][curpid:1145787,1145787][drv][dmp][_dsmi_send_msg_rec_res]call dsmi_check_out_valid error:46.
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:729989][dsmi_dmp_command.c:491][ascend][curpid:1145787,1145787][drv][dmp][dsmi_cmd_get_component_list]dev(7) dsmi_send_msg_rec_res failed, ret = 46.
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:730000][dsmi_common_interface.c:2412][ascend][curpid:1145787,1145787][drv][upgrade][dsmi_get_component_count]dsmi_get_component_count fail, device id 0x7 ret = 46
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:730010][dsmi_upgrade_proc.c:493][ascend][curpid:1145787,1145787][drv][upgrade][check_component_type]get device 7 component count fail ret = 46, component_num = 0!
+2026-10-04T18:52:32+0800 <redacted-host> npu-smi[1145787]: [ERROR][2026-10-04-18:52:32:730020][dsmi_common_interface.c:2510][ascend][curpid:1145787,1145787][drv][upgrade][dsmi_upgrade_get_component_static_version]The component type is error. (dev_id=7; type=0x12; ret=46)
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_host_log.c:177: Thread(alogFlush) quit, pid=1145839.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145839]: (1145839)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)dlog_level_env.c:68: set default global log level (3), debug log level (3), run log level (1).
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)dlog_level_env.c:114: get the null ASCEND_MODULE_LOG_LEVEL env
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)dlog_level_env.c:166: can not init log level by ASCEND_MODULE_LOG_LEVEL env, use global log level for all modules
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)dlog_level_env.c:39: set default global event level true.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_driver_api.c:50: load driver library succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_driver_api.c:56: load driver library function succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)log_file_util.c:117: home_directory=/var/lib/kernelx-bootstrap.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_file_mgr.c:833: use default host log file path: /var/lib/kernelx-bootstrap/ascend/log
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_file_mgr.c:584: host log file num = 10.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_host_log.c:293: can not get sync mode from env, use default: 0
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_driver_log.c:62: can not get global log level from env, maybe is's null. Use default: 3
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_driver_log.c:78: plog register DlogInner function to Hal by RUN_LOG_OUT_HANDLE.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_device_log.c:364: Dlog initialize finished for process.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_core.c:91: Log init finished for process, platform is host, init host and device.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)slog_api.cpp:65: alog transfer to unified_dlog success
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_api.cpp:52: plog transfer to unified_dlog success
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_device_log.c:397: Dlog finalize finished.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_host_log.c:177: Thread(alogFlush) quit, pid=1145844.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_driver_api.c:66: close driver library handle succeed.
+2026-10-04T18:52:33+0800 <redacted-host> msprof[1145844]: (1145844)plog_core.c:168: Log uninit finished.
+2026-10-04T18:52:33+0800 <redacted-host> kernelx-bootstrap[1144805]: {"state": "CURRENT", "release_id": "1352814729bbbb16f38aee86d92558752dc6e6ab1b652aa8ec08d4e4e065a5ac", "runnable": true, "exit_code": 0}
+2026-10-04T18:52:34+0800 <redacted-host> systemd[1]: kernelx-bootstrap.service: Deactivated successfully.
+2026-10-04T18:52:34+0800 <redacted-host> systemd[1]: Finished KernelX signed release pull and reservation Agent.

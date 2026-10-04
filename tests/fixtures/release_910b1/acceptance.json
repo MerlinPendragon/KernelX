@@ -1,0 +1,36 @@
+{
+  "device_release": "RELEASED",
+  "evidence_type": "910B1_REAL_SINGLE_SERVER",
+  "https_upgrade": {
+    "release_id": "819682511cb6e4aabe33f0f8d194e7ae8e5c086ac1a50faf3503606bd6bc02d5",
+    "state": "HEALTHY"
+  },
+  "npu_device": 5,
+  "observations": 30,
+  "offline_install": {
+    "release_id": "f4b864164243cba4f220d59806d6c87b50304585a6b19d6e385565df0206edef",
+    "state": "HEALTHY"
+  },
+  "persistent_timer_installed": false,
+  "release_checked_at": "2026-10-04T09:58:48.271551Z",
+  "release_ids": [
+    "f4b864164243cba4f220d59806d6c87b50304585a6b19d6e385565df0206edef",
+    "819682511cb6e4aabe33f0f8d194e7ae8e5c086ac1a50faf3503606bd6bc02d5"
+  ],
+  "repeat_tick": {
+    "release_id": "819682511cb6e4aabe33f0f8d194e7ae8e5c086ac1a50faf3503606bd6bc02d5",
+    "state": "CURRENT"
+  },
+  "repeats": 10,
+  "root": "/home/lxb/kernelx-issue4/acceptance-20261004T095758Z",
+  "sequences": [
+    3,
+    4
+  ],
+  "shared_host_rebooted": false,
+  "source_commit": "4dd4e5be7edb9a74c1e7383f93b68598a237a440",
+  "systemd_exit": 0,
+  "systemd_transient_unit": "kernelx-issue4-acceptance-095906",
+  "warmup": 20,
+  "unit_verification_exit": 0
+}

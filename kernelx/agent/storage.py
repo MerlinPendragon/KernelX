@@ -130,7 +130,7 @@ class Center:
         device=next(d for d in environment['devices'] if d['device_uid']==observation['device_uid'])
         return dict(observation,case=entity('case',observation['case_key']),
             hardware=dict(device=device,driver=environment['software']['driver'],firmware=environment['software']['firmware']),
-            software=environment['software'],artifact_bundle_ids=[row['bundle_id'] for row in self.db.execute('SELECT bundle_id FROM bundle_profiles WHERE profile_id=?',(observation['profile_id'],))],fleet_links=[dict(row) for row in self.db.execute('SELECT * FROM fleet_links WHERE session_id=?',(observation['session_id'],))],library_provenance=environment['extensions'].get('library_provenance',{}))
+            software=environment['software'],release=environment['extensions'].get('release'),artifact_bundle_ids=[row['bundle_id'] for row in self.db.execute('SELECT bundle_id FROM bundle_profiles WHERE profile_id=?',(observation['profile_id'],))],fleet_links=[dict(row) for row in self.db.execute('SELECT * FROM fleet_links WHERE session_id=?',(observation['session_id'],))],library_provenance=environment['extensions'].get('library_provenance',{}))
 
     def artifact_path(self,artifact_id):
         row=self.db.execute('SELECT payload FROM entities WHERE kind=? AND identity=?',('artifact',artifact_id)).fetchone()
