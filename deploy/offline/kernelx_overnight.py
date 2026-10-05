@@ -25,7 +25,7 @@ import uuid
 import zipfile
 
 PAYLOAD_SHA256 = '40ec35c2f92feb5b31c93315f8de9ea6382280263b8499df65089e0b954c5c6f'
-SOURCE_COMMIT = 'fa5a147a3ae6be2ab470573109520b3c2ef4f046'
+SOURCE_COMMIT = '8e255e41d1b4d413d288b4684aa02021c5f85d85'
 PAYLOAD = '''UEsDBBQAAAAIAAAAIVyVYWZrYgAAAGsAAAATAAAAa2VybmVseC9fX2luaXRfXy5weVNSUvJOLcpLzYlQKCjKL8lPzs9RKDNUSMxL
 UShKTUzRzc/LqVTITS1JTEksSQQpSUrVU1JS4gp29nD1dYwPcw0K9vT3U7BVMOQKCPIP8Xf290ESVMpJLEnNS67ULTNU4gIAUEsD
 BBQAAAAIAAAAIVwe8zE1pg8AAJdCAAATAAAAa2VybmVseC9fX21haW5fXy5wecUcWXOcRvpdv4LiBcZmRna28hB5efDGTuKHuFyx
@@ -7521,9 +7521,15 @@ class DiagnosticAdapter:
         (output/'adapter.json').write_text(json.dumps(self.manifest,indent=2))
         (output/'build.json').write_text(json.dumps(dict(source_sha256=source_hash,binary_sha256=digest(self.manifest),cache_state='UPSTREAM_JIT',cache_key=None,elapsed_seconds=0,compile_elapsed_seconds=None)))
         return output/'adapter.json'
-    def benchmark_command(self,binary,device,warmup,repeats,raw,sidecar):
+    def prepare(self,device,warmup,repeats,raw,sidecar):
         from kernelx.cann_adapter import PRESET
-        spec = dict(library=self.row['library'],case=self.row,device=device,warmup=warmup,repeats=repeats,raw=str(raw),sidecar=str(sidecar),rank=0,preset=PRESET)
+        if type(warmup) is not int or type(repeats) is not int or not 1<=warmup<=1000 or not 1<=repeats<=1000:
+            raise ValueError('bounded repeat policy required')
+        # Input allocation, extension loading and JIT stay in the worker before
+        # profiling; this is the preparation record shared with its launch spec.
+        return dict(library=self.row['library'],case=self.row,device=device,warmup=warmup,repeats=repeats,raw=str(raw),sidecar=str(sidecar),rank=0,preset=PRESET)
+    def benchmark_command(self,binary,device,warmup,repeats,raw,sidecar):
+        spec = self.prepare(device,warmup,repeats,raw,sidecar)
         path = Path(binary).parent/'benchmark-spec.json'
         path.write_text(json.dumps(spec,indent=2))
         return [sys.executable,'-B','-m','kernelx.offline_benchmark','--spec',str(path)]
@@ -7543,6 +7549,24 @@ def json_write(path, value):
     temporary = path.with_suffix(path.suffix+'.tmp')
     temporary.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
     temporary.replace(path)
+
+
+def diagnostic_self_test(matrix):
+    checked=[]
+    with tempfile.TemporaryDirectory(prefix='kernelx-adapter-check-') as temp:
+        root=Path(temp)
+        for library in sorted({row['library'] for row in matrix}):
+            row=next(row for row in matrix if row['library']==library)
+            adapter=DiagnosticAdapter(row)
+            for name in ('capabilities','build','prepare','benchmark_command','resolve_versions'):
+                if not callable(getattr(adapter,name,None)):
+                    raise RuntimeError('diagnostic adapter missing '+name)
+            prepared=adapter.prepare(0,20,30,root/'raw',root/'sidecar.jsonl')
+            command=adapter.benchmark_command(root/'adapter.json',0,20,30,root/'raw',root/'sidecar.jsonl')
+            if json.loads(Path(command[-1]).read_text())!=prepared:
+                raise RuntimeError('preparation and worker spec differ')
+            checked.append(library)
+    return checked
 
 
 def main():
@@ -7603,7 +7627,7 @@ def main():
             from kernelx.offline_ci import source_inventory
             ci_root=Path(runtime)/'kernelx/offline_ci_sources'
             ci_files={p.name:len(source_inventory(p,p.name)) for p in ci_root.iterdir() if p.is_dir()}
-            print(json.dumps(dict(**self_test(),candidate_cases=len(matrix),by_library=dict(Counter(r['library'] for r in matrix)),embedded_ci_files=ci_files,source_commit=SOURCE_COMMIT),indent=2))
+            print(json.dumps(dict(**self_test(),candidate_cases=len(matrix),by_library=dict(Counter(r['library'] for r in matrix)),diagnostic_adapters_checked=diagnostic_self_test(matrix),embedded_ci_files=ci_files,source_commit=SOURCE_COMMIT),indent=2))
             return 0
         if args.list_cases:
             print(json.dumps(matrix,ensure_ascii=False,indent=2))
