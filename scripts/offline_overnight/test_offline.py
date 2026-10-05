@@ -1,9 +1,10 @@
 import importlib.util
+from datetime import datetime, timedelta, timezone
 import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -17,6 +18,53 @@ driver=load('overnight_driver',HERE/'driver.py')
 ci=load('overnight_ci',HERE/'ci.py')
 
 class OfflineTests(unittest.TestCase):
+    def test_adapter_self_test_checks_all_diagnostic_libraries(self):
+        checked=driver.diagnostic_self_test(driver.candidates())
+        self.assertEqual(checked,['deepgemm-ascend','sgl-kernel-npu','tile-kernels','torch-npu'])
+        with patch.object(driver.DiagnosticAdapter,'prepare',None):
+            with self.assertRaisesRegex(RuntimeError,'missing prepare'):
+                driver.diagnostic_self_test(driver.candidates())
+
+    def test_diagnostic_adapters_reach_runner_worker_launch(self):
+        from kernelx import runner, libraries
+        env=json.loads((ROOT/'tests/fixtures/910b1/environment.json').read_text())
+        rows=driver.candidates()
+        for library in ('sgl-kernel-npu','torch-npu','tile-kernels','deepgemm-ascend'):
+            with self.subTest(library=library), tempfile.TemporaryDirectory() as temp:
+                root=Path(temp)
+                row=next(row for row in rows if row['library']==library)
+                adapter=driver.DiagnosticAdapter(row)
+                def build(output,environment=None):
+                    output=Path(output);output.mkdir()
+                    (output/'adapter.json').write_text(json.dumps(adapter.manifest))
+                    return output/'adapter.json'
+                start=datetime.now(timezone.utc)-timedelta(seconds=1)
+                launch=Mock(side_effect=RuntimeError('CPU_TEST_WORKER_LAUNCH_REACHED'))
+                with patch.object(runner,'probe',return_value=env), \
+                     patch.object(libraries,'FrozenPerformanceAdapter',return_value=adapter), \
+                     patch.object(adapter,'build',side_effect=build), \
+                     patch.object(runner,'DeviceLock',return_value=Mock(__enter__=Mock(return_value=Mock(fd=42,path=root/'lock')),__exit__=Mock(return_value=False))), \
+                     patch.object(runner,'release_check',return_value=dict(status='RELEASED',evidence=dict(stdout='No process in device.'))), \
+                     patch.object(runner,'run_owned',launch):
+                    result=runner.collect(root/'run',server_id=env['server_id'],device=0,
+                        window_start=start.isoformat(),window_end=(start+timedelta(seconds=120)).isoformat(),
+                        authorization_id='cpu-test',adapter_library=library,warmup=20,repeats=30)
+                self.assertEqual(result['reason'],'CPU_TEST_WORKER_LAUNCH_REACHED')
+                launch.assert_called_once()
+                command=launch.call_args.args[0]
+                self.assertEqual(command[2:5],['-m','kernelx.offline_benchmark','--spec'])
+                prepared=json.loads((root/'run/preparation.json').read_text())
+                spec=json.loads(Path(command[-1]).read_text())
+                self.assertEqual(prepared,spec)
+                self.assertEqual(spec['library'],library)
+                self.assertEqual(spec['case']['case_key'],row['case_key'])
+
+    def test_prepare_rejects_invalid_repeat_policy(self):
+        adapter=driver.DiagnosticAdapter(driver.candidates()[0])
+        for warmup,repeats in [(0,30),(20,1001),(True,30),(20,1.5)]:
+            with self.subTest(warmup=warmup,repeats=repeats), self.assertRaises(ValueError):
+                adapter.prepare(0,warmup,repeats,'raw','sidecar')
+
     def test_frozen_ci_shapes_include_layouts_and_boundary_tokens(self):
         sources=HERE/'ci_sources'
         metadata=json.loads((sources/'sources.json').read_text())

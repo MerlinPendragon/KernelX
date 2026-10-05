@@ -104,6 +104,9 @@ v0.1.1 修复 950DT 的五列表头（含 Slot ID、Chip Phy-ID）被旧解析�
 v0.1.2 对 board/usages/proc-mem 的只读查询增加兼容重试：仅当 chip 0 查询明确
 返回 `This device does not support input parameter of -c.` 时，去掉 `-c 0` 后重试一次，
 保留两次原始查询证据。查询失败或未知进程输出仍不算设备已释放。
+v0.1.3 补齐隔离性能适配器的 `prepare()` 接口；准备记录与 worker 启动 spec 共用
+同一生成函数。`--self-test` 也会检查每个已选择的诊断适配器接口及 spec 一致性，
+无需导入 Torch 或启动 NPU。CPU Runner 回归验证扩展库路径可以到达 worker 启动边界。
 
 ## 从源码重建单文件
 
